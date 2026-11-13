@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>if(new URLSearchParams(location.search).has("feature")){location.replace("./resume_tools.html"+location.search+location.hash);}</script>
+<meta name="careerai-api-base" content="https://careerai-project-vca7.onrender.com">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f4f7fb">
+<title>CareerAI | Your career workspace</title>
+<style>
+:root {
+    color-scheme: light;
+    --ink: #14253d;
+    --muted: #62718a;
+    --blue: #315ce8;
+    --teal: #0e9f9a;
+    --line: #e0e7f1;
+    --surface: rgba(255,255,255,.88);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--ink);
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    background: radial-gradient(ellipse at 85% 0%, #dce8ff 0, transparent 38%),
+                radial-gradient(ellipse at 0% 55%, #e4f8f5 0, transparent 34%), #f4f7fb;
+}
+a { color: inherit; }
+.page { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+.topbar { display:flex; align-items:center; justify-content:space-between; gap:18px; padding:24px 0; }
+.brand { display:flex; align-items:center; gap:12px; text-decoration:none; }
+.brand-mark { display:grid; place-items:center; width:42px; height:42px; border-radius:14px; color:#fff; font-size:20px; background:linear-gradient(145deg,#4777ff,#2449c7); box-shadow:0 8px 18px #315ce844, inset 0 1px 0 #ffffff66; }
+.brand-name { font-weight:760; font-size:19px; letter-spacing:-.4px; }
+.brand-caption { margin-top:3px; color:var(--muted); font-size:11px; }
+.top-links { display:flex; align-items:center; gap:10px; }
+.top-links a { padding:10px 14px; border:1px solid var(--line); border-radius:12px; text-decoration:none; font-size:13px; font-weight:650; background:#ffffffa8; transition:transform .2s, box-shadow .2s; }
+.top-links a:hover { transform:translateY(-2px); box-shadow:0 8px 18px #1c35551a; }
+.top-links .primary-link { border-color:transparent; color:#fff; background:linear-gradient(135deg,#315ce8,#567cff); }
+.hero { position:relative; display:grid; grid-template-columns:minmax(0,1.25fr) minmax(250px,.75fr); align-items:center; gap:32px; min-height:350px; padding:clamp(28px,5vw,58px); overflow:hidden; border:1px solid #ffffffb8; border-radius:30px; background:linear-gradient(115deg,#fff 5%,#f4f8ff 58%,#e8f4fb); box-shadow:0 22px 55px #263e6018, inset 0 1px 0 #fff; }
+.hero::before { content:""; position:absolute; width:420px; height:420px; right:-110px; top:-210px; border-radius:50%; background:#a9d4ff; filter:blur(4px); opacity:.35; }
+.hero-copy { position:relative; z-index:2; max-width:610px; }
+.eyebrow { display:inline-flex; align-items:center; gap:8px; margin-bottom:17px; color:#315ce8; font-size:11px; font-weight:750; letter-spacing:1.3px; text-transform:uppercase; }
+.eyebrow::before { content:""; width:20px; height:2px; border-radius:2px; background:var(--teal); }
+h1 { max-width:620px; margin:0; font-size:clamp(34px,5vw,57px); line-height:1.06; letter-spacing:-2px; }
+.hero-copy p { max-width:540px; margin:18px 0 0; color:var(--muted); font-size:16px; line-height:1.7; }
+.hero-actions { display:flex; flex-wrap:wrap; gap:11px; margin-top:26px; }
+.button { display:inline-flex; align-items:center; justify-content:center; gap:9px; min-height:46px; padding:0 17px; border:1px solid var(--line); border-radius:13px; color:var(--ink); background:#fff; text-decoration:none; font-size:13px; font-weight:700; box-shadow:0 5px 13px #263e600d; transition:transform .2s, box-shadow .2s; }
+.button:hover { transform:translateY(-2px); box-shadow:0 10px 20px #263e601a; }
+.button.primary { border-color:transparent; color:#fff; background:linear-gradient(135deg,#315ce8,#567cff); box-shadow:0 9px 20px #315ce833; }
+.hero-art { position:relative; display:grid; place-items:center; min-height:240px; perspective:850px; }
+.art-glow { position:absolute; width:220px; height:220px; border-radius:50%; background:#b9d4ff; filter:blur(32px); opacity:.65; }
+.art-base { position:absolute; bottom:15px; width:245px; height:62px; border-radius:50%; background:linear-gradient(90deg,#b5c8ef,#f8fcff,#a9c0ec); transform:rotateX(67deg) rotateZ(-10deg); box-shadow:0 25px 34px #536d9c33; }
+.art-card { position:relative; width:190px; min-height:185px; padding:18px; border:1px solid #ffffff; border-radius:22px; background:linear-gradient(150deg,#ffffff,#edf3ff); box-shadow:13px 22px 34px #26477a25, inset 0 1px 0 #fff; transform:rotateY(-13deg) rotateX(5deg) rotateZ(3deg); animation:float 5s ease-in-out infinite; }
+.art-card-top { display:flex; align-items:center; justify-content:space-between; }
+.art-mini-logo { display:grid; place-items:center; width:34px; height:34px; border-radius:11px; color:#fff; background:linear-gradient(145deg,#4777ff,#2449c7); font-weight:800; }
+.art-dots { display:flex; gap:4px; }
+.art-dots i { width:5px; height:5px; border-radius:50%; background:#c4cede; }
+.art-line { height:8px; margin-top:15px; border-radius:8px; background:#d7e1f2; }
+.art-line.long { width:82%; background:#a9bfec; }
+.art-line.medium { width:63%; }
+.art-skills { display:flex; gap:6px; margin-top:18px; }
+.art-skills i { width:41px; height:23px; border-radius:8px; background:#dce8ff; }
+.art-check { position:absolute; right:-27px; bottom:29px; display:grid; place-items:center; width:52px; height:52px; border:4px solid #f2f7ff; border-radius:18px; color:white; font-size:24px; background:linear-gradient(145deg,#19b89e,#0d8f86); box-shadow:0 9px 18px #0e9f9a44; transform:rotate(8deg); }
+@keyframes float { 0%,100%{transform:translateY(0) rotateY(-13deg) rotateX(5deg) rotateZ(3deg)} 50%{transform:translateY(-8px) rotateY(-10deg) rotateX(5deg) rotateZ(1deg)} }
+.section-head { display:flex; align-items:end; justify-content:space-between; gap:15px; margin:38px 0 17px; }
+.section-head h2 { margin:0; font-size:22px; letter-spacing:-.5px; }
+.section-head p { margin:6px 0 0; color:var(--muted); font-size:13px; }
+.tools { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:15px; }
+.tool { --accent:#315ce8; position:relative; display:flex; flex-direction:column; min-height:186px; padding:21px; overflow:hidden; border:1px solid #e5ebf4; border-radius:21px; color:var(--ink); background:var(--surface); box-shadow:0 10px 24px #263e600a, inset 0 1px 0 #fff; text-decoration:none; transform-style:preserve-3d; transition:transform .22s, box-shadow .22s, border-color .22s; }
+.tool::after { content:""; position:absolute; width:105px; height:105px; right:-48px; top:-58px; border-radius:50%; background:var(--accent); filter:blur(35px); opacity:.12; }
+.tool:hover { transform:perspective(800px) translateY(-5px) rotateX(1.5deg); border-color:#c7d5ef; box-shadow:0 18px 30px #263e6018, 0 3px 0 #fff inset; }
+.tool-icon { display:grid; place-items:center; width:42px; height:42px; border:1px solid color-mix(in srgb,var(--accent) 15%,white); border-radius:14px; background:color-mix(in srgb,var(--accent) 9%,white); font-size:20px; }
+.tool h3 { margin:16px 0 0; font-size:15px; letter-spacing:-.15px; }
+.tool p { margin:8px 0 17px; color:var(--muted); font-size:12px; line-height:1.55; }
+.tool-action { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:auto; color:var(--accent); font-size:12px; font-weight:750; }
+.tool-action span:last-child { font-size:17px; }
+.note { margin:24px 0 0; padding:15px 17px; border:1px solid #d9e5f5; border-radius:15px; color:#4d607a; background:#ffffffa6; font-size:12px; line-height:1.6; }
+.note strong { color:var(--ink); }
+footer { padding:25px 0 34px; color:#738198; text-align:center; font-size:11px; }
+.module-modal[hidden] { display:none!important; }
+.module-modal { position:fixed; inset:0; z-index:10; display:flex; align-items:center; justify-content:center; padding:16px; background:#12243ccc; backdrop-filter:blur(8px); }
+.module-shell { display:flex; flex-direction:column; width:min(1440px,100%); height:min(920px,94vh); overflow:hidden; border:1px solid #dce4f0; border-radius:19px; background:#fff; box-shadow:0 24px 80px #10223a55; }
+.module-modal-header { display:flex; align-items:center; justify-content:space-between; gap:15px; min-height:56px; padding:9px 15px; border-bottom:1px solid var(--line); }
+.module-modal-header h2 { margin:0; font-size:15px; }
+.module-close { width:40px; height:38px; border:1px solid var(--line); border-radius:11px; color:var(--ink); background:#f5f7fb; cursor:pointer; font-size:22px; }
+.module-frame { flex:1; width:100%; border:0; background:#fff; }
+@media(max-width:850px) { .tools{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{grid-template-columns:minmax(0,1fr) 240px;gap:12px}.hero-art{transform:scale(.86)} }
+@media(max-width:600px) { .page{width:calc(100% - 28px)}.topbar{padding:15px 0}.brand-caption{display:none}.top-links a{padding:9px 10px;font-size:11px}.hero{grid-template-columns:1fr;gap:0;min-height:0;padding:27px 22px;border-radius:23px}.hero-copy p{font-size:14px}.hero-art{min-height:165px;margin-top:0;transform:scale(.72);transform-origin:top center;margin-bottom:-38px}.section-head{margin-top:29px}.section-head h2{font-size:19px}.tools{grid-template-columns:1fr;gap:11px}.tool{min-height:155px;padding:18px}.module-modal{padding:5px}.module-shell{height:98vh;border-radius:13px} }
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important} }
+
+.skip-link { position:absolute; left:16px; top:-70px; z-index:30; padding:12px 16px; border-radius:10px; background:var(--ink); color:#fff; }
+.skip-link:focus { top:12px; }
+.hero-actions .button { min-height:48px; }
+.journey-link { display:inline-block; margin-top:20px; color:var(--blue); font-size:13px; font-weight:700; text-underline-offset:4px; }
+.tool-group { margin-top:25px; scroll-margin-top:20px; }
+.tool-group .tools { grid-template-columns:repeat(auto-fit,minmax(min(100%,285px),1fr)); }
+.tool-group-head { display:flex; align-items:baseline; gap:12px; margin:0 0 12px; }
+.tool-group-head h3 { margin:0; font-size:17px; letter-spacing:-.3px; }
+.tool-group-head p { margin:0; color:var(--muted); font-size:12px; }
+.tool h4 { margin:16px 0 0; font-size:15px; letter-spacing:-.15px; }
+.tool.starting { border-color:#c9d7fa; background:linear-gradient(145deg,#fff,#f4f7ff); }
+.start-label { position:absolute; right:20px; top:28px; color:#4b65a7; font-size:10px; font-weight:750; letter-spacing:.7px; text-transform:uppercase; }
+.workspace-empty { margin-top:16px; padding:24px; border:1px dashed #bdcde9; border-radius:18px; background:#ffffffc9; }
+.workspace-empty h3 { margin:0 0 8px; font-size:19px; }
+.workspace-empty p { max-width:680px; color:var(--muted); font-size:14px; line-height:1.6; }
+.workspace-empty .button { margin-top:4px; }
+.workspace-empty[hidden],.charts-grid[hidden] { display:none!important; }
+.saved-draft-hint { margin-bottom:0; font-size:12px!important; }
+.career-progress { margin:28px 0; padding:24px; border:1px solid var(--line); border-radius:20px; background:#fff; }
+.career-progress h2 { margin:0; font-size:22px; }
+.career-progress>p { color:var(--muted); font-size:13px; line-height:1.6; }
+.progress-items { display:grid; grid-template-columns:repeat(auto-fit,minmax(165px,1fr)); gap:12px; }
+.progress-item { padding:15px; background:#f5f7fb; border-radius:12px; font-size:13px; }
+.progress-item p { margin-bottom:0; color:var(--muted); line-height:1.5; }
+.clear-progress { padding:10px 14px; border:1px solid var(--line); border-radius:10px; color:var(--ink); background:#fff; font:inherit; font-size:12px; cursor:pointer; }
+@media(max-width:600px) { .hero-actions{display:grid;grid-template-columns:1fr}.hero-actions .button{justify-content:space-between}.tool-group-head{display:block}.tool-group-head p{margin-top:5px}.workspace-empty,.career-progress{padding:20px}.progress-items{grid-template-columns:1fr 1fr}.start-label{top:26px} }
+@media(max-width:380px) { .progress-items{grid-template-columns:1fr} }
+
+</style>
+<style>
+button,a,input,select,textarea{touch-action:manipulation}input,select,textarea{font-size:16px}button{min-height:44px}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #8c78ed;outline-offset:3px}img,video{max-width:100%}body{overflow-wrap:break-word}@media(max-width:600px){input,select,textarea{max-width:100%}.module-modal{padding:0!important}.module-shell{width:100%!important;height:100dvh!important;max-height:none!important;border-radius:0!important}.module-frame{min-height:0}button{white-space:normal}}@media print{.career-progress{display:none!important}}
+</style><script>
+window.CareerAI={read:function(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}},write:function(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}},role:function(){return this.read('careerAIProfile',{}).role||this.read('careerAIResumeAnalysis',{}).job_role||''},setRole:function(role){if(!role.trim())return;var p=this.read('careerAIProfile',{});p.role=role.trim();p.updatedAt=new Date().toISOString();this.write('careerAIProfile',p)}};
+</script>
+<script src="./career-api.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#mainContent">Skip to career tools</a>
+<div class="page" id="dashboardPage">
+    <header class="topbar">
+        <a class="brand" href="dashboard.html" aria-label="CareerAI home">
+            <span class="brand-mark" aria-hidden="true">C</span>
+            <span><span class="brand-name">CareerAI</span><span class="brand-caption">Career tools in one place</span></span>
+        </a>
+        <nav class="top-links" aria-label="Quick links">
+            <a href="#tools-title">All tools</a>
+            <a class="primary-link" href="./resume_builder.html">Build my resume <span aria-hidden="true">↗</span></a>
+        </nav>
+    </header>
+
+    <main id="mainContent">
+        <section class="hero" aria-labelledby="welcome-title">
+            <div class="hero-copy">
+                <div class="eyebrow">Your career workspace</div>
+                <h1 id="welcome-title">Take your next career step.</h1>
+                <p>Bring your experience, choose your direction, and prepare one step at a time. Start with the part that matters to you today.</p>
+                <div class="hero-actions" aria-label="Three ways to get started">
+                    <a class="button primary" href="resume_tools.html?feature=resume">Review my resume <span aria-hidden="true">↗</span></a>
+                    <a class="button" href="./interview_practice.html">Practise an interview <span aria-hidden="true">↗</span></a>
+                    <a class="button" href="resume_tools.html?feature=skill-gap">Build my skills <span aria-hidden="true">↗</span></a>
+                </div>
+                <a class="journey-link" href="resume_tools.html?feature=resume&journey=1" id="startJourney">Prefer a guided path? Start step by step →</a>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+                <div class="art-glow"></div><div class="art-base"></div>
+                <div class="art-card">
+                    <div class="art-card-top"><span class="art-mini-logo">CV</span><span class="art-dots"><i></i><i></i><i></i></span></div>
+                    <div class="art-line long"></div><div class="art-line medium"></div><div class="art-line"></div>
+                    <div class="art-skills"><i></i><i></i><i></i></div><span class="art-check">✓</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="career-charts" aria-labelledby="chartHeading"><div><h2 id="chartHeading">Your preparation at a glance</h2><p>Results from your saved activity on this device.</p></div><div class="workspace-empty" id="dashboardEmpty" hidden><h3>Your first result starts with a resume.</h3><p>No completed activity has been saved on this device yet. Upload your resume and choose a target role to get a starting point. Your results will appear here as you practise.</p><a class="button primary" href="resume_tools.html?feature=resume">Start my resume review <span aria-hidden="true">↗</span></a><p class="saved-draft-hint" id="savedDraftHint" hidden>A resume draft is already saved on this device. <a href="./resume_builder.html">Continue my draft →</a></p></div><div class="charts-grid" id="chartsGrid"><article class="chart-card"><h3>Activity progress</h3><div id="activityDonut"></div><p id="activityCaption"></p></article><article class="chart-card"><h3>Your latest results</h3><div id="resultBars"></div><p class="chart-note">Each bar measures a different activity. These are practice indicators, not a hiring score.</p></article></div></section>
+<section aria-labelledby="tools-title"><div class="section-head"><div><h2 id="tools-title">All your career tools</h2><p>Every tool is here. Choose a section and continue at your own pace.</p></div></div>
+<section class="tool-group" aria-labelledby="resume-tools"><div class="tool-group-head"><h3 id="resume-tools">Resume</h3><p>Review, create, and refine your story.</p></div><div class="tools">
+<a class="tool starting" href="resume_tools.html?feature=resume" style="--accent:#315ce8">
+                    <span class="start-label">Start here</span><span class="tool-icon" aria-hidden="true">📄</span><h4>Resume review</h4><p>Compare your resume with a job role or pasted job description, then review detected skills and suggestions.</p><span class="tool-action">Review resume <span aria-hidden="true">↗</span></span>
+                </a>
+<a class="tool" href="./resume_builder.html" style="--accent:#0e9f9a">
+                    <span class="tool-icon" aria-hidden="true">✍️</span><h4>Resume builder</h4><p>Create a clean, job-focused resume from your own details and save it as a PDF.</p><span class="tool-action">Build resume <span aria-hidden="true">↗</span></span>
+                </a>
+<a class="tool" href="./correction_map.html" style="--accent:#7254bd"><span class="tool-icon" aria-hidden="true">✎</span><h4>Resume correction impact map</h4><p>Correct detected skills, preview coverage changes, and find saved content to review.</p><span class="tool-action">Review corrections ↗</span></a>
+</div></section>
+<section class="tool-group" aria-labelledby="interview-tools"><div class="tool-group-head"><h3 id="interview-tools">Interviews</h3><p>Practise an answer, then learn from your feedback.</p></div><div class="tools">
+<a class="tool starting" href="./interview_practice.html" style="--accent:#b66b0b">
+                    <span class="start-label">Start here</span><span class="tool-icon" aria-hidden="true">🎙️</span><h4>Mock interview</h4><p>Practise answering job-related questions with optional voice input and coaching.</p><span class="tool-action">Start practice <span aria-hidden="true">↗</span></span>
+                </a>
+<a class="tool" href="./interview_analysis.html" style="--accent:#1878b8">
+                    <span class="tool-icon" aria-hidden="true">📈</span><h4>Interview feedback</h4><p>Review your latest practice answers and get ideas for making them stronger.</p><span class="tool-action">View feedback <span aria-hidden="true">↗</span></span>
+                </a>
+</div></section>
+<section class="tool-group" aria-labelledby="learning-tools"><div class="tool-group-head"><h3 id="learning-tools">Skills & learning</h3><p>Find your gaps and practise with a learning path.</p></div><div class="tools">
+<a class="tool starting" href="resume_tools.html?feature=skill-gap" style="--accent:#7952c8">
+                    <span class="start-label">Start here</span><span class="tool-icon" aria-hidden="true">🧠</span><h4>Skills and learning</h4><p>Explore job skills, see what you can learn next, and take a skill quiz.</p><span class="tool-action">Explore skills <span aria-hidden="true">↗</span></span>
+                </a>
+<a class="tool" href="./tutor.html" style="--accent:#ce4a83">
+                    <span class="tool-icon" aria-hidden="true">🌐</span><h4>English practice</h4><p>Practise spoken English with lesson activities and language support.</p><span class="tool-action">Open tutor <span aria-hidden="true">↗</span></span>
+                </a>
+</div></section>
+<section class="tool-group" aria-labelledby="career-tools"><div class="tool-group-head"><h3 id="career-tools">Jobs & careers</h3><p>Explore your direction and plan your applications.</p></div><div class="tools">
+<a class="tool" href="resume_tools.html?feature=job-role" style="--accent:#5266d8">
+                    <span class="tool-icon" aria-hidden="true">🎯</span><h4>Explore job roles</h4><p>Look at career roles and understand the skills they commonly ask for.</p><span class="tool-action">Explore roles <span aria-hidden="true">↗</span></span>
+                </a>
+<a class="tool" href="./career_readiness.html" style="--accent:#19866f">
+                    <span class="tool-icon" aria-hidden="true">🚀</span><h4>Career matches</h4><p>Compare your current skills with career paths and see possible next steps.</p><span class="tool-action">See matches <span aria-hidden="true">↗</span></span>
+                </a>
+<a class="tool" href="./placements.html" style="--accent:#247c57"><span class="tool-icon" aria-hidden="true">💼</span><h4>Jobs & college placements</h4><p>Find job-search links, review Nagarjuna Degree College drives, and track applications on this device.</p><span class="tool-action">Explore placements <span aria-hidden="true">↗</span></span></a>
+</div></section>
+</section>
+        <section class="career-progress" id="careerProgress"><h2>Your progress</h2><p id="progressRole"></p><div id="progressItems" class="progress-items"></div><p id="progressNext"></p><p style="font-size:13px;color:#626a7a">Saved in this browser on this device. Progress does not sync across devices.</p><button type="button" id="clearProgress" class="clear-progress">Clear saved activity</button></section>
+    </main>
+    <footer>CareerAI · Tools to help you prepare for work</footer>
+</div>
+
+<div class="module-modal" id="moduleModal" role="dialog" aria-modal="true" aria-labelledby="moduleTitle" hidden>
+    <div class="module-shell">
+        <div class="module-modal-header"><h2 id="moduleTitle">CareerAI tool</h2><button class="module-close" id="closeModule" type="button" aria-label="Return to dashboard">×</button></div>
+        <iframe class="module-frame" id="moduleFrame" title="CareerAI tool" allow="microphone; camera; autoplay"></iframe>
+    </div>
+</div>
+<script>
+const moduleModal = document.getElementById("moduleModal");
+const moduleFrame = document.getElementById("moduleFrame");
+const moduleTitle = document.getElementById("moduleTitle");
+const closeModuleButton = document.getElementById("closeModule");
+const dashboardPage = document.getElementById("dashboardPage");
+let activeModuleLink = null;
+let previousOverflow = "";
+let previousInert = false;
+let frameDocument = null;
+
+function frameControls() {
+    try {
+        return Array.from(moduleFrame.contentDocument.querySelectorAll('a[href],button,input,select,textarea,[tabindex]')).filter(function(control) {
+            return !control.disabled && control.tabIndex >= 0 && control.getClientRects().length && !control.closest('[hidden],[inert]') && moduleFrame.contentWindow.getComputedStyle(control).visibility !== 'hidden';
+        });
+    } catch(error) { return []; }
+}
+function focusFrameBoundary(last) {
+    const controls = frameControls();
+    if (controls.length) controls[last ? controls.length - 1 : 0].focus();
+    else closeModuleButton.focus();
+}
+function clearFrameKeys() {
+    if (frameDocument) frameDocument.removeEventListener("keydown", handleFrameKeys, true);
+    frameDocument = null;
+}
+function closeModule() {
+    if (moduleModal.hidden) return;
+    try { if(moduleFrame.contentWindow.CareerAIDrafts && !moduleFrame.contentWindow.CareerAIDrafts.save()) { alert("Browser storage is full or unavailable. Copy your work before closing."); return; } } catch(error) { console.warn("Could not save module draft",error); }
+    clearFrameKeys();
+    moduleModal.hidden = true;
+    dashboardPage.inert = previousInert;
+    moduleFrame.src = "about:blank";
+    document.body.style.overflow = previousOverflow;
+    if(typeof refreshProgress === "function") refreshProgress();
+    if(typeof renderCareerCharts === "function") renderCareerCharts();
+    const returnTo = activeModuleLink && activeModuleLink.isConnected ? activeModuleLink : document.querySelector('#progressNext a') || document.getElementById("startJourney");
+    returnTo.focus();
+}
+function handleFrameKeys(event) {
+    if (moduleModal.hidden) return;
+    if (event.key === "Escape") {
+        event.preventDefault(); event.stopImmediatePropagation(); closeModule(); return;
+    }
+    if (event.key !== "Tab") return;
+    const controls = frameControls();
+    const index = controls.indexOf(frameDocument.activeElement);
+    if (!controls.length || index < 0 || event.shiftKey && index === 0 || !event.shiftKey && index === controls.length - 1) {
+        event.preventDefault(); closeModuleButton.focus();
+    }
+}
+moduleFrame.addEventListener("load", function() {
+    clearFrameKeys();
+    if (moduleModal.hidden) return;
+    try { frameDocument = moduleFrame.contentDocument; frameDocument.addEventListener("keydown", handleFrameKeys, true); } catch(error) { frameDocument = null; }
+});
+closeModuleButton.addEventListener("click", closeModule);
+document.addEventListener("keydown", function(event) {
+    if (moduleModal.hidden) return;
+    if (event.key === "Escape") { event.preventDefault(); closeModule(); }
+    else if (event.key === "Tab") { event.preventDefault(); focusFrameBoundary(event.shiftKey); }
+});
+document.addEventListener("focusin", function(event) {
+    if (!moduleModal.hidden && !moduleModal.contains(event.target)) closeModuleButton.focus();
+});
+document.addEventListener("click", function(event) {
+    const link = event.target.closest('a[href]');
+    if (!link || event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || link.target === '_blank' || link.hasAttribute('download')) return;
+    const target = new URL(link.href, window.location.href);
+    if (target.searchParams.get("journey") === "1" || target.origin !== window.location.origin || !target.pathname.toLowerCase().endsWith('.html') || target.pathname.toLowerCase().endsWith('/dashboard.html')) return;
+    event.preventDefault();
+    activeModuleLink = link;
+    previousOverflow = document.body.style.overflow;
+    previousInert = dashboardPage.inert;
+    moduleTitle.textContent = (link.querySelector('h4')?.textContent || link.innerText || "CareerAI tool").trim().replace(/\s+/g, " ");
+    moduleFrame.src = target.href;
+    moduleModal.hidden = false;
+    document.body.style.overflow = "hidden";
+    closeModuleButton.focus();
+    dashboardPage.inert = true;
+});
+</script>
+<script>
+function careerActivity() {
+    const analysis=CareerAI.read('careerAIResumeAnalysis',{}),quizzes=CareerAI.read('careerAIVerifiedSkills',{}),interview=CareerAI.read('careerAIInterviewReport',{}),lessons=CareerAI.read('careerAILearningProgress',{}),built=CareerAI.read('careerAIResumeBuilt',{});
+    return {analysis,quizzes,interview,lessons,built,hasInterview:!!(interview.savedAt||interview.createdAt||interview.totalAnswers||interview.answers?.length)};
+}
+function measuredValue(value) {
+    if (value === null || value === undefined || value === '') return null;
+    const number=Number(value); return Number.isFinite(number)?number:null;
+}
+function refreshProgress() {
+    const {analysis:a,quizzes:q,interview:r,lessons:l,built:b,hasInterview}=careerActivity();
+    const coverage=measuredValue(a.match_percentage);
+    document.getElementById('progressRole').textContent=CareerAI.role()?'Target role: '+CareerAI.role():'Choose a target role in Resume review to make your next steps more focused.';
+    const items=[['Resume review',a.job_role?(coverage===null?'Analysis saved':Math.round(coverage)+'% keyword coverage'):'Not started'],['Skill quizzes',Object.keys(q).length?Object.keys(q).length+' skills attempted':'Not started'],['Interview',hasInterview?'Report saved':'Not started'],['English lessons',Object.keys(l).length?Object.keys(l).length+' lessons attempted':'Not started'],['Resume builder',b.at?'Preview created':'Not started']];
+    const root=document.getElementById('progressItems');root.replaceChildren();
+    items.forEach(([title,value])=>{const box=document.createElement('div');box.className='progress-item';const strong=document.createElement('strong');strong.textContent=title;const p=document.createElement('p');p.textContent=value;box.append(strong,p);root.append(box)});
+    const next=document.getElementById('progressNext');next.replaceChildren();const link=document.createElement('a');link.href=!a.job_role?'resume_tools.html?feature=resume':!Object.keys(q).length?'resume_tools.html?feature=verification':!hasInterview?'interview_practice.html':'resume_builder.html';link.textContent=!a.job_role?'Next: review your resume →':!Object.keys(q).length?'Next: verify a skill →':!hasInterview?'Next: practise an interview →':'Next: refine your resume →';next.append(link);
+    if(typeof renderCareerCharts==='function')renderCareerCharts();
+}
+document.getElementById('clearProgress').onclick=()=>{if(confirm('Clear analysis, quizzes, interview feedback, lesson progress, and selected role on this device? Your resume draft will remain.')){['careerAIResumeAnalysis','careerAIVerifiedSkills','careerAIInterviewReport','careerAILearningProgress','careerAIResumeBuilt','careerAIProfile'].forEach(k=>localStorage.removeItem(k));sessionStorage.removeItem('resumeAnalysisData');refreshProgress()}};window.addEventListener('storage',refreshProgress);window.addEventListener('focus',refreshProgress);refreshProgress();
+</script>
+<script>const journey=CareerAI.read('careerAIJourney',{});if(Number.isInteger(journey.current)&&journey.current>0&&!journey.finishedAt){const routes=['resume_tools.html?feature=resume','resume_tools.html?feature=skill-gap','resume_tools.html?feature=verification','tutor.html','interview_practice.html','interview_analysis.html','resume_builder.html'];const i=Math.min(journey.current,6),link=document.getElementById('startJourney');link.href=routes[i]+(routes[i].includes('?')?'&':'?')+'journey=1';link.textContent='Resume your preparation · Step '+(i+1)+' →';}</script>
+<style>.career-charts{margin:28px 0}.career-charts h2{margin:0}.career-charts>div>p,.chart-note{color:#657187;font-size:13px}.charts-grid{display:grid;grid-template-columns:1fr 1.7fr;gap:16px;margin-top:16px}.chart-card{padding:22px;border:1px solid #e0e5ef;border-radius:18px;background:white}.chart-card h3{margin:0 0 16px}.chart-card svg{display:block;max-width:100%;margin:auto}.result-bar{margin-bottom:18px}.result-label{display:flex;justify-content:space-between;gap:12px;font-size:13px;margin-bottom:7px}.bar-track{height:11px;background:#edf0f6;border-radius:20px;overflow:hidden}.bar-fill{height:100%;background:linear-gradient(90deg,#6048d8,#4da7bd);border-radius:20px}.chart-empty{color:#77849a;font-size:12px}@media(max-width:650px){.charts-grid{grid-template-columns:1fr}}</style><script>
+function renderCareerCharts() {
+    const {analysis:a,quizzes,interview:r,lessons:learning,built,hasInterview}=careerActivity(),q=Object.values(quizzes),lessons=Object.values(learning);
+    const count=[!!a.job_role,q.length>0,hasInterview,lessons.length>0,!!built.at].filter(Boolean).length;
+    document.getElementById('dashboardEmpty').hidden=count>0;
+    document.getElementById('chartsGrid').hidden=count===0;
+    document.getElementById('savedDraftHint').hidden=!CareerAI.read('careerAIResumeDraft',null);
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 180 180');svg.setAttribute('width','180');svg.setAttribute('role','img');svg.setAttribute('aria-label',count+' of 5 activities have saved progress');
+    for(const color of ['#edf0f6','#6048d8']){const circle=document.createElementNS(svg.namespaceURI,'circle');circle.setAttribute('cx','90');circle.setAttribute('cy','90');circle.setAttribute('r','70');circle.setAttribute('fill','none');circle.setAttribute('stroke',color);circle.setAttribute('stroke-width','15');if(color!=='#edf0f6'){circle.setAttribute('stroke-dasharray',(count/5*440)+' 440');circle.setAttribute('transform','rotate(-90 90 90)')}svg.append(circle)}
+    const text=document.createElementNS(svg.namespaceURI,'text');text.setAttribute('x','90');text.setAttribute('y','99');text.setAttribute('text-anchor','middle');text.setAttribute('fill','#263650');text.setAttribute('font-size','28');text.setAttribute('font-family','Segoe UI,sans-serif');text.textContent=count+'/5';svg.append(text);document.getElementById('activityDonut').replaceChildren(svg);document.getElementById('activityCaption').textContent='Activities with saved progress';
+    const total=q.reduce((n,x)=>n+(Number(x?.total)||0),0),correct=q.reduce((n,x)=>n+(Number(x?.score)||0),0),attempts=lessons.reduce((n,x)=>n+(Number(x?.attempts)||0),0),good=lessons.reduce((n,x)=>n+(Number(x?.correct)||0),0),interviewScore=measuredValue(r.averageScore);
+    const metrics=[['Resume keyword coverage',a.job_role?measuredValue(a.match_percentage):null],['Skill quiz accuracy',total?correct/total*100:null],['Interview answer structure',hasInterview&&interviewScore!==null?interviewScore*10:null],['English quiz accuracy',attempts?good/attempts*100:null]];
+    const bars=document.getElementById('resultBars');bars.replaceChildren();
+    metrics.forEach(([title,value])=>{const item=document.createElement('div');item.className='result-bar';const label=document.createElement('div');label.className='result-label';const name=document.createElement('span');name.textContent=title;const result=document.createElement('strong');result.textContent=value===null?'No results yet':Math.round(value)+'%';label.append(name,result);if(value!==null){const track=document.createElement('div');track.className='bar-track';track.setAttribute('role','img');track.setAttribute('aria-label',title+': '+Math.round(value)+' percent');const fill=document.createElement('div');fill.className='bar-fill';fill.style.width=Math.max(0,Math.min(100,value))+'%';track.append(fill);item.append(label,track)}else item.append(label);bars.append(item)});
+}
+renderCareerCharts();window.addEventListener('storage',renderCareerCharts);window.addEventListener('focus',renderCareerCharts);
+</script>
+<script src="correction-support.js"></script>
+</body>
+</html>

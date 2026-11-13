@@ -1,0 +1,798 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="careerai-api-base" content="https://careerai-project-vca7.onrender.com">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Resume & Career Preparation System</title>
+
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#080b1a;--panel:#111831;--panel2:#171f3e;
+  --purple:#8b5cf6;--blue:#38bdf8;--text:#eef2ff;
+  --muted:#a8b3d1;--border:rgba(148,163,255,.2);
+}
+body{
+  margin:0;font-family:Arial,sans-serif;
+  background:radial-gradient(ellipse at top,#20245a 0%,#0b1025 42%,var(--bg) 100%);
+  color:var(--text);min-height:100vh;
+}
+header{
+  text-align:center;padding:35px 20px;
+  background:linear-gradient(135deg,#171b46,#38216b,#132b55);
+  border-bottom:1px solid var(--border);
+  box-shadow:0 12px 40px #0006;
+}
+header h1{margin:0;font-size:clamp(24px,4vw,36px);letter-spacing:.5px}
+header p{color:#c4cafa;margin:12px 0 0}
+.container{width:92%;max-width:1100px;margin:30px auto 60px}
+.card{
+  background:linear-gradient(145deg,rgba(24,33,65,.97),rgba(13,19,42,.97));
+  border:1px solid var(--border);padding:26px;margin-bottom:24px;
+  border-radius:18px;box-shadow:0 15px 35px #0005, inset 0 1px #ffffff0b;
+  transition:transform .25s,border-color .25s,box-shadow .25s;
+}
+.card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(139,92,246,.65);
+  box-shadow:0 20px 42px #0007,0 0 22px #8b5cf622;
+}
+h2{color:#c4b5fd;margin-top:0}
+h3{color:#93c5fd;margin-top:24px}
+p{line-height:1.6}
+label{font-weight:bold;display:block;margin-top:17px;margin-bottom:8px;color:#dbe4ff}
+input[type=file],input[type=text],select,textarea{
+  width:100%;padding:13px;border:1px solid #39466f;border-radius:10px;
+  font-size:15px;background:#0b1229;color:var(--text);outline:none;
+}
+input:focus,select:focus,textarea:focus{
+  border-color:var(--purple);box-shadow:0 0 0 3px #8b5cf626;
+}
+input[type=file]{cursor:pointer}
+textarea{resize:vertical;min-height:150px;font-family:inherit;line-height:1.5}
+button{
+  background:linear-gradient(135deg,#8b5cf6,#6366f1);
+  color:white;border:1px solid #a78bfa66;padding:12px 19px;
+  border-radius:10px;cursor:pointer;font-size:15px;font-weight:bold;
+  margin-top:16px;box-shadow:0 6px 18px #6366f133;
+  transition:transform .2s,filter .2s;
+}
+button:hover{filter:brightness(1.15);transform:translateY(-2px)}
+button:disabled{opacity:.6;cursor:wait;transform:none}
+.career-btn{background:linear-gradient(135deg,#0ea5e9,#6366f1)}
+.result-box{
+  background:linear-gradient(135deg,#16264a,#20204b);
+  border:1px solid #5263a6;padding:16px;margin-top:16px;border-radius:12px;
+}
+.skill{
+  display:inline-block;background:#202952;color:#c4b5fd;
+  border:1px solid #6655a566;padding:8px 12px;border-radius:20px;
+  margin:5px;font-size:14px;
+}
+.missing{background:#401e38;color:#fda4af;border-color:#be456b66}
+.recommendation{
+  background:#121e3a;padding:15px;margin:10px 0;border-radius:11px;
+  border-left:4px solid var(--blue);border-top:1px solid #ffffff0c;
+}
+.question{
+  background:linear-gradient(145deg,#151f40,#10172f);
+  border:1px solid var(--border);padding:18px;margin:15px 0;border-radius:13px;
+}
+.question-title{font-weight:bold;margin-bottom:12px;color:#e0e7ff}
+.quiz-option{
+  display:flex;align-items:center;gap:10px;background:#0c142b;
+  border:1px solid #344165;padding:12px;margin:8px 0;
+  border-radius:9px;cursor:pointer;font-weight:normal;transition:.2s;
+}
+.quiz-option:hover{background:#20234b;border-color:var(--purple)}
+.quiz-option input[type=radio]{width:18px;height:18px;margin:0;accent-color:#8b5cf6}
+.option-letter{font-weight:bold;color:#a78bfa;min-width:22px}
+.career-result{
+  background:linear-gradient(135deg,#172747,#252052);
+  border:1px solid #6555a566;padding:14px;margin:9px 0;border-radius:10px;
+}
+.hidden{display:none!important}
+.success{color:#4ade80;font-weight:bold}
+.error{color:#fca5a5;font-weight:bold}
+.score{font-size:23px;font-weight:bold;color:#c4b5fd}
+#fileStatus,#analysisStatus{color:var(--muted)}
+#skillGapNotice{border-color:#a78bfa88}
+ul{padding-left:25px}
+@media(max-width:600px){
+  header{padding:26px 15px}
+  .container{width:94%;margin:18px auto}
+  .card{padding:19px;border-radius:14px}
+  button{max-width:100%}
+}
+.privacy-note{margin:8px 0 14px;color:var(--muted);font-size:12px;line-height:1.5}
+.comparison-note{color:var(--muted);font-size:14px}
+.review-checks{list-style:none;padding:0}
+.review-checks li{padding:10px 0;border-bottom:1px solid var(--border)}
+.review-checks p{margin:4px 0 0;color:var(--muted)}
+.keyword-evidence{margin-top:18px}
+.keyword-evidence summary{cursor:pointer;color:#c4b5fd;padding:8px 0}
+.keyword-evidence article{padding:10px 0;border-top:1px solid var(--border)}
+.keyword-evidence blockquote{margin:6px 0 12px;padding:8px 12px;border-left:3px solid #6555a5;color:#dbe4ff;white-space:pre-wrap}
+</style>
+<style>
+button,a,input,select,textarea{touch-action:manipulation}input,select,textarea{font-size:16px}button{min-height:44px}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #8c78ed;outline-offset:3px}img,video{max-width:100%}body{overflow-wrap:break-word}@media(max-width:600px){input,select,textarea{max-width:100%}.module-modal{padding:0!important}.module-shell{width:100%!important;height:100dvh!important;max-height:none!important;border-radius:0!important}.module-frame{min-height:0}button{white-space:normal}}@media print{.career-progress{display:none!important}}
+</style><script>
+window.CareerAI={read:function(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}},write:function(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}},role:function(){return this.read('careerAIProfile',{}).role||this.read('careerAIResumeAnalysis',{}).job_role||''},setRole:function(role){if(!role.trim())return;var p=this.read('careerAIProfile',{});p.role=role.trim();p.updatedAt=new Date().toISOString();this.write('careerAIProfile',p)}};
+</script>
+<script src="./career-api.js"></script>
+</head>
+
+<body>
+<header>
+<h1>AI Resume & Career Preparation System</h1>
+<p>Resume Analysis • Skill Gap • Learning • Skill Verification • Career Path</p>
+</header>
+
+<div class="container">
+
+<div class="card" id="resumeAnalysisSection">
+<h2>01 · Resume Analysis</h2>
+<p>Upload your resume and enter your target job role to evaluate your skills.</p>
+
+<label for="resumeFile">Select Resume PDF</label>
+<input type="file" id="resumeFile" accept=".pdf,application/pdf">
+<p class="privacy-note">Your PDF is sent to this site for analysis. Full PDF and pasted description are not stored by CareerAI; comparison results save on this device.</p>
+
+<label for="jobRole">Enter Job Role</label>
+<input type="text" id="jobRole" placeholder="Example: Web Developer">
+
+<label for="jobDescription">Paste a Job Description <span class="comparison-note">(optional)</span></label>
+<textarea id="jobDescription" maxlength="20000" rows="6" placeholder="Paste the role description to compare its recognized skill keywords with your resume." aria-describedby="jobDescriptionNote"></textarea>
+<p id="jobDescriptionNote" class="privacy-note">The pasted description is sent for keyword comparison and is not saved in this browser. Use 40–20,000 characters. Short comparison excerpts are shown only for this request.</p>
+
+<button id="analyzeButton" onclick="analyzeResume()">Analyze Resume</button>
+<p id="fileStatus"></p>
+<p id="analysisStatus" aria-live="polite"></p>
+</div>
+
+<div id="skillGapNotice" class="card hidden">
+<h2 id="noticeTitle">Skill Gap & Learning</h2>
+<p id="skillGapMessage">Analyze your resume to see your results.</p>
+<button onclick="goToResume()">Analyze My Resume</button>
+</div>
+
+<div id="analysisSection" class="card hidden">
+<h2>Resume Analysis Results</h2>
+
+<div class="result-box">
+<p><strong>File:</strong> <span id="resultFile"></span></p>
+<p><strong>Job Role:</strong> <span id="resultRole"></span></p>
+<p><strong>Role skill match:</strong> <span id="matchPercentage"></span>%</p>
+<p class="comparison-note">This compares detected skills with the selected role’s skill list. The optional pasted-description comparison appears separately below.</p>
+</div>
+
+<section id="resumeReviewSection" class="result-box hidden" aria-labelledby="resumeReviewTitle">
+<h3 id="resumeReviewTitle">PDF readability &amp; common sections</h3>
+<div id="resumeReviewContent"></div>
+</section>
+
+<section id="jobDescriptionMatchSection" class="result-box hidden" aria-labelledby="jobDescriptionMatchTitle">
+<h3 id="jobDescriptionMatchTitle">Pasted job description · keyword comparison</h3>
+<div id="jobDescriptionMatchContent"></div>
+</section>
+
+<h3>Required Skills</h3>
+<div id="requiredSkills"></div>
+<h3>Detected Skills</h3>
+<div id="detectedSkills"></div>
+<p><a href="correction_map.html">Wrong skill detected? Preview a correction →</a></p>
+<h3>Skill Gap</h3>
+<div id="skillGap"></div>
+<h3>Learning Recommendations</h3>
+<div id="learningRecommendations"></div>
+</div>
+
+<div class="card" id="careerPathSection">
+<h2>02 · Not Sure? Find My Career Path</h2>
+<p>Answer these questions to explore career roles that may suit your interests.</p>
+
+<label for="interest">What are you interested in?</label>
+<select id="interest">
+<option value="">Select</option>
+<option value="coding">Coding</option><option value="data">Data</option>
+<option value="ai">Artificial Intelligence</option>
+<option value="security">Cyber Security</option><option value="design">Design</option>
+<option value="business">Business</option><option value="marketing">Marketing</option>
+<option value="cloud">Cloud</option>
+</select>
+
+<label for="workType">What type of work do you prefer?</label>
+<select id="workType">
+<option value="">Select</option><option value="building">Building Applications</option>
+<option value="analysis">Analysis</option><option value="problem">Problem Solving</option>
+<option value="creative">Creative Work</option><option value="communication">Communication</option>
+</select>
+
+<label for="skillPreference">Which skill area do you prefer?</label>
+<select id="skillPreference">
+<option value="">Select</option><option value="programming">Programming</option>
+<option value="database">Database</option><option value="statistics">Statistics</option>
+<option value="security">Security</option><option value="design">Design</option>
+<option value="communication">Communication</option>
+</select>
+
+<label for="careerPreference">What type of career do you prefer?</label>
+<select id="careerPreference">
+<option value="">Select</option><option value="technical">Technical</option>
+<option value="creative">Creative</option><option value="analytical">Analytical</option>
+<option value="business">Business</option>
+</select>
+
+<button class="career-btn" onclick="findCareerPath()">Find My Career Path</button>
+<div id="careerResults"></div>
+</div>
+
+<div class="card hidden" id="verificationSection">
+<h2>03 · Skill Verification</h2>
+<p>Choose a skill and complete a short quiz to check your knowledge.</p>
+
+<label for="verificationSkill">Select Skill</label>
+<select id="verificationSkill"><option value="">Select a skill</option></select>
+
+<button onclick="loadSkillQuestions()">Start Skill Verification</button>
+<div id="questionsContainer"></div>
+<button id="submitQuizButton" class="hidden" onclick="submitSkillQuiz()">Submit Answers</button>
+<div id="verificationResult" aria-live="polite"></div>
+</div>
+
+</div>
+
+<script>
+const BACKEND_URL = CareerAIAPI.origin;
+document.getElementById("jobRole").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        analyzeResume();
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const params = new URLSearchParams(window.location.search);
+    const feature = params.get("feature");
+
+    if (feature === "skill-gap") showFeature("skill-gap");
+    else if (feature === "verification") showFeature("verification");
+    else if (feature === "career-path") {
+        document.getElementById("careerPathSection").scrollIntoView({behavior:"smooth"});
+    } else if (feature === "resume" || feature === "job-role") {
+        goToResume();
+    }
+});
+
+function showFeature(feature) {
+    const analysis = document.getElementById("analysisSection");
+    const notice = document.getElementById("skillGapNotice");
+    const verification = document.getElementById("verificationSection");
+    notice.classList.add("hidden");
+
+    if (feature === "skill-gap") {
+        if (!analysis.classList.contains("hidden")) {
+            analysis.scrollIntoView({behavior:"smooth"});
+        } else {
+            document.getElementById("noticeTitle").textContent = "Skill Gap & Learning";
+            document.getElementById("skillGapMessage").textContent =
+                "Analyze your resume first to discover missing skills and learning recommendations.";
+            notice.classList.remove("hidden");
+            notice.scrollIntoView({behavior:"smooth"});
+        }
+    }
+
+    if (feature === "verification") {
+        if (!verification.classList.contains("hidden")) {
+            verification.scrollIntoView({behavior:"smooth"});
+        } else {
+            document.getElementById("noticeTitle").textContent = "Skill Verification";
+            document.getElementById("skillGapMessage").textContent =
+                "Analyze your resume first. Your detected and missing skills will then be available for verification.";
+            notice.classList.remove("hidden");
+            notice.scrollIntoView({behavior:"smooth"});
+        }
+    }
+}
+
+function goToResume() {
+    document.getElementById("resumeAnalysisSection").scrollIntoView({behavior:"smooth"});
+}
+
+
+function showResumeQuality(data){
+ let box=document.getElementById('resumeQuality');if(!box){box=document.createElement('section');box.id='resumeQuality';box.className='result-box';document.getElementById('analysisSection').append(box)}box.replaceChildren();
+ const q=data.quality_feedback;if(!q)return;const h=document.createElement('h3');h.textContent='Strengthen your resume';box.append(h);
+ const list=document.createElement('ul');Object.entries(q.sections||{}).forEach(([name,found])=>{const li=document.createElement('li');li.textContent=(found?'✓ Found: ':'○ Check: ')+name;list.append(li)});(q.improvements||[]).forEach(t=>{const li=document.createElement('li');li.textContent=t;list.append(li)});box.append(list);const note=document.createElement('p');note.textContent=q.note;box.append(note);
+ const links=document.createElement('p');for(const [url,title] of [['interview_practice.html','Practise this role'],['resume_builder.html','Improve my resume']]){const a=document.createElement('a');a.href=url;a.textContent=title;a.style.marginRight='20px';links.append(a)}box.append(links);
+}
+
+function appendResultText(parent, tag, text, className) {
+    const element = document.createElement(tag);
+    element.textContent = text;
+    if (className) element.className = className;
+    parent.append(element);
+    return element;
+}
+
+function displayResumeReview(review) {
+    const section = document.getElementById("resumeReviewSection");
+    const content = document.getElementById("resumeReviewContent");
+    content.replaceChildren();
+    section.classList.toggle("hidden", !review);
+    if (!review) return;
+
+    const checks = Array.isArray(review.checks) ? review.checks : [];
+    const passed = Number.isInteger(review.passed_count) ? review.passed_count : checks.filter(check => check.passed === true).length;
+    const total = Number.isInteger(review.total_checks) ? review.total_checks : checks.length;
+    appendResultText(content, "p", passed + " of " + total + " basic checks passed.");
+    const list = document.createElement("ul");
+    list.className = "review-checks";
+    checks.forEach(check => {
+        const item = document.createElement("li");
+        appendResultText(item, "strong", (check.passed === true ? "✓ Found: " : "○ Check: ") + (check.label || "Resume check"));
+        if (check.detail) appendResultText(item, "p", check.detail);
+        list.append(item);
+    });
+    content.append(list);
+    appendResultText(content, "p", review.note || "These checks inspect extracted text and common section labels. They do not guarantee how a hiring system reads the PDF layout.", "comparison-note");
+}
+
+function displayJobDescriptionMatch(comparison) {
+    const section = document.getElementById("jobDescriptionMatchSection");
+    const content = document.getElementById("jobDescriptionMatchContent");
+    content.replaceChildren();
+    section.classList.toggle("hidden", !comparison);
+    if (!comparison) return;
+
+    const recognized = Array.isArray(comparison.recognized_skills) ? comparison.recognized_skills : [];
+    const matched = Array.isArray(comparison.matched_skills) ? comparison.matched_skills : [];
+    const missing = Array.isArray(comparison.missing_skills) ? comparison.missing_skills : [];
+    const matchedCount = Number.isInteger(comparison.matched_count) ? comparison.matched_count : matched.length;
+    const total = Number.isInteger(comparison.total_recognized) ? comparison.total_recognized : recognized.length;
+    const percentage = typeof comparison.coverage_percentage === "number" && Number.isFinite(comparison.coverage_percentage) ? comparison.coverage_percentage : null;
+    appendResultText(content, "p", percentage === null
+        ? "Keyword coverage unavailable · " + matchedCount + " of " + total + " recognized job-description skill keywords found in the resume."
+        : "Keyword coverage: " + percentage + "% · " + matchedCount + " of " + total + " recognized job-description skill keywords found in the resume.", "score");
+    appendResultText(content, "p", "Based on text extracted from the uploaded PDF. Skill-list corrections do not change this PDF comparison; analyse an updated PDF to compare again.", "comparison-note");
+    appendResultText(content, "p", "Only recognized skill keywords in the pasted description form this denominator. This comparison is separate from the role skill match above.", "comparison-note");
+
+    [["Matched keywords", matched, false], ["Keywords not found in the resume", missing, true]].forEach(([title, terms, isMissing]) => {
+        appendResultText(content, "h4", title);
+        const group = document.createElement("div");
+        if (!terms.length) appendResultText(group, "p", isMissing ? "No missing recognized keywords." : "No matching recognized keywords.");
+        terms.forEach(term => appendResultText(group, "span", term, isMissing ? "skill missing" : "skill"));
+        content.append(group);
+    });
+    if (comparison.method) appendResultText(content, "p", "Method: " + comparison.method, "comparison-note");
+    appendResultText(content, "p", comparison.limitations || "Keyword presence does not assess experience level, context, overall job fit, or hiring-system compatibility.", "comparison-note");
+
+    const evidence = Array.isArray(comparison.keyword_evidence) ? comparison.keyword_evidence : [];
+    if (evidence.length) {
+        const details = document.createElement("details");
+        details.className = "keyword-evidence";
+        appendResultText(details, "summary", "View keyword evidence excerpts");
+        evidence.forEach(entry => {
+            const article = document.createElement("article");
+            appendResultText(article, "h4", entry.skill || "Keyword");
+            appendResultText(article, "strong", "Pasted job description");
+            appendResultText(article, "blockquote", entry.job_description_excerpt || "No excerpt available.");
+            appendResultText(article, "strong", "Resume");
+            appendResultText(article, "blockquote", entry.resume_excerpt || "This keyword was not found in the extracted resume text.");
+            details.append(article);
+        });
+        content.append(details);
+        appendResultText(content, "p", "These short excerpts are visible for this request only and are not saved with your results.", "comparison-note");
+    } else if (!Object.prototype.hasOwnProperty.call(comparison, "keyword_evidence")) {
+        appendResultText(content, "p", "Saved comparison results exclude PDF and job-description excerpts. Analyze again with your PDF and pasted description to view them.", "comparison-note");
+    }
+}
+
+function analysisMetadataForStorage(data) {
+    const saved = {...data};
+    if (data.job_description_match) {
+        saved.job_description_match = {...data.job_description_match};
+        delete saved.job_description_match.keyword_evidence;
+    }
+    return saved;
+}
+
+const savedRole=CareerAI.role();if(savedRole&&!document.getElementById('jobRole').value)document.getElementById('jobRole').value=savedRole;
+document.getElementById('jobRole').addEventListener('change',e=>CareerAI.setRole(e.target.value));
+
+async function analyzeResume() {
+    const fileInput = document.getElementById("resumeFile");
+    const jobRoleInput = document.getElementById("jobRole");
+    const file = fileInput.files[0];
+    const jobRole = jobRoleInput.value.trim();
+    const jobDescription = document.getElementById("jobDescription").value.trim();
+    const status = document.getElementById("analysisStatus");
+    const button = document.getElementById("analyzeButton");
+
+    if (button.disabled) return;
+    if (!file) { alert("Please select a PDF resume."); return; }
+    if (!file.name.toLowerCase().endsWith(".pdf")) {
+        alert("Please select a PDF file."); return;
+    }
+    if (file.size > 10 * 1024 * 1024) { alert("Please select a PDF no larger than 10 MB."); return; }
+    if (!jobRole) { alert("Please enter the job role."); return; }
+    if (jobDescription && jobDescription.length < 40) { alert("Please paste at least 40 characters of the job description, or leave it blank."); return; }
+    if (jobDescription.length > 20000) { alert("Please keep the job description within 20,000 characters."); return; }
+
+    const formData = new FormData();
+    formData.append("resume", file);
+    formData.append("job_role", jobRole);
+    if (jobDescription) formData.append("job_description", jobDescription);
+    status.textContent = jobDescription ? "Uploading and analyzing your resume, then comparing the pasted job description..." : "Uploading and analyzing your resume...";
+    status.className = "";
+    button.disabled = true;
+    const startedAt = Date.now();
+    const loadingInterval = setInterval(() => {
+        if (Date.now() - startedAt >= 12000) {
+            status.textContent = "Server may be waking... Your request is still in progress. Keep this page open.";
+        }
+    }, 1000);
+
+    try {
+        const response = await fetch(BACKEND_URL + "/analyze", {
+            method:"POST", body:formData
+        });
+        const data = await response.json();
+
+        if (!response.ok || data.status !== "success") {
+            status.textContent = data.message || "Resume analysis failed.";
+            status.className = "error";
+            return;
+        }
+
+        status.textContent = "Resume analyzed successfully!";
+        status.className = "success";
+        document.getElementById("analysisSection").classList.remove("hidden");
+        document.getElementById("skillGapNotice").classList.add("hidden");
+        document.getElementById("resultFile").textContent = data.file_name || file.name;
+        document.getElementById("resultRole").textContent = data.job_role || jobRole;
+        document.getElementById("matchPercentage").textContent = data.match_percentage ?? 0;
+
+        displaySkills("requiredSkills", data.required_skills || []);
+        displaySkills("detectedSkills", data.detected_skills || []);
+        displaySkillGap(data.skill_gap || []);
+        displayRecommendations(data.learning_recommendations || []);
+        displayResumeReview(data.resume_review || null);
+        displayJobDescriptionMatch(data.job_description_match || null);
+
+        setupSkillVerification([...(data.detected_skills || []), ...(data.skill_gap || [])]);
+        const savedData = analysisMetadataForStorage(data);
+        try { sessionStorage.setItem("resumeAnalysisData", JSON.stringify(savedData)); } catch (_) {}
+        const persisted = CareerAI.write("careerAIResumeAnalysis", savedData);
+        CareerAI.setRole(data.job_role || ""); showResumeQuality(data);
+        if (!persisted) {
+            status.textContent = "Analysis is ready below. Browser storage is unavailable or full, so these results could not be saved on this device.";
+            status.className = "error";
+        }
+    } catch (error) {
+        console.error(error);
+        status.textContent = "The server could not finish the request. It may be waking up. Please wait a minute and try again; your previous results are unchanged.";
+        status.className = "error";
+    } finally {
+        clearInterval(loadingInterval);
+        button.disabled = false;
+    }
+}
+
+function restoreAnalysis() {
+    let saved = null;
+    try { saved = sessionStorage.getItem("resumeAnalysisData"); } catch (_) {}
+    if (!saved) { try { saved = localStorage.getItem("careerAIResumeAnalysis"); } catch (_) {} }
+    if (!saved) return;
+    try {
+        const data = analysisMetadataForStorage(JSON.parse(saved));
+        try { sessionStorage.setItem("resumeAnalysisData", JSON.stringify(data)); } catch (_) {}
+        CareerAI.write("careerAIResumeAnalysis", data);
+        CareerAI.setRole(data.job_role || ""); showResumeQuality(data);
+        document.getElementById("analysisSection").classList.remove("hidden");
+        document.getElementById("resultFile").textContent = data.file_name || "";
+        document.getElementById("resultRole").textContent = data.job_role || "";
+        document.getElementById("matchPercentage").textContent = data.match_percentage ?? 0;
+        displaySkills("requiredSkills", data.required_skills || []);
+        displaySkills("detectedSkills", data.detected_skills || []);
+        displaySkillGap(data.skill_gap || []);
+        displayRecommendations(data.learning_recommendations || []);
+        displayResumeReview(data.resume_review || null);
+        displayJobDescriptionMatch(data.job_description_match || null);
+        setupSkillVerification([...(data.detected_skills || []), ...(data.skill_gap || [])]);
+    } catch (error) {
+        console.error("Could not restore saved analysis", error);
+    }
+}
+restoreAnalysis();
+
+function displaySkills(elementId, skills) {
+    const container = document.getElementById(elementId);
+    container.innerHTML = "";
+    if (!skills.length) { container.textContent = "No skills detected."; return; }
+    skills.forEach(skill => {
+        const span = document.createElement("span");
+        span.className = "skill";
+        span.textContent = skill;
+        container.appendChild(span);
+    });
+}
+
+function displaySkillGap(skills) {
+    const container = document.getElementById("skillGap");
+    container.innerHTML = "";
+    if (!skills.length) {
+        const p = document.createElement("p");
+        p.className = "success";
+        p.textContent = "No major skill gap found.";
+        container.appendChild(p);
+        return;
+    }
+    skills.forEach(skill => {
+        const span = document.createElement("span");
+        span.className = "skill missing";
+        span.textContent = skill;
+        container.appendChild(span);
+    });
+}
+
+function displayRecommendations(recommendations) {
+    const container = document.getElementById("learningRecommendations");
+    container.innerHTML = "";
+    if (!recommendations.length) {
+        container.textContent = "No learning recommendations available.";
+        return;
+    }
+    recommendations.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "recommendation";
+        const title = document.createElement("strong");
+        title.textContent = item.skill || "Recommended skill";
+        const description = document.createElement("p");
+        description.textContent = item.recommendation || "";
+        div.append(title, description);
+        container.appendChild(div);
+    });
+}
+
+function findCareerPath() {
+    const interest = document.getElementById("interest").value;
+    const workType = document.getElementById("workType").value;
+    const skillPreference = document.getElementById("skillPreference").value;
+    const careerPreference = document.getElementById("careerPreference").value;
+
+    if (!interest || !workType || !skillPreference || !careerPreference) {
+        alert("Please answer all questions."); return;
+    }
+
+    let careers = [];
+    if (interest === "coding" || skillPreference === "programming")
+        careers.push("Software Developer", "Full Stack Developer");
+    if (interest === "data" || skillPreference === "statistics")
+        careers.push("Data Analyst", "Data Scientist");
+    if (interest === "ai") careers.push("AI Engineer", "Machine Learning Engineer");
+    if (interest === "security" || skillPreference === "security")
+        careers.push("Cyber Security Analyst");
+    if (interest === "design" || skillPreference === "design") careers.push("UI/UX Designer");
+    if (interest === "business" || careerPreference === "business") careers.push("Business Analyst");
+    if (interest === "marketing") careers.push("Digital Marketing Specialist");
+    if (interest === "cloud") careers.push("Cloud Engineer", "DevOps Engineer");
+    if (workType === "analysis" || careerPreference === "analytical")
+        careers.push("Data Analyst", "Business Analyst");
+    if (workType === "problem") careers.push("Software Developer", "Cyber Security Analyst");
+    if (workType === "creative" || careerPreference === "creative") careers.push("UI/UX Designer");
+    if (workType === "building") careers.push("Software Developer");
+
+    careers = [...new Set(careers)].slice(0, 5);
+    const container = document.getElementById("careerResults");
+    container.innerHTML = "";
+    const heading = document.createElement("h3");
+    heading.textContent = "Suggested Career Paths";
+    container.appendChild(heading);
+
+    careers.forEach(career => {
+        const div = document.createElement("div");
+        div.className = "career-result";
+        div.textContent = career;
+        container.appendChild(div);
+    });
+}
+
+function setupSkillVerification(skills) {
+    const section = document.getElementById("verificationSection");
+    const dropdown = document.getElementById("verificationSkill");
+    dropdown.innerHTML = '<option value="">Select a skill</option>';
+    skills = [...new Set(skills)];
+    skills.forEach(skill => {
+        const option = document.createElement("option");
+        option.value = skill;
+        option.textContent = skill;
+        dropdown.appendChild(option);
+    });
+    if (skills.length) section.classList.remove("hidden");
+}
+
+async function loadSkillQuestions() {
+    const skill = document.getElementById("verificationSkill").value;
+    if (!skill) { alert("Please select a skill."); return; }
+
+    currentSkill = skill;
+    document.getElementById("questionsContainer").textContent = "Loading questions...";
+    document.getElementById("verificationResult").innerHTML = "";
+    document.getElementById("submitQuizButton").classList.add("hidden");
+
+    try {
+        const response = await fetch(BACKEND_URL + "/skill-questions", {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({skill:skill})
+        });
+        const data = await response.json();
+        if (!response.ok || data.status !== "success") {
+            document.getElementById("questionsContainer").textContent =
+                data.message || "Could not load questions.";
+            return;
+        }
+        currentQuestions = data.questions || [];
+        displayQuestions(currentQuestions);
+        document.getElementById("submitQuizButton").classList.remove("hidden");
+    } catch (error) {
+        console.error(error);
+        document.getElementById("questionsContainer").textContent =
+            "Could not load questions. Check that app.py is running.";
+    }
+}
+
+function displayQuestions(questions) {
+    const container = document.getElementById("questionsContainer");
+    container.innerHTML = "";
+    const letters = ["A","B","C","D"];
+
+    questions.forEach((question, questionIndex) => {
+        const questionDiv = document.createElement("div");
+        questionDiv.className = "question";
+        const title = document.createElement("div");
+        title.className = "question-title";
+        title.textContent = (questionIndex + 1) + ". " + question.question;
+        questionDiv.appendChild(title);
+
+        (question.options || []).forEach((option, optionIndex) => {
+            const label = document.createElement("label");
+            label.className = "quiz-option";
+            const radio = document.createElement("input");
+            radio.type = "radio";
+            radio.name = "question_" + questionIndex;
+            radio.value = option;
+            const letter = document.createElement("span");
+            letter.className = "option-letter";
+            letter.textContent = (letters[optionIndex] || "") + ")";
+            const optionText = document.createElement("span");
+            optionText.textContent = option;
+            label.append(radio, letter, optionText);
+            questionDiv.appendChild(label);
+        });
+        container.appendChild(questionDiv);
+    });
+}
+
+async function submitSkillQuiz() {
+    const answers = [];
+    for (let i = 0; i < currentQuestions.length; i++) {
+        const selected = document.querySelector('input[name="question_' + i + '"]:checked');
+        if (!selected) { alert("Please answer question " + (i + 1) + "."); return; }
+        answers.push(selected.value);
+    }
+
+    try {
+        const response = await fetch(BACKEND_URL + "/verify-skill", {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({skill:currentSkill, answers:answers})
+        });
+        const data = await response.json();
+        if (!response.ok || data.status !== "success") {
+            document.getElementById("verificationResult").textContent =
+                data.message || "Could not verify skill.";
+            return;
+        }
+
+        const result = document.getElementById("verificationResult");
+        let savedQuizResults = {};
+        try { savedQuizResults = JSON.parse(localStorage.getItem("careerAIVerifiedSkills") || "{}"); } catch (_) {}
+        savedQuizResults[data.skill] = {
+            skill: data.skill,
+            score: data.score,
+            total: data.total,
+            percentage: data.percentage,
+            result: data.result,
+            savedAt: new Date().toISOString()
+        };
+        localStorage.setItem("careerAIVerifiedSkills", JSON.stringify(savedQuizResults));
+        result.innerHTML = "";
+        const box = document.createElement("div");
+        box.className = "result-box";
+        const heading = document.createElement("h3");
+        heading.textContent = "Skill Verification Result";
+        const skill = document.createElement("p");
+        skill.textContent = "Skill: " + data.skill;
+        const score = document.createElement("p");
+        score.className = "score";
+        score.textContent = data.score + " / " + data.total;
+        const percentage = document.createElement("p");
+        percentage.textContent = "Percentage: " + data.percentage + "%";
+        const outcome = document.createElement("p");
+        outcome.textContent = "Result: " + data.result;
+        box.append(heading, skill, score, percentage, outcome);
+        result.appendChild(box);
+    } catch (error) {
+        console.error(error);
+        document.getElementById("verificationResult").textContent =
+            "Could not verify skill. Check that app.py is running.";
+    }
+}
+</script>
+
+<style data-career-journey>
+.journey-bar{width:min(1180px,calc(100% - 32px));margin:20px auto;padding:20px;border:1px solid #dddff0;border-radius:16px;background:white;color:#20243a;font:15px/1.5 'Segoe UI',sans-serif}.journey-bar h2{margin:0 0 6px;font-size:21px}.journey-track{display:flex;gap:8px;overflow-x:auto;list-style:none;padding:0 0 8px;margin:14px 0}.journey-track li{white-space:nowrap;padding:6px 10px;border-radius:20px;background:#f1f2f7;font-size:12px}.journey-track li[aria-current]{background:#6048d8;color:white}.journey-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.journey-actions a,.journey-actions button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 15px;border:1px solid #d7dbeb;border-radius:9px;background:white;color:#39405a;text-decoration:none;font:600 14px 'Segoe UI',sans-serif;cursor:pointer}.journey-actions .journey-next{background:#6048d8;color:white}.journey-actions button:disabled{opacity:.55;cursor:not-allowed}.journey-hint{margin:10px 0;color:#616a80;font-size:13px}body.journey-resume #careerPathSection,body.journey-resume #verificationSection,body.journey-resume #analysisSection,body.journey-results #resumeAnalysisSection,body.journey-results #careerPathSection,body.journey-results #verificationSection,body.journey-quiz #resumeAnalysisSection,body.journey-quiz #analysisSection,body.journey-quiz #careerPathSection{display:none!important}.journey-bottom{margin-top:20px;margin-bottom:32px}@media print{.journey-bar{display:none!important}}@media(max-width:550px){.journey-bar{padding:16px}.journey-actions .journey-next{flex:1}}
+</style>
+<script data-career-journey>
+(function(){
+const params=new URLSearchParams(location.search);if(params.get('journey')!=='1')return;
+const steps=[['Upload resume','resume_tools.html?feature=resume'],['Review analysis','resume_tools.html?feature=skill-gap'],['Verify skills','resume_tools.html?feature=verification'],['English tutor','tutor.html'],['Mock interview','interview_practice.html'],['Interview feedback','interview_analysis.html'],['Build resume','resume_builder.html']];
+const page=location.pathname.split('/').pop();let step=page==='resume_tools.html'?(params.get('feature')==='verification'?2:params.get('feature')==='skill-gap'?1:0):steps.findIndex(x=>x[1].split('?')[0]===page);if(step<0)return;
+const url=i=>steps[i][1]+(steps[i][1].includes('?')?'&':'?')+'journey=1';
+let state=CareerAI.read('careerAIJourney',{});state.current=step;state.visited=state.visited||{};state.visited[step]=true;state.updatedAt=new Date().toISOString();CareerAI.write('careerAIJourney',state);
+function build(bottom){const box=document.createElement('section');box.className='journey-bar'+(bottom?' journey-bottom':'');box.setAttribute('aria-label','Career preparation journey');if(!bottom){const title=document.createElement('h2');title.textContent='Step '+(step+1)+' of '+steps.length+' · '+steps[step][0];box.append(title);const role=document.createElement('p');role.className='journey-hint';role.textContent=CareerAI.role()?'Your target: '+CareerAI.role():'Choose your job role when uploading your resume.';box.append(role);const list=document.createElement('ol');list.className='journey-track';steps.forEach(([name],i)=>{const item=document.createElement('li');item.textContent=(i+1)+'. '+name;if(i===step)item.setAttribute('aria-current','step');list.append(item)});box.append(list)}const actions=document.createElement('div');actions.className='journey-actions';const back=document.createElement('a');back.href=step?url(step-1):'dashboard.html';back.textContent=step?'← Back':'← Dashboard';actions.append(back);const next=document.createElement('button');next.type='button';next.className='journey-next';next.onclick=()=>advance(false);actions.append(next);if(step<steps.length-1){const skip=document.createElement('button');skip.type='button';skip.textContent='Skip this step';skip.onclick=()=>advance(true);actions.append(skip)}const dash=document.createElement('a');dash.href='dashboard.html';dash.textContent='Save & exit';dash.onclick=()=>{if(step===4&&typeof endInterview==='function')endInterview();if(step===6&&document.getElementById('saveDraft'))document.getElementById('saveDraft').click();};actions.append(dash);const hint=document.createElement('p');hint.className='journey-hint journey-status';hint.setAttribute('aria-live','polite');box.append(actions,hint);return box}
+const top=build(false),bottom=build(true);document.body.insertBefore(top,document.body.firstChild);document.body.append(bottom);
+if(page==='resume_tools.html'){document.body.classList.add(step===0?'journey-resume':step===1?'journey-results':'journey-quiz');const a=CareerAI.read('careerAIResumeAnalysis',null);if(step>0&&!a){const notice=document.getElementById('skillGapNotice');notice.classList.remove('hidden');document.getElementById('noticeTitle').textContent='Upload a resume first';document.getElementById('skillGapMessage').textContent='Return to Step 1 to analyze a resume, or skip this step.';notice.querySelector('button').onclick=()=>location.assign(url(0));}}
+function completed(){switch(step){case 0:case 1:return !!CareerAI.read('careerAIResumeAnalysis',{}).job_role;case 2:return Object.keys(CareerAI.read('careerAIVerifiedSkills',{})).length>0;case 3:return Object.keys(CareerAI.read('careerAILearningProgress',{})).length>0;case 4:return !!CareerAI.read('careerAIInterviewReport',{}).totalAnswers;case 5:return !!CareerAI.read('careerAIInterviewReport',{}).totalAnswers;case 6:return !!CareerAI.read('careerAIResumeBuilt',{}).at;}}
+function update(){const done=completed(),working=step===4&&typeof active!=='undefined'&&active;const ready=done||working;const label=step===6?'Finish journey':step===4&&working?'End interview & review feedback':'Continue → '+steps[step+1][0];for(const bar of [top,bottom]){const button=bar.querySelector('.journey-next');if(button.textContent!==label)button.textContent=label;button.disabled=!ready;const text=ready?'Continue when you are ready. Your progress is saved in this browser.':'Complete this activity to continue, or use Skip this step.';const hint=bar.querySelector('.journey-status');if(hint.textContent!==text)hint.textContent=text}}
+function advance(skip){if(step===4&&typeof endInterview==='function'&&typeof active!=='undefined'&&active)endInterview();state=CareerAI.read('careerAIJourney',{});if(skip){state.skipped=state.skipped||{};state.skipped[step]=true;}else{state.completed=state.completed||{};state.completed[step]=true;}state.current=Math.min(step+1,steps.length-1);if(step===6)state.finishedAt=new Date().toISOString();CareerAI.write('careerAIJourney',state);location.assign(step===6?'dashboard.html':url(step+1));}
+// Keep links within the journey and show the results as the next step after analysis.
+document.querySelectorAll('a[href]').forEach(a=>{const target=new URL(a.href,location.href);if(target.origin!==location.origin)return;const i=steps.findIndex(x=>x[1]===target.pathname.split('/').pop()+target.search);if(i>=0)a.href=url(i)});
+update();setInterval(update,1000);
+})();
+</script>
+
+
+<script data-career-drafts>
+(function(){
+const page=location.pathname.split('/').pop()||'dashboard.html';if(page==='dashboard.html')return;
+const key='careerAIAutosave:'+(page==='resume_tools.html'?'index.html':page);let restoring=false,cleared=false,timer;
+const fields=()=>[...document.querySelectorAll('input[id],select[id],textarea[id]')].filter(e=>e.id!=='jobDescription'&&!['file','password','hidden'].includes(e.type));
+function save(){if(restoring||cleared)return true;const data={savedAt:new Date().toISOString(),fields:{},scrollY:scrollY};fields().forEach(e=>data.fields[e.id]={value:e.value,checked:e.checked});
+if(page==='tutor.html'){data.tutor={lesson:activeLessonId,quizScore,quizAttempts,panel:window.tutorPanel||'lessonCard'};['speechResult','practiceFeedback','correction','quizResult'].forEach(id=>{const el=document.getElementById(id);if(el)data[id]={text:el.textContent,visible:getComputedStyle(el).display!=='none'};});}
+if(page==='interview_practice.html'){data.interview={questions,mainIndex,followUpPending,answers,inProgress:active||!!document.getElementById('resumeSavedInterview'),aiMode,question:document.getElementById('avatarQuestion').textContent,conversation:[...document.querySelectorAll('#conversation .bubble')].map(e=>({speaker:e.querySelector('.speaker').textContent,text:e.lastElementChild.textContent}))};}
+if(page==='resume_builder.html'){const view=document.getElementById('preview');if(!view.querySelector('.empty'))data.preview=[...view.childNodes].map(serializePreview);const draft={};draftFields.forEach(id=>draft[id]=document.getElementById(id).value);draft.skills=confirmedSkills().join(', ');draft.photo=photoData;draft.savedAt=data.savedAt;if(!CareerAI.write('careerAIResumeDraft',draft))return false;}
+if(page==='resume_tools.html')data.quizAnswers=[...document.querySelectorAll('#questionsContainer input:checked')].map(e=>({name:e.name,value:e.value}));
+const ok=CareerAI.write(key,data);const label=document.getElementById('draftSaveStatus');if(label)label.textContent=ok?'Draft saved on this device · '+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}):'Draft could not be saved: browser storage is unavailable or full.';return ok;}
+function serializePreview(node){if(node.nodeType===3)return {text:node.textContent};if(node.nodeType!==1)return null;return {tag:node.tagName,classes:node.className,children:[...node.childNodes].map(serializePreview).filter(Boolean)};}
+function restorePreview(item){if(typeof item.text==='string')return document.createTextNode(item.text);const allowed=['DIV','HEADER','H1','H2','H3','P','UL','OL','LI','SPAN','IMG','BR','B','STRONG','EM'];if(!allowed.includes(item.tag))return document.createTextNode('');const el=document.createElement(item.tag);if(typeof item.classes==='string')el.className=item.classes;if(item.tag==='IMG'){if(/^data:image\/(jpeg|png|webp);base64,/.test(photoData)){el.src=photoData;el.alt='Profile photo';}}else(item.children||[]).forEach(x=>el.append(restorePreview(x)));return el;}
+window.CareerAIDrafts={save};
+if(page==='resume_builder.html')document.getElementById('deleteDraft').onclick=()=>{if(!confirm('Clear the saved resume draft and its form on this device?'))return;cleared=true;draftFields.forEach(id=>document.getElementById(id).value=id==='template'?'classic':'');photoData='';document.getElementById('resumePhoto').value='';document.getElementById('preview').replaceChildren();const empty=document.createElement('div');empty.className='empty';empty.textContent='Fill in your details and create a preview.';document.getElementById('preview').append(empty);document.getElementById('qualityChecks').hidden=true;localStorage.removeItem('careerAIResumeDraft');localStorage.removeItem(key);document.getElementById('draftSaveStatus').textContent='Saved resume draft cleared.';};
+const strip=document.createElement('aside');strip.className='draft-status';strip.style.cssText='padding:10px 16px;margin:12px auto;max-width:1180px;background:#edf5f1;border:1px solid #cfe2d7;border-radius:10px;color:#255241;font:13px/1.5 Segoe UI,sans-serif';const label=document.createElement('span');label.id='draftSaveStatus';label.textContent='Your work saves automatically on this device. Uploaded files and recordings are not saved.';strip.append(label);document.body.insertBefore(strip,document.body.firstChild);
+const saved=CareerAI.read(key,null);
+if(saved){restoring=true;
+// Restore selectors before rebuilding dynamic lesson content, then restore typed work.
+for(const [id,item] of Object.entries(saved.fields||{})){const el=document.getElementById(id);if(el&&el.tagName==='SELECT'&&[...el.options].some(o=>o.value===item.value))el.value=item.value;}
+if(page==='tutor.html'&&saved.tutor){activeLessonId=saved.tutor.lesson;filterLessons();changeLanguage();quizScore=saved.tutor.quizScore||0;quizAttempts=saved.tutor.quizAttempts||0;document.getElementById('score').textContent='Score: '+quizScore+' / '+quizAttempts;if(window.showTutorPanel)showTutorPanel(saved.tutor.panel||'lessonCard');}
+for(const [id,item] of Object.entries(saved.fields||{})){const el=document.getElementById(id);if(!el||el.type==='file'||id==='jobDescription')continue;if(el.tagName!=='SELECT'){el.value=item.value??'';if(['checkbox','radio'].includes(el.type))el.checked=!!item.checked;}}
+if(page==='resume_builder.html'&&saved.preview){const view=document.getElementById('preview');view.dataset.template=document.getElementById('template').value;view.replaceChildren(...saved.preview.map(restorePreview));if(view.firstElementChild)view.firstElementChild.contentEditable='true';showQualityChecks();}
+if(page==='tutor.html'){['speechResult','practiceFeedback','correction','quizResult'].forEach(id=>{const state=saved[id];if(state){const el=document.getElementById(id);el.textContent=state.text;if(state.visible)el.style.display='block';}});}
+if(page==='interview_practice.html'&&saved.interview){const d=saved.interview;const safe=d.questions&&d.questions.length&&Number.isInteger(d.mainIndex)&&d.mainIndex>=0&&d.mainIndex<d.questions.length;
+if(safe&&!d.aiMode){questions=d.questions;mainIndex=d.mainIndex;followUpPending=!!d.followUpPending;answers=d.answers||[];aiMode=false;document.getElementById('conversation').replaceChildren();(d.conversation||[]).forEach(item=>addMessage(item.speaker,item.text));document.getElementById('avatarQuestion').textContent=d.question||questions[mainIndex].q;lastSpokenQuestion=d.question||questions[mainIndex].q;
+if(d.inProgress){const resume=document.createElement('button');resume.type='button';resume.id='resumeSavedInterview';resume.textContent='▶ Resume saved interview';resume.onclick=async()=>{active=true;setSetupLocked(true);document.getElementById('answerText').disabled=false;document.getElementById('sendButton').disabled=false;document.getElementById('recordButton').disabled=!recognitionAvailable();document.getElementById('endButton').disabled=false;document.getElementById('startButton').disabled=true;resume.remove();if(document.getElementById('useCamera').checked)await startCamera(false);setTurnStatus('Question '+(mainIndex+1)+' of '+questions.length+(followUpPending?' · follow-up':''));speak(lastSpokenQuestion);};document.getElementById('startButton').before(resume);document.getElementById('startButton').textContent='Start a new interview';document.getElementById('setupStatus').textContent='Saved interview found. Resume from your last question, or start a new round.';}
+}else if(d.aiMode){document.getElementById('setupStatus').textContent='Your typed draft is restored. Start a new AI session to continue; connected sessions may expire.';}}
+if(page==='resume_tools.html'&&saved.fields?.verificationSkill?.value&&saved.quizAnswers?.length){loadSkillQuestions().then(()=>{saved.quizAnswers.forEach(a=>{const input=[...document.querySelectorAll('#questionsContainer input')].find(e=>e.name===a.name&&e.value===a.value);if(input)input.checked=true;});});}
+requestAnimationFrame(()=>window.scrollTo(0,Number(saved.scrollY)||0));restoring=false;label.textContent='Draft restored from '+new Date(saved.savedAt).toLocaleString()+'. Your camera and microphone stay off until you resume.';}
+document.addEventListener('input',()=>{cleared=false;clearTimeout(timer);timer=setTimeout(save,300)});document.addEventListener('change',()=>{cleared=false;save()});document.addEventListener('click',()=>{clearTimeout(timer);timer=setTimeout(save,350)});window.addEventListener('pagehide',save);window.addEventListener('beforeunload',save);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')save()});
+})();
+</script>
+
+<script src="correction-support.js"></script>
+</body>
+</html>
+
+

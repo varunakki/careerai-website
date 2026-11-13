@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="careerai-api-base" content="https://careerai-project-vca7.onrender.com">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Communication Studio | CareerAI</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    background: radial-gradient(circle at top, #30205f, #090b20 65%);
+    min-height: 100vh;
+}
+
+header {
+    text-align: center;
+    padding: 28px 15px;
+}
+
+header h1 { color: #c7a7ff; }
+header p { color: #d3cce8; }
+
+.container {
+    max-width: 1050px;
+    margin: auto;
+    padding: 15px;
+}
+
+.card {
+    background: rgba(25, 25, 58, .94);
+    border: 1px solid #6e4caf;
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 20px rgba(139, 92, 246, .12);
+}
+
+h2 { color: #d2baff; }
+
+select, input[type="text"] {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #8065ba;
+    border-radius: 9px;
+    margin: 8px 0 14px;
+    font-size: 16px;
+    background: #11132f;
+    color: white;
+}
+
+button {
+    border: 0;
+    border-radius: 9px;
+    padding: 12px 16px;
+    margin: 5px 4px 5px 0;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    background: linear-gradient(90deg, #7044d9, #a04df0);
+}
+
+button:hover { filter: brightness(1.15); }
+
+button:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
+.secondary { background: #34385d; }
+.danger { background: #9d315e; }
+
+.lesson, .result {
+    background: #11132f;
+    padding: 16px;
+    border-radius: 10px;
+    line-height: 1.8;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+.small {
+    color: #c3bdd8;
+    font-size: 13px;
+}
+
+footer {
+    text-align: center;
+    color: #aaa1c7;
+    padding: 20px;
+}
+
+.quiz-option {
+    display: block;
+    margin: 14px 0;
+    line-height: 1.6;
+}
+
+.quiz-option input { margin-right: 8px; }
+
+.selector-row { display: grid; grid-template-columns: 1fr 1fr 2fr; gap: 14px; }
+.selector-row label { display: block; color: #ddd3f6; font-weight: bold; }
+.exercise-prompt { border-left: 4px solid #a04df0; padding: 10px 14px; background: #171936; border-radius: 7px; line-height: 1.6; }
+.score-pill { display: inline-block; padding: 6px 10px; border-radius: 999px; background: #34385d; color: #e8dcff; }
+.lesson-level { display:inline-flex; align-items:center; padding:6px 10px; margin-bottom:10px; border-radius:999px; background:#f0edff; color:#4c39b8; font-size:12px; font-weight:800; letter-spacing:.04em; text-transform:uppercase; }
+textarea {
+    width: 100%; min-height: 110px; padding: 13px; border: 1px solid #8065ba;
+    border-radius: 9px; margin: 8px 0 14px; font: inherit; background: #11132f; color: white; resize: vertical;
+}
+button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid #c7a7ff; outline-offset: 2px; }
+
+/* Refined CareerAI learning studio visual system */
+:root { color-scheme: light; --ink:#20263a; --muted:#667085; --accent:#6048d8; --line:#e5e8f0; }
+body { color:var(--ink); background:#f4f6fb; font-family:Inter,"Segoe UI",Arial,sans-serif; }
+header { text-align:left; padding:48px 24px 62px; color:#fff; background:linear-gradient(115deg,#171d34 0%,#25214e 58%,#403078 100%); }
+.hero-content { max-width:1050px; margin:auto; }
+.hero-kicker { display:flex; align-items:center; gap:10px; color:#c9c5ff; font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; }
+.brand-mark { display:inline-grid; place-items:center; width:30px; height:30px; border-radius:9px; color:#fff; background:linear-gradient(135deg,#9d8bff,#6548da); letter-spacing:0; }
+header h1 { margin:22px 0 10px; color:#fff; font-size:clamp(32px,5vw,48px); letter-spacing:-.04em; line-height:1.08; }
+header p { max-width:650px; margin:0; color:#d6d9e8; font-size:17px; line-height:1.65; }
+.hero-tags { display:flex; flex-wrap:wrap; gap:9px; margin-top:22px; }
+.hero-tags span { padding:7px 11px; border:1px solid #ffffff32; border-radius:999px; color:#f4f2ff; background:#ffffff0c; font-size:12px; font-weight:650; }
+.quick-nav { position:sticky; top:0; z-index:5; display:flex; justify-content:center; gap:7px; overflow-x:auto; padding:10px 16px; border-bottom:1px solid var(--line); background:#ffffffed; backdrop-filter:blur(14px); }
+.quick-nav a { flex:0 0 auto; padding:9px 13px; border-radius:999px; color:#475069; font-size:13px; font-weight:700; text-decoration:none; }
+.quick-nav a:hover,.quick-nav a:focus-visible { color:#4932c1; background:#f0edff; outline:none; }
+.container { max-width:1050px; padding:24px 18px 34px; }
+.card { padding:24px; margin-bottom:16px; border:1px solid var(--line); border-radius:18px; background:#fff; box-shadow:0 5px 20px #222b4408; }
+h2 { margin-top:0; color:#242b40; font-size:20px; letter-spacing:-.02em; }
+.card > p:not(.small) { color:#535d73; line-height:1.65; }
+select,input[type="text"],textarea { border:1px solid #d7dbe7; border-radius:10px; background:#fbfcff; color:#20263a; }
+select:hover,input[type="text"]:hover,textarea:hover { border-color:#9c91dc; }
+select:focus,input[type="text"]:focus,textarea:focus { border-color:var(--accent); outline:3px solid #6048d826; }
+button { padding:11px 15px; border-radius:10px; background:var(--accent); box-shadow:0 2px 6px #6048d82c; transition:transform .15s ease,box-shadow .15s ease,background .15s ease; }
+button:hover { filter:none; transform:translateY(-1px); box-shadow:0 5px 12px #6048d82e; background:#5038c5; }
+.secondary { color:#34405a; background:#eef0f6; box-shadow:none; }
+.secondary:hover { color:#252b40; background:#e3e6ef; box-shadow:none; }
+.danger { background:#a83e59; box-shadow:none; }
+.danger:hover { background:#91334c; box-shadow:none; }
+.lesson,.result { border:1px solid #eceaf6; background:#f8f7fc; color:#293149; }
+.exercise-prompt { border-left-color:#7259df; background:#f6f3ff; color:#302b50; }
+.score-pill { border:1px solid #e2dcff; background:#f0edff; color:#4c39b8; font-weight:750; }
+.small { color:var(--muted); }
+.selector-row label { color:#38425a; }
+.quiz-option { padding:12px 14px; border:1px solid #e6e8f0; border-radius:11px; background:#fbfcfe; cursor:pointer; }
+.quiz-option:has(input:checked) { border-color:#8d7ce4; background:#f4f1ff; }
+footer { color:#7a8294; font-size:13px; }
+.card[id] { scroll-margin-top:72px; }
+@media (max-width:650px) {
+    header { padding:36px 20px 48px; }
+    .container { padding:18px 12px 28px; }
+    .card { padding:18px; border-radius:15px; }
+    .quick-nav { justify-content:flex-start; }
+    .hero-tags { gap:7px; }
+}
+@media (prefers-reduced-motion:reduce) {
+    *,*::before,*::after { scroll-behavior:auto !important; transition:none !important; }
+}
+
+@media (max-width: 600px) {
+    .card { padding: 16px; }
+    header h1 { font-size: 25px; }
+    button { max-width: 100%; }
+    .selector-row { grid-template-columns: 1fr; gap: 0; }
+}
+</style>
+<style>
+button,a,input,select,textarea{touch-action:manipulation}input,select,textarea{font-size:16px}button{min-height:44px}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #8c78ed;outline-offset:3px}img,video{max-width:100%}body{overflow-wrap:break-word}@media(max-width:600px){input,select,textarea{max-width:100%}.module-modal{padding:0!important}.module-shell{width:100%!important;height:100dvh!important;max-height:none!important;border-radius:0!important}.module-frame{min-height:0}button{white-space:normal}}@media print{.career-progress{display:none!important}}
+</style><script>
+window.CareerAI={read:function(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}},write:function(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}},role:function(){return this.read('careerAIProfile',{}).role||this.read('careerAIResumeAnalysis',{}).job_role||''},setRole:function(role){if(!role.trim())return;var p=this.read('careerAIProfile',{});p.role=role.trim();p.updatedAt=new Date().toISOString();this.write('careerAIProfile',p)}};
+</script>
+<style>
+body{background:#f3f6fa;color:#24354c;font-family:'Segoe UI',Arial,sans-serif}header{background:#14263d;color:white;padding:18px}header h1{color:white;font-size:24px;margin:8px}header p{color:#cedaec}.quick-nav{display:none}.container{max-width:1160px;padding:24px 16px}.studio-welcome{display:grid;grid-template-columns:1fr 190px;gap:24px;padding:30px;border:1px solid #dae4ef;border-radius:20px;background:linear-gradient(130deg,#fff,#e6f0fc);margin-bottom:20px;box-shadow:0 14px 35px #20344b0a}.studio-eyebrow{color:#42719a;font-size:11px;letter-spacing:.12em;font-weight:800}.studio-welcome h1{max-width:700px;font-size:clamp(27px,4vw,40px);line-height:1.2;margin:12px 0}.studio-welcome p{color:#63748a;max-width:600px}.studio-stats{display:grid;align-content:center;gap:3px;padding:20px;border-radius:14px;background:#fff9}.studio-stats strong{font-size:27px;color:#246c76}.studio-stats span{font-size:12px;color:#65788b;margin-bottom:8px}.card{background:white;border:1px solid #dde5ef;box-shadow:0 6px 20px #24395005;border-radius:16px;color:#24354c}h2{color:#24354c;font-size:21px}.small,.hint{color:#63748a}.lesson,.exercise-prompt{background:#f3f7fb;color:#314965;border:1px solid #dbe6f0;border-radius:12px;line-height:1.9}input[type=text],input[type=search],select,textarea{background:#fbfcfe!important;color:#24354c!important;border:1px solid #cfdbe8!important;border-radius:10px!important;padding:12px!important;font:inherit;width:100%}.result{background:#eef6f3;color:#24533f;border:1px solid #cde1d7}button{background:#246f7d;color:white;border-radius:9px;box-shadow:none}button.secondary{background:#edf2f7;color:#34506b}.lesson-level,.score-pill{background:#eaf3f8;color:#28697c;border-color:#cce1eb}.tutor-tabs{display:flex;gap:8px;overflow-x:auto;margin:10px 0 18px;padding:6px 0}.tutor-tabs button{white-space:nowrap;background:#e8eef5;color:#496078;min-width:120px}.tutor-tabs button[aria-pressed=true]{background:#246f7d;color:white}.tutor-panel-hidden{display:none!important}.studio-next{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:16px 0}.studio-note{font-size:12px;color:#64778c;line-height:1.7}@media(min-width:850px){#languageCard{float:left;width:31%;margin-right:2%}#pathCard{margin-left:33%;min-height:310px}.tutor-tabs{clear:both}}@media(max-width:600px){.studio-welcome{grid-template-columns:1fr;padding:22px}.studio-stats{grid-template-columns:auto 1fr auto 1fr;align-items:center;gap:8px}.studio-stats span{margin:0}.container{padding:16px 12px}.tutor-tabs button{min-width:100px;font-size:13px}}@media print{.tutor-tabs,.studio-next{display:none}}
+</style>
+<style>.curriculum-levels{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}.curriculum-levels button{display:block;text-align:left;padding:12px;background:#eef5f9;color:#24475d;border:1px solid #d8e5ee}.curriculum-levels strong,.curriculum-levels span{display:block}.curriculum-levels span{font-size:12px;line-height:1.6;margin-top:7px;color:#586e81}@media(max-width:650px){.curriculum-levels{grid-template-columns:1fr}}.curriculum-block{margin-top:18px;padding:18px;border:1px solid #dfe8ef;background:#fbfdff;border-radius:12px}.curriculum-block h3{margin:0 0 10px;font-size:16px;color:#245665}.curriculum-block p{white-space:pre-wrap;line-height:1.8}.curriculum-block li{margin:8px 0;line-height:1.6}.curriculum-note{font-size:13px;color:#667b8e;line-height:1.8}#nextCurriculumQuiz{margin:12px 0}.quiz-option{color:#24354c!important;background:#f5f8fc!important;border-color:#d9e3ed!important}.quiz-option input{width:auto!important}.curriculum-block button{margin-top:8px}</style>
+<script src="./career-api.js"></script>
+</head>
+
+<body>
+
+<header>
+    <div class="hero-content">
+        <div class="hero-kicker"><span class="brand-mark">CA</span> CareerAI · Learning Studio</div>
+        <h1>English for your next opportunity</h1>
+        <p>Build confidence for everyday conversations, the workplace, and your next interview—with practical lessons explained in your language.</p>
+        <div class="hero-tags"><span>9 explanation languages</span><span>11 practical lessons</span><span>Speaking practice</span></div>
+    </div>
+</header>
+
+<nav class="quick-nav" aria-label="Jump to a section">
+    <a href="#languageCard">Language</a><a href="#pathCard">Learning paths</a><a href="#lessonCard">Lesson</a><a href="#practiceCard">Practice</a><a href="#speakingCard">Speaking</a><a href="#quizCard">Quiz</a>
+</nav>
+
+<div class="container"><section class="studio-welcome"><div><span class="studio-eyebrow">CAREERAI · COMMUNICATION STUDIO</span><h1>Build confidence, one conversation at a time.</h1><p>Learn in your language. Practise English for everyday life, work, and interviews.</p></div><div class="studio-stats"><strong id="studioLessons">0</strong><span>lessons practised</span><strong id="studioAccuracy">—</strong><span>quiz accuracy</span></div></section>
+
+    <section class="card" id="languageCard">
+        <h2>🌐 Choose Your Language</h2>
+
+        <label for="language">Explanation language:</label>
+
+        <select id="language" onchange="changeLanguage()">
+            <option value="kn">ಕನ್ನಡ — Kannada</option>
+            <option value="hi">हिन्दी — Hindi</option>
+            <option value="te">తెలుగు — Telugu</option>
+            <option value="ta">தமிழ் — Tamil</option>
+            <option value="ml">മലയാളം — Malayalam</option>
+            <option value="bn">বাংলা — Bengali</option>
+            <option value="mr">मराठी — Marathi</option>
+            <option value="gu">ગુજરાતી — Gujarati</option>
+            <option value="en">English</option>
+        </select>
+
+        <p class="small">
+            Explanations use your selected language. English examples and
+            speaking practice use English.
+        </p>
+    </section>
+
+    <section class="card" id="pathCard" aria-labelledby="pathTitle">
+        <h2 id="pathTitle">🧭 Choose a learning path</h2>
+        <p>Pick a practical situation and work through short lessons, speaking prompts, and a quick check.</p>
+        <div class="curriculum-levels" aria-label="Curriculum levels"><button type="button" data-level="beginner"><strong>Beginner · 6 lessons</strong><span>Introductions, clarity, meetings, and email foundations</span></button><button type="button" data-level="intermediate"><strong>Intermediate · 9 lessons</strong><span>Real conversations, feedback, customer support, and bug reports</span></button><button type="button" data-level="advanced"><strong>Advanced · 6 lessons</strong><span>Negotiation, technical interviews, presentations, and security handovers</span></button></div>
+<div class="selector-row">
+            <label for="levelSelect">Level
+                <select id="levelSelect" onchange="filterLessons()">
+                    <option value="all">All levels</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option><option value="advanced">Advanced</option>
+                </select>
+            </label>
+            <label for="lessonCategory">Category
+                <select id="lessonCategory" onchange="filterLessons()">
+                    <option value="all">All learning paths</option>
+                    <option value="spoken">Spoken English</option>
+                    <option value="workplace">Workplace communication</option>
+                    <option value="interview">Job interview preparation</option>
+                </select>
+            </label>
+            <label for="lessonSelect">Lesson
+                <select id="lessonSelect" onchange="selectLesson(this.value)"></select>
+            </label>
+        </div>
+        <label for="lessonSearch">Find a lesson</label><input type="search" id="lessonSearch" placeholder="Search introductions, meetings, interviews…"><p id="lessonCount" class="small" aria-live="polite"></p>
+    </section>
+
+    <nav class="tutor-tabs" aria-label="Learning activities"><button type="button" data-panel="lessonCard">1 · Learn</button><button type="button" data-panel="practiceCard">2 · Practise</button><button type="button" data-panel="grammarCard">3 · Refine</button><button type="button" data-panel="speakingCard">4 · Speak</button><button type="button" data-panel="quizCard">5 · Check</button></nav><section class="card" id="lessonCard">
+        <span id="lessonLevel" class="lesson-level">Beginner</span>
+        <h2 id="lessonTitle">📘 Lesson 1: Am, Is, Are</h2>
+
+        <div id="lessonText" class="lesson"></div>
+
+        <p id="voiceStatus" class="small" aria-live="polite">
+            Choose a language and click Hear Explanation.
+        </p>
+
+        <button onclick="speakLesson()">🔊 Hear Explanation</button>
+        <button class="secondary" onclick="speakExamples()">
+            🗣️ Hear English Examples
+        </button>
+        <button class="danger" onclick="stopSpeech()">⏹ Stop Voice</button>
+    </section>
+
+    <section class="card" id="practiceCard">
+        <h2>💬 Practice the situation</h2>
+        <p id="practicePrompt" class="exercise-prompt"></p>
+        <label for="practiceAnswer">Your response</label>
+        <textarea id="practiceAnswer" placeholder="Write a response, or use Start Speaking above and then bring your transcript here."></textarea>
+        <button onclick="evaluatePractice()">Review My Practice</button>
+        <button id="speakPracticeFeedbackButton" class="secondary" style="display:none" onclick="speakPracticeFeedback()">🔊 Hear Feedback</button>
+        <button class="secondary" onclick="copySpeechToPractice()">Use Speech Transcript</button>
+        <div id="practiceFeedback" class="result" style="display:none" aria-live="polite"></div>
+    </section>
+
+    <section class="card" id="grammarCard">
+        <h2>✍️ English Sentence Correction</h2>
+        <p>Enter a sentence to check some common grammar mistakes.</p>
+
+        <input
+            id="sentence"
+            type="text"
+            placeholder="Example: He are a student"
+            onkeydown="if(event.key==='Enter') checkSentence()"
+        >
+
+        <button onclick="checkSentence()">Check My Sentence</button>
+
+        <div id="correction" class="result" style="display:none"></div>
+
+        <button
+            id="speakCorrectionButton"
+            style="display:none"
+            onclick="speakCorrection()"
+        >
+            🔊 Hear Feedback
+        </button>
+
+        <p class="small">
+            This demo checks selected sentence patterns; it does not yet
+            understand every possible English sentence.
+        </p>
+    </section>
+
+    <section class="card" id="speakingCard">
+        <h2>🎙️ English Speaking Practice</h2>
+        <p>Allow microphone access and speak a short English sentence.</p>
+
+        <button id="startButton" onclick="startSpeaking()">
+            🎤 Start Speaking
+        </button>
+
+        <button class="danger" onclick="stopRecognition()">
+            ⏹ Stop Listening
+        </button>
+
+        <div id="speechResult" class="result">
+            Your spoken sentence will appear here.
+        </div>
+
+        <p class="small">
+            Speech recognition may require an internet connection and a
+            browser-supported recognition service.
+        </p>
+    </section>
+
+    <section class="card" id="quizCard">
+        <h2>🧠 Quick Quiz</h2>
+        <p id="quizQuestion">Choose the grammatically correct sentence.</p>
+        <div id="quizOptions"></div>
+
+        <button onclick="checkQuiz()">Submit Answer</button>
+
+        <div id="quizResult" class="result" style="display:none"></div>
+        <p><span id="score" class="score-pill" aria-live="polite">Score: 0 / 0</span></p>
+
+        <button
+            id="quizVoiceButton"
+            style="display:none"
+            onclick="speakQuizResult()"
+        >
+            🔊 Hear Quiz Feedback
+        </button>
+    </section>
+
+    <footer>CareerAI Learning Studio · Practice a little, grow every day.</footer>
+
+</div>
+
+<script>
+const lessonLibrary = [
+    { id:"grammar", level:"beginner", category:"spoken", title:"Grammar warm-up: Am, Is, Are", content:"Use am with I, is with he/she/it, and are with you/we/they.\n\nExamples:\nI am ready.\nShe is a student.\nThey are learning English.", prompt:"Say or write three short sentences about yourself using am, is, or are.", examples:"I am a BCA student. I am learning English. We are ready to begin.", quiz:{question:"Choose the correct sentence.", options:["She are ready.","She is ready.","She am ready."], answer:1, why:"Use is with she."}},
+    { id:"introductions", level:"beginner", category:"spoken", title:"Introduce yourself with confidence", content:"A clear introduction has three parts: your name, what you do or study, and one relevant interest or goal. Keep it brief and speak at a comfortable pace.\n\nExample: Hello, I’m Ananya. I’m studying computer applications, and I’m interested in web development.", prompt:"Introduce yourself in 3–4 sentences. Include your course or role and one goal.", examples:"Hello, I’m ____. I’m studying ____. I’m interested in ____. I’m currently working on ____.", quiz:{question:"Which is the clearest introduction?", options:["Myself Ravi and all things.","Hello, I’m Ravi. I’m studying computer applications and learning web development.","Ravi. Hmm. Basically, many things."], answer:1, why:"A brief introduction with a name, current focus, and relevant interest is easy to follow."}},
+    { id:"smalltalk", level:"intermediate", category:"spoken", title:"Everyday conversation and follow-up questions", content:"Start with a friendly greeting, make one relevant comment, then ask an open question. Listen to the answer and ask a natural follow-up.\n\nExample: Hi, how has your week been?\nThat sounds interesting. What did you enjoy most?", prompt:"Imagine meeting a classmate before a presentation. Start a short conversation and ask one follow-up question.", examples:"Hi, how is your presentation going? What topic did you choose? That sounds useful. How did you prepare?", quiz:{question:"Which is an open follow-up question?", options:["Did you like it, yes or no?","What did you find most useful?","Okay."], answer:1, why:"Open questions invite the other person to share more."}},
+    { id:"clarity", level:"beginner", category:"spoken", title:"Speak clearly and at a steady pace", content:"Use short thought groups. Pause briefly between ideas, pronounce the ending of important words, and stress key information. Clarity matters more than speaking quickly.\n\nPractice: I completed the project / with my team / last week.", prompt:"Read the sample sentence aloud twice. On the second attempt, pause at the slash marks and emphasize the key words.", examples:"I completed the project with my team last week. We presented our results on Friday.", quiz:{question:"What helps listeners understand you?", options:["Speaking as fast as possible","Pausing between ideas and stressing key words","Avoiding all pauses"], answer:1, why:"Short pauses and clear emphasis make ideas easier to follow."}},
+    { id:"meetings", level:"beginner", category:"workplace", title:"Participate in a meeting", content:"Make your point briefly, connect it to the topic, and invite a response. Useful phrases: “I’d like to add…”, “Could you clarify…?”, and “To summarize, our next step is…”.", prompt:"In 2–4 sentences, share one project idea and invite a teammate’s view.", examples:"I’d like to suggest a short user survey before we finalize the design. It could help us catch usability issues. What do you think?", quiz:{question:"How can you politely ask for clarification?", options:["You are not making sense.","Could you clarify what you mean by the deadline?","Whatever, I don’t know."], answer:1, why:"A specific, courteous question makes it easy for the speaker to clarify."}},
+    { id:"email", level:"beginner", category:"workplace", title:"Write a concise professional email", content:"Use a useful subject, a polite greeting, the purpose in the first sentence, any needed details, and a clear next step. End with a professional sign-off.\n\nSubject: Request for project feedback\nHello Maya, could you review the draft by Thursday? Your feedback will help us prepare for Friday’s presentation. Thank you, Ravi", prompt:"Write a short email asking a teammate to review your project draft by a specific date.", examples:"Subject: Review request\nHello ____, could you please review ____ by ____? This will help us ____. Thank you, ____.", quiz:{question:"Which email opening is clearest?", options:["Hey, read this now.","Hello Priya, could you review the attached draft by Wednesday?","Important!!!"], answer:1, why:"It is polite, specific, and tells the reader what action and deadline are needed."}},
+    { id:"feedback", level:"intermediate", category:"workplace", title:"Give and receive feedback", content:"Describe the specific action, explain its effect, and suggest a next step. Keep feedback focused on the work. When receiving feedback, listen, ask a question, and thank the person.\n\nExample: The chart is easy to read. Adding labels to the axes would make the comparison clearer.", prompt:"Give constructive feedback on a presentation slide that has useful information but is hard to read.", examples:"The slide includes useful data. A larger font and clearer labels could make it easier for the audience to follow.", quiz:{question:"Which feedback is most constructive?", options:["This is bad.","The data is useful; clearer headings would help readers compare the results.","You never do this right."], answer:1, why:"It names what works and suggests a specific improvement."}},
+    { id:"tellme", level:"beginner", category:"interview", title:"Interview: Tell me about yourself", content:"Keep your answer focused on the role: present situation, relevant experience or project, then what you want to contribute. Aim for about one minute and avoid reciting your entire life story.\n\nStructure: Present → Relevant example → Goal", prompt:"Answer “Tell me about yourself” in 4–6 sentences, focusing on your studies, one relevant project, and the role you want.", examples:"I’m completing my BCA and have been building my skills in ____. In a recent project, I ____. I learned ____. I’m now looking for an opportunity to contribute and grow in ____.", quiz:{question:"What should a strong answer focus on?", options:["Every personal detail since childhood","Relevant background, an example, and a goal related to the role","Only the salary you want"], answer:1, why:"A focused answer helps the interviewer connect your experience to the role."}},
+    { id:"strengths", level:"intermediate", category:"interview", title:"Interview: Strengths and examples", content:"Choose a strength that matters for the role. Support it with a specific example and result. Avoid listing adjectives without evidence.\n\nExample: I’m organized. During our final-year project, I tracked tasks in a shared board, which helped the team meet our demo deadline.", prompt:"Name one strength and support it with a real example from a class, project, internship, or job.", examples:"One strength I bring is ____. For example, when ____, I ____. The result was ____.", quiz:{question:"What makes a strength answer convincing?", options:["Saying “I’m perfect at everything.”","Giving a relevant example that shows the strength","Repeating the strength many times"], answer:1, why:"A concrete example gives the interviewer evidence."}},
+    { id:"star", level:"intermediate", category:"interview", title:"Interview: Answer with the STAR method", content:"Use STAR for behavioral questions: Situation (context), Task (your responsibility), Action (what you did), Result (what happened and what you learned). Be clear about your own contribution.", prompt:"Describe a challenge you handled using Situation, Task, Action, and Result. Use a study or project example if you are new to work.", examples:"Situation: Our project was behind schedule. Task: I coordinated the testing. Action: I divided the remaining checks and tracked them daily. Result: We fixed the main issues and delivered the demo on time.", quiz:{question:"In STAR, what does the A stand for?", options:["Attitude","Action","Aim"], answer:1, why:"Action explains the specific steps you took."}},
+    { id:"mock", level:"intermediate", category:"interview", title:"Mock interview: Why should we hire you?", content:"Connect two or three role requirements to skills you can demonstrate. Give a short example, then explain how you would contribute. Be confident and truthful; do not claim experience you do not have.", prompt:"Mock interview question: “Why should we hire you?” Give a 30–60 second answer connected to a role you want.", examples:"You should consider me for this role because ____. Through ____, I developed ____. I can contribute by ____ while continuing to grow in ____.", quiz:{question:"Which response is strongest?", options:["Because I need any job.","My project experience in ____ helped me build ____, which matches this role’s need for ____.","I know everything already."], answer:1, why:"It links real evidence to a role requirement and avoids unsupported claims."}}
+];
+
+let activeLessonId = "grammar";
+let quizScore = 0;
+let quizAttempts = 0;
+let lastQuizFeedback = "";
+
+const languages = {
+    kn: {
+        voice: "kn-IN",
+        title: "ಪಾಠ 1: Am, Is, Are",
+        lesson: `ಇಂಗ್ಲಿಷ್‌ನಲ್ಲಿ Am, Is ಮತ್ತು Are ಅನ್ನು ವ್ಯಕ್ತಿ ಅಥವಾ ವಸ್ತುವಿನ ಬಗ್ಗೆ ಹೇಳಲು ಬಳಸುತ್ತೇವೆ.
+
+I ಜೊತೆ Am ಬಳಸಿ.
+I am a student. = ನಾನು ವಿದ್ಯಾರ್ಥಿ.
+
+He, She, It ಜೊತೆ Is ಬಳಸಿ.
+He is a student. = ಅವನು ವಿದ್ಯಾರ್ಥಿ.
+
+You, We, They ಜೊತೆ Are ಬಳಸಿ.
+You are my friend. = ನೀನು ನನ್ನ ಸ್ನೇಹಿತ.
+
+ನೆನಪಿಡಿ:
+I am
+He is
+She is
+It is
+You are
+We are
+They are`,
+        correct: "ಸರಿಯಾಗಿದೆ! ಈ ವಾಕ್ಯದಲ್ಲಿ ಸರಿಯಾದ ಪದವನ್ನು ಬಳಸಿದ್ದೀರಿ.",
+        wrong: "ಮತ್ತೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸಿ. I ಜೊತೆ am, He/She/It ಜೊತೆ is, You/We/They ಜೊತೆ are ಬಳಸಿ.",
+        quizYes: "ಸರಿಯಾದ ಉತ್ತರ! He is a student.",
+        quizNo: "ಸರಿಯಾದ ಉತ್ತರ B: He is a student. He ಜೊತೆ is ಬಳಸಬೇಕು."
+    },
+
+    hi: {
+        voice: "hi-IN",
+        title: "पाठ 1: Am, Is, Are",
+        lesson: `Am, Is और Are का उपयोग किसी व्यक्ति या वस्तु के बारे में बताने के लिए होता है।
+
+I के साथ Am:
+I am a student. = मैं एक विद्यार्थी हूँ।
+
+He, She, It के साथ Is:
+He is a student. = वह एक विद्यार्थी है।
+
+You, We, They के साथ Are:
+You are my friend. = तुम मेरे दोस्त हो।
+
+याद रखें:
+I am
+He is
+She is
+It is
+You are
+We are
+They are`,
+        correct: "सही! आपने सही शब्द का उपयोग किया है।",
+        wrong: "फिर कोशिश करें। I के साथ am, He/She/It के साथ is और You/We/They के साथ are का उपयोग करें।",
+        quizYes: "सही जवाब! He is a student.",
+        quizNo: "सही जवाब B है: He is a student. He के साथ is आता है।"
+    },
+
+    te: {
+        voice: "te-IN",
+        title: "పాఠం 1: Am, Is, Are",
+        lesson: `Am, Is, Are ను వ్యక్తులు లేదా వస్తువుల గురించి చెప్పడానికి ఉపయోగిస్తాము.
+
+I తో Am:
+I am a student. = నేను విద్యార్థిని.
+
+He, She, It తో Is:
+He is a student. = అతను విద్యార్థి.
+
+You, We, They తో Are:
+You are my friend. = నువ్వు నా స్నేహితుడివి.
+
+గుర్తుంచుకోండి:
+I am
+He is
+She is
+It is
+You are
+We are
+They are`,
+        correct: "సరైనది! మీరు సరైన పదాన్ని ఉపయోగించారు.",
+        wrong: "మళ్లీ ప్రయత్నించండి. I తో am, He/She/It తో is, You/We/They తో are ఉపయోగించండి.",
+        quizYes: "సరైన సమాధానం! He is a student.",
+        quizNo: "సరైన సమాధానం B: He is a student. He తో is ఉపయోగించాలి."
+    },
+
+    ta: {
+        voice: "ta-IN",
+        title: "பாடம் 1: Am, Is, Are",
+        lesson: `ஒருவரைப் பற்றிச் சொல்ல Am, Is, Are பயன்படுத்தப்படுகின்றன.
+
+I உடன் Am:
+I am a student. = நான் ஒரு மாணவர்.
+
+He, She, It உடன் Is:
+He is a student. = அவன் ஒரு மாணவன்.
+
+You, We, They உடன் Are:
+You are my friend. = நீ என் நண்பன்.
+
+நினைவில் கொள்ளுங்கள்:
+I am
+He is
+She is
+It is
+You are
+We are
+They are`,
+        correct: "சரி! நீங்கள் சரியான சொல்லைப் பயன்படுத்தியுள்ளீர்கள்.",
+        wrong: "மீண்டும் முயற்சி செய்யுங்கள். I உடன் am, He/She/It உடன் is, You/We/They உடன் are பயன்படுத்தவும்.",
+        quizYes: "சரியான பதில்! He is a student.",
+        quizNo: "சரியான பதில் B: He is a student. He உடன் is பயன்படுத்த வேண்டும்."
+    },
+
+    ml: {
+        voice: "ml-IN",
+        title: "പാഠം 1: Am, Is, Are",
+        lesson: `ഒരാളെക്കുറിച്ചോ ഒരു വസ്തുവിനെക്കുറിച്ചോ പറയാൻ Am, Is, Are ഉപയോഗിക്കുന്നു.
+
+I-യോടൊപ്പം Am:
+I am a student. = ഞാൻ ഒരു വിദ്യാർത്ഥിയാണ്.
+
+He, She, It എന്നിവയോടൊപ്പം Is:
+He is a student. = അവൻ ഒരു വിദ്യാർത്ഥിയാണ്.
+
+You, We, They എന്നിവയോടൊപ്പം Are:
+You are my friend. = നീ എന്റെ സുഹൃത്താണ്.
+
+ഓർക്കുക:
+I am
+He is
+She is
+It is
+You are
+We are
+They are`,
+        correct: "ശരി! നിങ്ങൾ ശരിയായ വാക്ക് ഉപയോഗിച്ചു.",
+        wrong: "വീണ്ടും ശ്രമിക്കുക. I-യോടൊപ്പം am, He/She/It-യോടൊപ്പം is, You/We/They-യോടൊപ്പം are ഉപയോഗിക്കുക.",
+        quizYes: "ശരിയായ ഉത്തരം! He is a student.",
+        quizNo: "ശരിയായ ഉത്തരം B: He is a student. He-യോടൊപ്പം is ഉപയോഗിക്കണം."
+    },
+
+    bn: {
+        voice: "bn-IN",
+        title: "পাঠ ১: Am, Is, Are",
+        lesson: `কোনো ব্যক্তি বা বস্তু সম্পর্কে বলতে Am, Is, Are ব্যবহার করা হয়।
+
+I-এর সঙ্গে Am:
+I am a student. = আমি একজন ছাত্র।
+
+He, She, It-এর সঙ্গে Is:
+He is a student. = সে একজন ছাত্র।
+
+You, We, They-এর সঙ্গে Are:
+You are my friend. = তুমি আমার বন্ধু।
+
+মনে রাখুন:
+I am
+He is
+She is
+It is
+You are
+We are
+They are`,
+        correct: "সঠিক! আপনি সঠিক শব্দ ব্যবহার করেছেন।",
+        wrong: "আবার চেষ্টা করুন। I-এর সঙ্গে am, He/She/It-এর সঙ্গে is এবং You/We/They-এর সঙ্গে are ব্যবহার করুন।",
+        quizYes: "সঠিক উত্তর! He is a student.",
+        quizNo: "সঠিক উত্তর B: He is a student. He-এর সঙ্গে is ব্যবহার করতে হয়।"
+    },
+
+    mr: {
+        voice: "mr-IN",
+        title: "धडा १: Am, Is, Are",
+        lesson: `एखाद्या व्यक्तीबद्दल किंवा वस्तूबद्दल सांगण्यासाठी Am, Is, Are वापरतात.
+
+I सोबत Am:
+I am a student. = मी विद्यार्थी आहे.
+
+He, She, It सोबत Is:
+He is a student. = तो विद्यार्थी आहे.
+
+You, We, They सोबत Are:
+You are my friend. = तू माझा मित्र आहेस.
+
+लक्षात ठेवा:
+I am
+He is
+She is
+It is
+You are
+We are
+They are`,
+        correct: "बरोबर! तुम्ही योग्य शब्द वापरला आहे.",
+        wrong: "पुन्हा प्रयत्न करा. I सोबत am, He/She/It सोबत is आणि You/We/They सोबत are वापरा.",
+        quizYes: "बरोबर उत्तर! He is a student.",
+        quizNo: "बरोबर उत्तर B आहे: He is a student. He सोबत is वापरतात."
+    },
+
+    gu: {
+        voice: "gu-IN",
+        title: "પાઠ ૧: Am, Is, Are",
+        lesson: `વ્યક્તિ અથવા વસ્તુ વિશે કહેવા માટે Am, Is, Are વપરાય છે.
+
+I સાથે Am:
+I am a student. = હું વિદ્યાર્થી છું.
+
+He, She, It સાથે Is:
+He is a student. = તે વિદ્યાર્થી છે.
+
+You, We, They સાથે Are:
+You are my friend. = તમે મારા મિત્ર છો.
+
+યાદ રાખો:
+I am
+He is
+She is
+It is
+You are
+We are
+They are`,
+        correct: "સાચું! તમે યોગ્ય શબ્દનો ઉપયોગ કર્યો છે.",
+        wrong: "ફરી પ્રયાસ કરો. I સાથે am, He/She/It સાથે is અને You/We/They સાથે are વાપરો.",
+        quizYes: "સાચો જવાબ! He is a student.",
+        quizNo: "સાચો જવાબ B છે: He is a student. He સાથે is વપરાય છે."
+    },
+
+    en: {
+        voice: "en-IN",
+        title: "Lesson 1: Am, Is, Are",
+        lesson: `We use Am, Is and Are to describe people and things.
+
+Use Am with I:
+I am a student.
+
+Use Is with He, She and It:
+He is a student.
+
+Use Are with You, We and They:
+You are my friend.
+
+Remember:
+I am
+He is
+She is
+It is
+You are
+We are
+They are`,
+        correct: "Correct! You used the right word.",
+        wrong: "Try again. Use am with I, is with He/She/It, and are with You/We/They.",
+        quizYes: "Correct! He is a student.",
+        quizNo: "The correct answer is B: He is a student. Use is with He."
+    }
+};
+
+let lastFeedback = "";
+let activeRecognition = null;
+let activeRecorder = null;
+let activeMicStream = null;
+let recordingTimer = null;
+
+const localizedLessonNotes = {
+    kn: {
+        introductions:"ನಿಮ್ಮ ಹೆಸರು, ಓದು ಅಥವಾ ಕೆಲಸ, ಮತ್ತು ಒಂದು ಆಸಕ್ತಿ ಅಥವಾ ಗುರಿಯನ್ನು ಸಂಕ್ಷಿಪ್ತವಾಗಿ ಹೇಳಿ.", smalltalk:"ಸ್ನೇಹಪೂರ್ಣವಾಗಿ ಮಾತು ಆರಂಭಿಸಿ, ಮುಕ್ತ ಪ್ರಶ್ನೆ ಕೇಳಿ, ಗಮನದಿಂದ ಕೇಳಿ ಮತ್ತು ಮುಂದಿನ ಪ್ರಶ್ನೆ ಕೇಳಿ.", clarity:"ವೇಗಕ್ಕಿಂತ ಸ್ಪಷ್ಟತೆ ಮುಖ್ಯ. ಚಿಕ್ಕ ಭಾಗಗಳಲ್ಲಿ ಮಾತನಾಡಿ, ಮುಖ್ಯ ಪದಗಳಿಗೆ ಒತ್ತು ನೀಡಿ, ವಿರಾಮ ತೆಗೆದುಕೊಳ್ಳಿ.", meetings:"ಸಭೆಯಲ್ಲಿ ನಿಮ್ಮ ವಿಚಾರವನ್ನು ಸಂಕ್ಷಿಪ್ತವಾಗಿ ಹೇಳಿ, ಇತರರ ಅಭಿಪ್ರಾಯ ಕೇಳಿ ಮತ್ತು ಬೇಕಾದರೆ ಸ್ಪಷ್ಟನೆ ಕೇಳಿ.", email:"ಇಮೇಲ್‌ನಲ್ಲಿ ಸ್ಪಷ್ಟ ವಿಷಯ, ಗೌರವಪೂರ್ಣ ಶುಭಾಶಯ, ಉದ್ದೇಶ, ವಿವರ ಮತ್ತು ಮುಂದಿನ ಕ್ರಮ ಇರಲಿ.", feedback:"ನಿರ್ದಿಷ್ಟ ಕೆಲಸದ ಬಗ್ಗೆ ಅದರ ಪರಿಣಾಮ ಹೇಳಿ, ಸುಧಾರಣೆಯ ಸಲಹೆ ನೀಡಿ. ವ್ಯಕ್ತಿಯ ಬದಲು ಕೆಲಸದ ಮೇಲೆ ಗಮನ ಕೊಡಿ.", tellme:"ಉತ್ತರವನ್ನು ಹುದ್ದೆಗೆ ಸಂಬಂಧಿಸಿ: ಈಗಿನ ಓದು ಅಥವಾ ಕೆಲಸ, ಒಂದು ಉದಾಹರಣೆ, ಮತ್ತು ನಿಮ್ಮ ಗುರಿ.", strengths:"ಹುದ್ದೆಗೆ ಬೇಕಾದ ಒಂದು ಬಲವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ. ಅದನ್ನು ತೋರಿಸುವ ನಿಜವಾದ ಉದಾಹರಣೆ ಮತ್ತು ಫಲಿತಾಂಶ ಹೇಳಿ.", star:"STAR ವಿಧಾನದಲ್ಲಿ ಪರಿಸ್ಥಿತಿ, ನಿಮ್ಮ ಜವಾಬ್ದಾರಿ, ಕ್ರಮ ಮತ್ತು ಫಲಿತಾಂಶವನ್ನು ಕ್ರಮವಾಗಿ ವಿವರಿಸಿ.", mock:"ಹುದ್ದೆಯ ಅಗತ್ಯಗಳನ್ನು ನಿಮ್ಮ ನಿಜವಾದ ಕೌಶಲ್ಯ ಮತ್ತು ಅನುಭವಕ್ಕೆ ಜೋಡಿಸಿ. ಉದಾಹರಣೆಯೊಂದಿಗೆ ನಿಮ್ಮ ಕೊಡುಗೆ ತಿಳಿಸಿ."
+    },
+    hi: {
+        introductions:"अपना नाम, पढ़ाई या काम और एक रुचि या लक्ष्य संक्षेप में बताइए।", smalltalk:"दोस्ताना अभिवादन से शुरू करें, खुला सवाल पूछें, ध्यान से सुनें और आगे का सवाल करें।", clarity:"तेज़ी से ज़्यादा स्पष्टता ज़रूरी है। छोटे वाक्यांशों में बोलें और बीच में विराम लें।", meetings:"बैठक में अपनी बात संक्षेप में रखें, दूसरों की राय पूछें और ज़रूरत पर स्पष्टीकरण माँगें।", email:"ईमेल में स्पष्ट विषय, विनम्र अभिवादन, उद्देश्य, ज़रूरी जानकारी और अगला कदम रखें।", feedback:"किसी खास काम का असर बताकर सुधार का सुझाव दें। व्यक्ति के बजाय काम पर ध्यान दें।", tellme:"जवाब को भूमिका से जोड़ें: अभी की पढ़ाई या काम, एक उदाहरण और आपका लक्ष्य।", strengths:"भूमिका के लिए उपयोगी ताकत चुनें और उसे दिखाने वाला असली उदाहरण व परिणाम बताएँ।", star:"STAR में परिस्थिति, आपकी ज़िम्मेदारी, आपका कदम और परिणाम इसी क्रम में बताएँ।", mock:"भूमिका की ज़रूरत को अपने असली कौशल और अनुभव से जोड़ें। उदाहरण देकर अपना योगदान बताएँ।"
+    },
+    te: {
+        introductions:"మీ పేరు, చదువు లేదా పని, ఒక ఆసక్తి లేదా లక్ష్యాన్ని సంక్షిప్తంగా చెప్పండి.", smalltalk:"స్నేహపూర్వకంగా పలకరించి, ఓపెన్ ప్రశ్న అడిగి, శ్రద్ధగా విని తదుపరి ప్రశ్న అడగండి.", clarity:"వేగం కంటే స్పష్టత ముఖ్యం. చిన్న భాగాలుగా మాట్లాడి, ముఖ్య పదాలకు ఒత్తిడి ఇచ్చి విరామం తీసుకోండి.", meetings:"సమావేశంలో మీ ఆలోచనను సంక్షిప్తంగా చెప్పి, ఇతరుల అభిప్రాయం అడిగి, అవసరమైతే వివరణ కోరండి.", email:"ఇమెయిల్‌లో స్పష్టమైన విషయం, మర్యాదపూర్వక పలకరింపు, ఉద్దేశం, వివరాలు, తదుపరి చర్య ఉండాలి.", feedback:"నిర్దిష్ట పని ప్రభావాన్ని చెప్పి మెరుగుదల సూచించండి. వ్యక్తి కంటే పనిపై దృష్టి పెట్టండి.", tellme:"సమాధానాన్ని పాత్రకు అనుసంధానించండి: ప్రస్తుత చదువు లేదా పని, ఒక ఉదాహరణ, మీ లక్ష్యం.", strengths:"పాత్రకు ఉపయోగపడే బలాన్ని ఎంచుకుని, నిజమైన ఉదాహరణ మరియు ఫలితాన్ని చెప్పండి.", star:"STARలో పరిస్థితి, మీ బాధ్యత, మీరు చేసిన చర్య, ఫలితం అనే క్రమంలో వివరించండి.", mock:"పాత్ర అవసరాలను మీ నిజమైన నైపుణ్యాలు, అనుభవంతో కలిపి ఉదాహరణతో మీ సహకారం చెప్పండి."
+    },
+    ta: {
+        introductions:"உங்கள் பெயர், படிப்பு அல்லது வேலை, ஒரு ஆர்வம் அல்லது இலக்கைச் சுருக்கமாகச் சொல்லுங்கள்.", smalltalk:"நட்பாகத் தொடங்கி, திறந்த கேள்வி கேட்டு, கவனமாகக் கேட்டு அடுத்த கேள்வியைக் கேளுங்கள்.", clarity:"வேகத்தைவிடத் தெளிவு முக்கியம். சிறு பகுதிகளாகப் பேசி, இடைவெளி விடுங்கள்.", meetings:"கூட்டத்தில் கருத்தைச் சுருக்கமாகச் சொல்லி, பிறரின் கருத்தைக் கேட்டு, தேவைப்பட்டால் விளக்கம் கேளுங்கள்.", email:"மின்னஞ்சலில் தெளிவான தலைப்பு, மரியாதையான வாழ்த்து, நோக்கம், விவரம், அடுத்த செயல் இருக்கட்டும்.", feedback:"குறிப்பிட்ட வேலையின் தாக்கத்தைச் சொல்லி மேம்பாட்டு ஆலோசனை வழங்குங்கள்; வேலையில் கவனம் செலுத்துங்கள்.", tellme:"பதிலைப் பணியுடன் இணைக்கவும்: தற்போதைய படிப்பு அல்லது வேலை, ஒரு உதாரணம், உங்கள் இலக்கு.", strengths:"பணிக்குத் தேவையான திறனைத் தேர்ந்து, உண்மையான உதாரணத்தையும் முடிவையும் கூறுங்கள்.", star:"STAR முறையில் சூழ்நிலை, பொறுப்பு, செயல், முடிவு ஆகியவற்றை வரிசையாக விளக்குங்கள்.", mock:"பணியின் தேவைகளை உங்கள் உண்மையான திறன்களுடன் இணைத்து, உதாரணத்துடன் உங்கள் பங்களிப்பைச் சொல்லுங்கள்."
+    },
+    ml: {
+        introductions:"പേര്, പഠനം അല്ലെങ്കിൽ ജോലി, ഒരു താൽപര്യം അല്ലെങ്കിൽ ലക്ഷ്യം ചുരുക്കി പറയുക.", smalltalk:"സൗഹൃദമായി തുടങ്ങുക, തുറന്ന ചോദ്യം ചോദിക്കുക, ശ്രദ്ധിച്ച് കേട്ട് തുടർചോദ്യം ചോദിക്കുക.", clarity:"വേഗത്തേക്കാൾ വ്യക്തത പ്രധാനമാണ്. ചെറിയ ഭാഗങ്ങളായി പറയുകയും ഇടവേള എടുക്കുകയും ചെയ്യുക.", meetings:"യോഗത്തിൽ ആശയം ചുരുക്കി പറയുക, മറ്റുള്ളവരുടെ അഭിപ്രായം ചോദിക്കുക, ആവശ്യമെങ്കിൽ വിശദീകരണം തേടുക.", email:"ഇമെയിലിൽ വ്യക്തമായ വിഷയം, മാന്യമായ അഭിവാദ്യം, ഉദ്ദേശ്യം, വിവരങ്ങൾ, അടുത്ത നടപടി വേണം.", feedback:"ഒരു ജോലിയുടെ ഫലം പറഞ്ഞ് മെച്ചപ്പെടുത്താനുള്ള നിർദ്ദേശം നൽകുക. ജോലിയെക്കുറിച്ച് സംസാരിക്കുക.", tellme:"മറുപടി ജോലിയുമായി ബന്ധിപ്പിക്കുക: ഇപ്പോഴത്തെ പഠനം അല്ലെങ്കിൽ ജോലി, ഉദാഹരണം, ലക്ഷ്യം.", strengths:"ജോലിക്ക് പ്രയോജനമുള്ള കഴിവ് തിരഞ്ഞെടുത്ത് യഥാർത്ഥ ഉദാഹരണവും ഫലവും പറയുക.", star:"STAR രീതിയിൽ സാഹചര്യം, ചുമതല, നടപടി, ഫലം എന്ന ക്രമത്തിൽ വിവരിക്കുക.", mock:"ജോലിയുടെ ആവശ്യങ്ങളെ നിങ്ങളുടെ യഥാർത്ഥ കഴിവുകളുമായി ബന്ധിപ്പിച്ച് ഉദാഹരണത്തോടെ സംഭാവന പറയുക."
+    },
+    bn: {
+        introductions:"আপনার নাম, পড়াশোনা বা কাজ, এবং একটি আগ্রহ বা লক্ষ্য সংক্ষেপে বলুন।", smalltalk:"বন্ধুত্বপূর্ণভাবে শুরু করুন, খোলা প্রশ্ন করুন, মন দিয়ে শুনুন এবং পরের প্রশ্ন করুন।", clarity:"গতির চেয়ে স্পষ্টতা জরুরি। ছোট ভাগে বলুন, গুরুত্বপূর্ণ শব্দে জোর দিন, বিরতি নিন।", meetings:"মিটিংয়ে সংক্ষেপে মত বলুন, অন্যদের মতামত চান এবং দরকার হলে ব্যাখ্যা চান।", email:"ইমেলে স্পষ্ট বিষয়, ভদ্র সম্ভাষণ, উদ্দেশ্য, দরকারি তথ্য ও পরবর্তী পদক্ষেপ রাখুন।", feedback:"নির্দিষ্ট কাজের প্রভাব বলে উন্নতির পরামর্শ দিন। ব্যক্তির বদলে কাজকে কেন্দ্র করুন।", tellme:"উত্তরকে পদের সঙ্গে যুক্ত করুন: বর্তমান পড়াশোনা বা কাজ, একটি উদাহরণ ও লক্ষ্য।", strengths:"পদের উপযোগী একটি শক্তি বেছে নিয়ে বাস্তব উদাহরণ ও ফলাফল বলুন।", star:"STAR-এ পরিস্থিতি, দায়িত্ব, পদক্ষেপ ও ফলাফল এই ক্রমে ব্যাখ্যা করুন।", mock:"পদের চাহিদার সঙ্গে নিজের বাস্তব দক্ষতা জুড়ে উদাহরণ দিয়ে অবদান বলুন।"
+    },
+    mr: {
+        introductions:"तुमचे नाव, शिक्षण किंवा काम आणि एक आवड किंवा ध्येय थोडक्यात सांगा.", smalltalk:"मैत्रीपूर्ण सुरुवात करा, खुला प्रश्न विचारा, लक्ष देऊन ऐका आणि पुढचा प्रश्न विचारा.", clarity:"वेगापेक्षा स्पष्टता महत्त्वाची. छोटे विचारभाग बोला आणि मध्ये विराम घ्या.", meetings:"बैठकीत मुद्दा थोडक्यात मांडा, इतरांचे मत विचारा आणि गरज असल्यास स्पष्टीकरण मागा.", email:"ईमेलमध्ये स्पष्ट विषय, नम्र अभिवादन, उद्देश, तपशील आणि पुढची कृती असू द्या.", feedback:"कामाचा विशिष्ट परिणाम सांगून सुधारणा सुचवा. व्यक्तीऐवजी कामावर लक्ष द्या.", tellme:"उत्तर भूमिकेशी जोडा: सध्याचे शिक्षण किंवा काम, एक उदाहरण आणि तुमचे ध्येय.", strengths:"भूमिकेसाठी उपयोगी ताकद निवडा आणि खरे उदाहरण व परिणाम सांगा.", star:"STAR मध्ये परिस्थिती, जबाबदारी, कृती आणि परिणाम या क्रमाने सांगा.", mock:"भूमिकेच्या गरजा तुमच्या खऱ्या कौशल्यांशी जोडा आणि उदाहरणासह योगदान सांगा."
+    },
+    gu: {
+        introductions:"તમારું નામ, અભ્યાસ અથવા કામ, અને એક રસ અથવા લક્ષ્ય ટૂંકમાં જણાવો.", smalltalk:"મૈત્રીપૂર્ણ રીતે શરૂઆત કરો, ખુલ્લો પ્રશ્ન પૂછો, ધ્યાનથી સાંભળો અને આગળનો પ્રશ્ન પૂછો.", clarity:"ઝડપ કરતાં સ્પષ્ટતા અગત્યની છે. નાના ભાગમાં બોલો અને વચ્ચે વિરામ લો.", meetings:"બેઠકમાં મુદ્દો ટૂંકમાં કહો, બીજાનો અભિપ્રાય પૂછો અને જરૂર પડે તો સ્પષ્ટતા માગો.", email:"ઇમેઇલમાં સ્પષ્ટ વિષય, વિનમ્ર અભિવાદન, હેતુ, વિગતો અને આગળનું પગલું રાખો.", feedback:"ચોક્કસ કામની અસર કહી સુધારાનો સૂચન આપો. વ્યક્તિને બદલે કામ પર ધ્યાન આપો.", tellme:"જવાબને ભૂમિકા સાથે જોડો: હાલનો અભ્યાસ કે કામ, એક ઉદાહરણ અને લક્ષ્ય.", strengths:"ભૂમિકા માટે ઉપયોગી શક્તિ પસંદ કરી સાચું ઉદાહરણ અને પરિણામ જણાવો.", star:"STARમાં પરિસ્થિતિ, જવાબદારી, પગલું અને પરિણામ આ ક્રમમાં સમજાવો.", mock:"ભૂમિકાની જરૂરિયાતને તમારી સાચી કુશળતા સાથે જોડીને ઉદાહરણથી યોગદાન જણાવો."
+    }
+};
+
+// Kannada support for practice prompts and quiz content. English examples are
+// intentionally kept in English so learners can practise the target language.
+const kannadaPracticePrompts = {
+    grammar:"Am, Is ಅಥವಾ Are ಬಳಸಿ ನಿಮ್ಮ ಬಗ್ಗೆ ಮೂರು ಚಿಕ್ಕ ವಾಕ್ಯಗಳನ್ನು ಹೇಳಿ ಅಥವಾ ಬರೆಯಿರಿ.",
+    introductions:"3–4 ವಾಕ್ಯಗಳಲ್ಲಿ ನಿಮ್ಮ ಪರಿಚಯ ನೀಡಿ. ನಿಮ್ಮ ಕೋರ್ಸ್ ಅಥವಾ ಕೆಲಸ ಮತ್ತು ಒಂದು ಗುರಿಯನ್ನು ಸೇರಿಸಿ.",
+    smalltalk:"ಪ್ರಸ್ತುತಿಗೆ ಮೊದಲು ಸಹಪಾಠಿಯನ್ನು ಭೇಟಿಯಾದಂತೆ ಕಲ್ಪಿಸಿ. ಚಿಕ್ಕ ಮಾತುಕತೆ ಆರಂಭಿಸಿ ಮತ್ತು ಮುಂದುವರಿಸುವ ಒಂದು ಪ್ರಶ್ನೆ ಕೇಳಿ.",
+    clarity:"ಮಾದರಿ ವಾಕ್ಯವನ್ನು ಎರಡು ಬಾರಿ ಜೋರಾಗಿ ಓದಿ. ಎರಡನೇ ಬಾರಿ ಗುರುತುಗಳ ಬಳಿ ವಿರಾಮ ನೀಡಿ, ಮುಖ್ಯ ಪದಗಳಿಗೆ ಒತ್ತು ನೀಡಿ.",
+    meetings:"2–4 ವಾಕ್ಯಗಳಲ್ಲಿ ಒಂದು ಯೋಜನಾ ವಿಚಾರವನ್ನು ಹಂಚಿಕೊಂಡು, ಸಹೋದ್ಯೋಗಿಯ ಅಭಿಪ್ರಾಯ ಕೇಳಿ.",
+    email:"ನಿಮ್ಮ ಯೋಜನೆಯ ಕರಡು ಪ್ರತಿಯನ್ನು ನಿರ್ದಿಷ್ಟ ದಿನಾಂಕದೊಳಗೆ ಪರಿಶೀಲಿಸಲು ಸಹೋದ್ಯೋಗಿಗೆ ಚಿಕ್ಕ ಇಮೇಲ್ ಬರೆಯಿರಿ.",
+    feedback:"ಉಪಯುಕ್ತ ಮಾಹಿತಿಯಿದ್ದರೂ ಓದಲು ಕಷ್ಟವಾಗಿರುವ ಪ್ರಸ್ತುತಿ ಸ್ಲೈಡ್‌ಗೆ ರಚನಾತ್ಮಕ ಪ್ರತಿಕ್ರಿಯೆ ನೀಡಿ.",
+    tellme:"“ನಿಮ್ಮ ಬಗ್ಗೆ ಹೇಳಿ” ಎಂಬ ಪ್ರಶ್ನೆಗೆ 4–6 ವಾಕ್ಯಗಳಲ್ಲಿ ಉತ್ತರಿಸಿ. ನಿಮ್ಮ ಓದು, ಸಂಬಂಧಿತ ಯೋಜನೆ ಮತ್ತು ನೀವು ಬಯಸುವ ಕೆಲಸವನ್ನು ಸೇರಿಸಿ.",
+    strengths:"ಒಂದು ಬಲವನ್ನು ಹೆಸರಿಸಿ. ತರಗತಿ, ಯೋಜನೆ, ಇಂಟರ್ನ್‌ಶಿಪ್ ಅಥವಾ ಕೆಲಸದ ನಿಜವಾದ ಉದಾಹರಣೆಯಿಂದ ಅದನ್ನು ವಿವರಿಸಿ.",
+    star:"Situation, Task, Action, Result ಕ್ರಮ ಬಳಸಿ ನೀವು ಎದುರಿಸಿದ ಸವಾಲನ್ನು ವಿವರಿಸಿ. ಕೆಲಸದ ಅನುಭವ ಇಲ್ಲದಿದ್ದರೆ ಓದು ಅಥವಾ ಯೋಜನೆಯ ಉದಾಹರಣೆ ಬಳಸಿ.",
+    mock:"ಮಾಕ್ ಸಂದರ್ಶನದ ಪ್ರಶ್ನೆ: “ನಾವು ನಿಮ್ಮನ್ನು ಏಕೆ ನೇಮಿಸಬೇಕು?” ನೀವು ಬಯಸುವ ಕೆಲಸಕ್ಕೆ ಹೊಂದುವಂತೆ 30–60 ಸೆಕೆಂಡುಗಳ ಉತ್ತರ ನೀಡಿ."
+};
+
+const kannadaQuizzes = {
+    grammar:{question:"ಸರಿಯಾದ ವಾಕ್ಯವನ್ನು ಆಯ್ಕೆಮಾಡಿ.",options:["She are ready.","She is ready.","She am ready."],answer:1,why:"She ಜೊತೆ is ಬಳಸಬೇಕು."},
+    introductions:{question:"ಯಾವ ಪರಿಚಯ ಸ್ಪಷ್ಟವಾಗಿದೆ?",options:["Myself Ravi and all things.","Hello, I’m Ravi. I’m studying computer applications and learning web development.","Ravi. Hmm. Basically, many things."],answer:1,why:"ಚಿಕ್ಕ ಪರಿಚಯದಲ್ಲಿ ಹೆಸರು, ಪ್ರಸ್ತುತ ಗಮನ ಮತ್ತು ಸಂಬಂಧಿತ ಆಸಕ್ತಿ ಸ್ಪಷ್ಟವಾಗಿರುತ್ತವೆ."},
+    smalltalk:{question:"ಯಾವುದು ಮುಕ್ತ ಮುಂದುವರಿಕೆ ಪ್ರಶ್ನೆ?",options:["Did you like it, yes or no?","What did you find most useful?","Okay."],answer:1,why:"ಮುಕ್ತ ಪ್ರಶ್ನೆಗಳು ಇನ್ನಷ್ಟು ವಿವರವಾಗಿ ಮಾತನಾಡಲು ಅವಕಾಶ ನೀಡುತ್ತವೆ."},
+    clarity:{question:"ಕೇಳುವವರಿಗೆ ಅರ್ಥವಾಗಲು ಯಾವುದು ಸಹಾಯ ಮಾಡುತ್ತದೆ?",options:["ಸಾಧ್ಯವಾದಷ್ಟು ವೇಗವಾಗಿ ಮಾತನಾಡುವುದು","ಆಲೋಚನೆಗಳ ನಡುವೆ ವಿರಾಮ ನೀಡಿ ಮುಖ್ಯ ಪದಗಳಿಗೆ ಒತ್ತು ನೀಡುವುದು","ಎಲ್ಲಾ ವಿರಾಮಗಳನ್ನು ತಪ್ಪಿಸುವುದು"],answer:1,why:"ಚಿಕ್ಕ ವಿರಾಮಗಳು ಮತ್ತು ಸ್ಪಷ್ಟ ಒತ್ತು ವಿಚಾರವನ್ನು ಸುಲಭವಾಗಿ ಅರ್ಥಮಾಡಿಸುತ್ತವೆ."},
+    meetings:{question:"ಸ್ಪಷ್ಟೀಕರಣವನ್ನು ವಿನಯದಿಂದ ಹೇಗೆ ಕೇಳಬಹುದು?",options:["ನೀವು ಅರ್ಥವಾಗುವಂತೆ ಮಾತನಾಡುತ್ತಿಲ್ಲ.","ಗಡುವಿನ ಬಗ್ಗೆ ನೀವು ಏನು ಹೇಳಿದಿರಿ ಎಂದು ಸ್ವಲ್ಪ ವಿವರಿಸಬಹುದೇ?","ಏನಾದರೂ, ನನಗೆ ಗೊತ್ತಿಲ್ಲ."],answer:1,why:"ನಿರ್ದಿಷ್ಟ ಮತ್ತು ಗೌರವಪೂರ್ಣ ಪ್ರಶ್ನೆ ಮಾತನಾಡುವವರಿಗೆ ವಿವರಿಸಲು ಸಹಾಯ ಮಾಡುತ್ತದೆ."},
+    email:{question:"ಯಾವ ಇಮೇಲ್ ಆರಂಭ ಹೆಚ್ಚು ಸ್ಪಷ್ಟವಾಗಿದೆ?",options:["Hey, read this now.","Hello Priya, could you review the attached draft by Wednesday?","Important!!!"],answer:1,why:"ಇದು ವಿನಯಪೂರ್ಣವಾಗಿದೆ, ನಿರ್ದಿಷ್ಟವಾಗಿದೆ ಮತ್ತು ಬೇಕಾದ ಕ್ರಮ ಹಾಗೂ ಗಡುವನ್ನು ತಿಳಿಸುತ್ತದೆ."},
+    feedback:{question:"ಯಾವ ಪ್ರತಿಕ್ರಿಯೆ ಹೆಚ್ಚು ರಚನಾತ್ಮಕವಾಗಿದೆ?",options:["ಇದು ಕೆಟ್ಟದಾಗಿದೆ.","ಮಾಹಿತಿ ಉಪಯುಕ್ತವಾಗಿದೆ; ಸ್ಪಷ್ಟ ಶೀರ್ಷಿಕೆಗಳು ಫಲಿತಾಂಶಗಳನ್ನು ಹೋಲಿಸಲು ಸಹಾಯ ಮಾಡುತ್ತವೆ.","ನೀವು ಇದನ್ನು ಯಾವಾಗಲೂ ತಪ್ಪಾಗಿ ಮಾಡುತ್ತೀರಿ."],answer:1,why:"ಇದು ಚೆನ್ನಾಗಿರುವ ಅಂಶವನ್ನು ಹೇಳಿ ನಿರ್ದಿಷ್ಟ ಸುಧಾರಣೆಯನ್ನು ಸೂಚಿಸುತ್ತದೆ."},
+    tellme:{question:"ಉತ್ತಮ ಉತ್ತರ ಯಾವ ವಿಷಯದ ಮೇಲೆ ಗಮನ ಕೊಡಬೇಕು?",options:["ಬಾಲ್ಯದಿಂದಲಿನ ಪ್ರತಿಯೊಂದು ವೈಯಕ್ತಿಕ ವಿವರ","ಸಂಬಂಧಿತ ಹಿನ್ನೆಲೆ, ಒಂದು ಉದಾಹರಣೆ ಮತ್ತು ಕೆಲಸಕ್ಕೆ ಹೊಂದುವ ಗುರಿ","ಕೇವಲ ಬೇಕಾದ ಸಂಬಳ"],answer:1,why:"ಗಮನ ಕೇಂದ್ರೀಕೃತ ಉತ್ತರವು ನಿಮ್ಮ ಅನುಭವವನ್ನು ಕೆಲಸಕ್ಕೆ ಹೇಗೆ ಹೊಂದಿಸುತ್ತದೆ ಎಂಬುದನ್ನು ತೋರಿಸುತ್ತದೆ."},
+    strengths:{question:"ಬಲದ ಬಗ್ಗೆ ಉತ್ತರವನ್ನು ನಂಬುವಂತೆ ಮಾಡುವುದು ಯಾವುದು?",options:["ನಾನು ಎಲ್ಲದರಲ್ಲೂ ಪರಿಪೂರ್ಣ ಎಂದು ಹೇಳುವುದು","ಆ ಬಲವನ್ನು ತೋರಿಸುವ ಸಂಬಂಧಿತ ಉದಾಹರಣೆ ನೀಡುವುದು","ಅದೇ ಬಲವನ್ನು ಮತ್ತೆ ಮತ್ತೆ ಹೇಳುವುದು"],answer:1,why:"ನೈಜ ಉದಾಹರಣೆ ಸಂದರ್ಶಕರಿಗೆ ನಿಮ್ಮ ಸಾಮರ್ಥ್ಯದ ಸಾಕ್ಷಿ ನೀಡುತ್ತದೆ."},
+    star:{question:"STAR ವಿಧಾನದಲ್ಲಿ A ಎಂದರೆ ಏನು?",options:["Attitude","Action","Aim"],answer:1,why:"Action ಎಂದರೆ ನೀವು ಕೈಗೊಂಡ ನಿರ್ದಿಷ್ಟ ಕ್ರಮಗಳನ್ನು ವಿವರಿಸುವುದು."},
+    mock:{question:"ಯಾವ ಉತ್ತರ ಹೆಚ್ಚು ಪರಿಣಾಮಕಾರಿ?",options:["ನನಗೆ ಯಾವುದೇ ಕೆಲಸ ಬೇಕು.","ನನ್ನ ಯೋಜನೆಯ ಅನುಭವದಿಂದ ____ ಕೌಶಲ್ಯ ಬೆಳೆದಿದೆ. ಅದು ಈ ಕೆಲಸಕ್ಕೆ ಬೇಕಾದ ____ ಸಾಮರ್ಥ್ಯಕ್ಕೆ ಹೊಂದಿಕೊಳ್ಳುತ್ತದೆ.","ನನಗೆ ಈಗಾಗಲೇ ಎಲ್ಲವೂ ಗೊತ್ತು."],answer:1,why:"ಇದು ನಿಜವಾದ ಅನುಭವವನ್ನು ಕೆಲಸದ ಅಗತ್ಯಕ್ಕೆ ಸಂಪರ್ಕಿಸುತ್ತದೆ ಮತ್ತು ಸಾಕ್ಷಿಯಿಲ್ಲದ ಹೇಳಿಕೆಗಳನ್ನು ತಪ್ಪಿಸುತ್ತದೆ."}
+};
+
+const kannadaPracticeReview = {
+    empty:"ಮೊದಲು ನಿಮ್ಮ ಉತ್ತರವನ್ನು ಬರೆಯಿರಿ ಅಥವಾ ಧ್ವನಿಯಾಗಿ ದಾಖಲಿಸಿ.",
+    interview:"ಪರಿಶೀಲಿಸಿ: ಪ್ರಶ್ನೆಗೆ ಉತ್ತರಿಸಿದ್ದೀರಾ, ನಿರ್ದಿಷ್ಟ ಉದಾಹರಣೆ ನೀಡಿದ್ದೀರಾ ಮತ್ತು ಕೆಲಸಕ್ಕೆ ಸಂಪರ್ಕಿಸಿದ್ದೀರಾ?",
+    general:"ಪರಿಶೀಲಿಸಿ: ಮುಖ್ಯ ವಿಚಾರ ಸ್ಪಷ್ಟವಾಗಿದೆಯೇ, ಧಾಟಿ ಸೂಕ್ತವಾಗಿದೆಯೇ ಮತ್ತು ಮುಂದಿನ ಕ್ರಮ ಅಥವಾ ಉಪಯುಕ್ತ ವಿವರ ಇದೆಯೇ?",
+    ending:"ಒಮ್ಮೆ ಜೋರಾಗಿ ಹೇಳಿ; ನಂತರ ಒಂದು ಸುಧಾರಣೆ ಮಾಡಿ."
+};
+
+const localizedActivityText = {
+    kn:{practice:"ಈ ಅಭ್ಯಾಸಕ್ಕೆ ನಿಮ್ಮ ಉತ್ತರವನ್ನು ಬರೆಯಿರಿ ಅಥವಾ ಹೇಳಿ.",quizQuestion:"ಕೆಳಗಿನ ಆಯ್ಕೆಗಳಲ್ಲಿ ಯಾವುದು ಸರಿಯಾದುದು?",quizCorrect:"ಸರಿಯಾದ ಉತ್ತರ!",quizTry:"ಮತ್ತೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸಿ.",reviewEmpty:"ಮೊದಲು ನಿಮ್ಮ ಉತ್ತರವನ್ನು ಬರೆಯಿರಿ ಅಥವಾ ಧ್ವನಿಯಾಗಿ ದಾಖಲಿಸಿ.",reviewInterview:"ಪರಿಶೀಲಿಸಿ: ಪ್ರಶ್ನೆಗೆ ಉತ್ತರಿಸಿದ್ದೀರಾ, ನಿರ್ದಿಷ್ಟ ಉದಾಹರಣೆ ನೀಡಿದ್ದೀರಾ ಮತ್ತು ಕೆಲಸಕ್ಕೆ ಸಂಪರ್ಕಿಸಿದ್ದೀರಾ?",reviewGeneral:"ಪರಿಶೀಲಿಸಿ: ಮುಖ್ಯ ವಿಚಾರ ಸ್ಪಷ್ಟವಾಗಿದೆಯೇ, ಧಾಟಿ ಸೂಕ್ತವಾಗಿದೆಯೇ ಮತ್ತು ಉಪಯುಕ್ತ ವಿವರ ಇದೆಯೇ?",reviewEnd:"ಒಮ್ಮೆ ಜೋರಾಗಿ ಹೇಳಿ; ನಂತರ ಒಂದು ಸುಧಾರಣೆ ಮಾಡಿ.",grammarEmpty:"ಮೊದಲು ಒಂದು ಇಂಗ್ಲಿಷ್ ವಾಕ್ಯವನ್ನು ನಮೂದಿಸಿ.",grammarLabel:"ಸರಿಯಾದ ವಾಕ್ಯ:",grammarUnknown:"ಈ ಡೆಮೊ ಕೆಲವು ಮಾದರಿ ವಾಕ್ಯಗಳನ್ನು ಮಾತ್ರ ಪರಿಶೀಲಿಸುತ್ತದೆ. ಇನ್ನಷ್ಟು ವ್ಯಾಕರಣ ಮಾದರಿಗಳನ್ನು ನಂತರ ಸೇರಿಸಬಹುದು."},
+    hi:{practice:"इस अभ्यास का अपना उत्तर लिखें या बोलें।",quizQuestion:"नीचे दिए विकल्पों में से कौन-सा सही है?",quizCorrect:"सही जवाब!",quizTry:"फिर से कोशिश करें।",reviewEmpty:"पहले अपना जवाब लिखें या बोलकर रिकॉर्ड करें।",reviewInterview:"जाँचें: क्या आपने सवाल का जवाब दिया, एक खास उदाहरण दिया और उसे भूमिका से जोड़ा?",reviewGeneral:"जाँचें: क्या आपका मुख्य विचार स्पष्ट है, भाषा उपयुक्त है और उपयोगी जानकारी दी है?",reviewEnd:"इसे एक बार ज़ोर से बोलें और एक सुधार करें।",grammarEmpty:"पहले एक अंग्रेज़ी वाक्य लिखें।",grammarLabel:"सही वाक्य:",grammarUnknown:"यह डेमो केवल कुछ उदाहरण वाक्यों की जाँच करता है।"},
+    te:{practice:"ఈ అభ్యాసానికి మీ సమాధానాన్ని రాయండి లేదా మాట్లాడండి.",quizQuestion:"క్రింది ఎంపికల్లో ఏది సరైనది?",quizCorrect:"సరైన సమాధానం!",quizTry:"మళ్లీ ప్రయత్నించండి.",reviewEmpty:"ముందుగా మీ సమాధానాన్ని రాయండి లేదా మాట్లాడి రికార్డ్ చేయండి.",reviewInterview:"చూడండి: ప్రశ్నకు సమాధానం ఇచ్చారా, ఒక నిర్దిష్ట ఉదాహరణ చెప్పారా, పాత్రతో అనుసంధానించారా?",reviewGeneral:"చూడండి: ప్రధాన విషయం స్పష్టంగా ఉందా, మాట తీరు సరైనదా, ఉపయోగకరమైన వివరాలు ఉన్నాయా?",reviewEnd:"ఒకసారి గట్టిగా చెప్పి, ఒక మెరుగుదల చేయండి.",grammarEmpty:"ముందుగా ఒక ఆంగ్ల వాక్యాన్ని నమోదు చేయండి.",grammarLabel:"సరైన వాక్యం:",grammarUnknown:"ఈ డెమో కొన్ని ఉదాహరణ వాక్యాలను మాత్రమే తనిఖీ చేస్తుంది."},
+    ta:{practice:"இந்தப் பயிற்சிக்கான உங்கள் பதிலை எழுதுங்கள் அல்லது பேசுங்கள்.",quizQuestion:"கீழே உள்ளவற்றில் எது சரியானது?",quizCorrect:"சரியான பதில்!",quizTry:"மீண்டும் முயற்சி செய்யுங்கள்.",reviewEmpty:"முதலில் உங்கள் பதிலை எழுதுங்கள் அல்லது பேசி பதிவு செய்யுங்கள்.",reviewInterview:"சரிபார்க்கவும்: கேள்விக்குப் பதிலளித்தீர்களா, குறிப்பிட்ட உதாரணம் கூறினீர்களா, பணியுடன் இணைத்தீர்களா?",reviewGeneral:"சரிபார்க்கவும்: முக்கிய கருத்து தெளிவாகவும், தொனி பொருத்தமாகவும், தகவல் பயனுள்ளதாகவும் உள்ளதா?",reviewEnd:"ஒருமுறை சத்தமாகச் சொல்லி ஒரு மாற்றம் செய்யுங்கள்.",grammarEmpty:"முதலில் ஓர் ஆங்கில வாக்கியத்தை உள்ளிடுங்கள்.",grammarLabel:"சரியான வாக்கியம்:",grammarUnknown:"இந்த மாதிரி சில வாக்கியங்களை மட்டுமே சரிபார்க்கும்."},
+    ml:{practice:"ഈ പരിശീലനത്തിനുള്ള നിങ്ങളുടെ മറുപടി എഴുതുകയോ പറയുകയോ ചെയ്യുക.",quizQuestion:"താഴെ കൊടുത്തവയിൽ ഏതാണ് ശരി?",quizCorrect:"ശരിയായ ഉത്തരം!",quizTry:"വീണ്ടും ശ്രമിക്കുക.",reviewEmpty:"ആദ്യം നിങ്ങളുടെ മറുപടി എഴുതുകയോ ശബ്ദമായി രേഖപ്പെടുത്തുകയോ ചെയ്യുക.",reviewInterview:"പരിശോധിക്കുക: ചോദ്യത്തിന് മറുപടി നൽകിയോ, ഒരു ഉദാഹരണം പറഞ്ഞോ, ജോലിയുമായി ബന്ധിപ്പിച്ചോ?",reviewGeneral:"പരിശോധിക്കുക: പ്രധാന ആശയം വ്യക്തമാണോ, ശൈലി അനുയോജ്യമാണോ, ആവശ്യമായ വിവരം ഉണ്ടോ?",reviewEnd:"ഒരിക്കൽ ഉറക്കെ പറഞ്ഞ് ഒരു മെച്ചപ്പെടുത്തൽ വരുത്തുക.",grammarEmpty:"ആദ്യം ഒരു ഇംഗ്ലീഷ് വാക്യം നൽകുക.",grammarLabel:"ശരിയായ വാക്യം:",grammarUnknown:"ഈ മാതൃക ചില ഉദാഹരണ വാക്യങ്ങൾ മാത്രമാണ് പരിശോധിക്കുന്നത്."},
+    bn:{practice:"এই অনুশীলনের উত্তর লিখুন অথবা বলুন।",quizQuestion:"নিচের কোন বিকল্পটি সঠিক?",quizCorrect:"সঠিক উত্তর!",quizTry:"আবার চেষ্টা করুন।",reviewEmpty:"আগে আপনার উত্তর লিখুন বা বলে রেকর্ড করুন।",reviewInterview:"দেখুন: প্রশ্নের উত্তর দিয়েছেন, নির্দিষ্ট উদাহরণ দিয়েছেন এবং পদের সঙ্গে যুক্ত করেছেন কি?",reviewGeneral:"দেখুন: মূল বক্তব্য স্পষ্ট, ভঙ্গি উপযুক্ত এবং দরকারি তথ্য আছে কি?",reviewEnd:"একবার জোরে বলুন এবং একটি উন্নতি করুন।",grammarEmpty:"আগে একটি ইংরেজি বাক্য লিখুন।",grammarLabel:"সঠিক বাক্য:",grammarUnknown:"এই ডেমোতে কয়েকটি উদাহরণ বাক্যই পরীক্ষা করা হয়।"},
+    mr:{practice:"या सरावासाठी तुमचे उत्तर लिहा किंवा बोला.",quizQuestion:"खालीलपैकी कोणता पर्याय योग्य आहे?",quizCorrect:"योग्य उत्तर!",quizTry:"पुन्हा प्रयत्न करा.",reviewEmpty:"आधी तुमचे उत्तर लिहा किंवा बोलून नोंदवा.",reviewInterview:"तपासा: प्रश्नाचे उत्तर दिले, ठोस उदाहरण दिले आणि भूमिकेशी जोडले का?",reviewGeneral:"तपासा: मुख्य मुद्दा स्पष्ट, भाषा योग्य आणि उपयुक्त तपशील आहे का?",reviewEnd:"एकदा मोठ्याने बोलून एक सुधारणा करा.",grammarEmpty:"आधी एक इंग्रजी वाक्य लिहा.",grammarLabel:"योग्य वाक्य:",grammarUnknown:"हा नमुना काही उदाहरण वाक्येच तपासतो."},
+    gu:{practice:"આ અભ્યાસ માટે તમારો જવાબ લખો અથવા બોલો.",quizQuestion:"નીચેનામાંથી કયો વિકલ્પ સાચો છે?",quizCorrect:"સાચો જવાબ!",quizTry:"ફરી પ્રયાસ કરો.",reviewEmpty:"પહેલાં તમારો જવાબ લખો અથવા બોલીને રેકોર્ડ કરો.",reviewInterview:"તપાસો: પ્રશ્નનો જવાબ આપ્યો, ચોક્કસ ઉદાહરણ આપ્યું અને ભૂમિકા સાથે જોડ્યું?",reviewGeneral:"તપાસો: મુખ્ય વિચાર સ્પષ્ટ, ભાષા યોગ્ય અને ઉપયોગી વિગતો છે?",reviewEnd:"એક વાર ઊંચે અવાજે બોલો અને એક સુધારો કરો.",grammarEmpty:"પહેલાં એક અંગ્રેજી વાક્ય લખો.",grammarLabel:"સાચું વાક્ય:",grammarUnknown:"આ ડેમો ફક્ત થોડાં ઉદાહરણ વાક્યો તપાસે છે."},
+    en:{practice:"Write or say your response to this exercise.",quizQuestion:"Choose the correct option.",quizCorrect:"Correct!",quizTry:"Try again.",reviewEmpty:"Write or dictate your response first.",reviewInterview:"Check: did you answer the question, include a specific example, and connect it to the role?",reviewGeneral:"Check: is your main point clear, is the tone suitable, and did you include a useful detail?",reviewEnd:"Say it aloud once and make one improvement.",grammarEmpty:"Enter an English sentence first.",grammarLabel:"Correct sentence:",grammarUnknown:"This demo checks only selected example sentences."}
+};
+const localizedReviewCount = {
+    kn:["ಅಭ್ಯಾಸ ಪರಿಶೀಲನೆ","ಪದಗಳು"], hi:["अभ्यास समीक्षा","शब्द"], te:["అభ్యాస సమీక్ష","పదాలు"],
+    ta:["பயிற்சி மதிப்பாய்வு","சொற்கள்"], ml:["പരിശീലന അവലോകനം","വാക്കുകൾ"], bn:["অনুশীলন পর্যালোচনা","শব্দ"],
+    mr:["सराव आढावा","शब्द"], gu:["અભ્યાસ સમીક્ષા","શબ્દો"], en:["Practice review","words"]
+};
+
+
+// Structured curriculum: authored examples and multilingual teaching notes.
+const extendedCurriculum = [{"id": "clarify-details", "level": "intermediate", "category": "spoken", "title": "Resolve a misunderstanding without embarrassment", "content": "When a message is unclear, name the part you did not understand rather than pretending to agree. Ask a focused question, paraphrase the answer, then confirm the next action. Use tentative language when correcting your interpretation: “I may have misunderstood…” is more constructive than “You said it wrong.” In a phone call, repeat important dates or numbers and ask for confirmation. You can be polite and precise at the same time.", "prompt": "Your teammate says “send it next Friday,” but two dates are possible. Ask which date they mean, confirm the file format, and summarize what you will send.", "dialogue": "Maya: Please send the report next Friday.\nYou: Just to confirm, do you mean Friday the 12th or Friday the 19th?\nMaya: Friday the 12th, as a PDF.\nYou: Understood. I will send the PDF by Friday the 12th. Is there a preferred time?", "sample": "I may have misunderstood the deadline. Do you mean Friday the 12th? Would you like the report as a PDF or an editable document? Thank you for clarifying; I will send the PDF by 3 p.m. on the 12th.", "vocab": ["clarify", "confirm"], "pronunciation": "Just to CONFIRM / do you mean Friday the TWELFTH / or Friday the NINETEENTH?", "checks": ["Ask a focused question", "Repeat the agreed detail", "State the next action"], "quiz": {"question": "Which reply resolves an ambiguous date?", "options": ["Fine, I know.", "You are confusing.", "Do you mean Friday the 12th or the 19th?"], "answer": 2, "why": "Offering the two possible dates makes the ambiguity easy to resolve."}, "quizzes": [{"question": "Which reply resolves an ambiguous date?", "options": ["Fine, I know.", "You are confusing.", "Do you mean Friday the 12th or the 19th?"], "answer": 2, "why": "Offering the two possible dates makes the ambiguity easy to resolve."}, {"question": "After hearing the date, what should you do?", "options": ["Confirm the date and your next action.", "Switch topics immediately.", "Assume the time."], "answer": 0, "why": "Confirming your interpretation prevents another misunderstanding."}, {"question": "Which phrase politely checks your understanding?", "options": ["Obviously you meant that.", "If I understood correctly, you need the PDF by 3 p.m. Is that right?", "I agree with everything."], "answer": 1, "why": "A paraphrase plus a confirmation question checks the exact meaning."}], "examples": "Maya: Please send the report next Friday.\nYou: Just to confirm, do you mean Friday the 12th or Friday the 19th?\nMaya: Friday the 12th, as a PDF.\nYou: Understood. I will send the PDF by Friday the 12th. Is there a preferred time?", "native": {"kn": "ಸಂದೇಶ ಅಸ್ಪಷ್ಟವಾಗಿದ್ದರೆ ಯಾವ ವಿವರ ಅರ್ಥವಾಗಿಲ್ಲ ಎಂದು ಸ್ಪಷ್ಟವಾಗಿ ಕೇಳಿ. ದಿನಾಂಕ ಅಥವಾ ಕಡತದ ರೂಪವನ್ನು ಖಚಿತಪಡಿಸಿಕೊಂಡು, ನೀವು ಮಾಡುವ ಮುಂದಿನ ಕೆಲಸವನ್ನು ನಿಮ್ಮ ಮಾತಿನಲ್ಲಿ ಹೇಳಿ.", "hi": "संदेश अस्पष्ट हो तो ठीक वही विवरण पूछें जो समझ नहीं आया। तारीख या फ़ाइल का प्रारूप स्पष्ट करें, फिर अपने शब्दों में अगला काम दोहराकर पुष्टि करें।", "te": "సందేశం స్పష్టంగా లేకపోతే అర్థం కాని వివరాన్ని నిర్దిష్టంగా అడగండి. తేదీ లేదా ఫైల్ రూపాన్ని నిర్ధారించి, మీరు చేయబోయే పనిని మీ మాటల్లో చెప్పండి.", "ta": "செய்தி தெளிவாக இல்லாவிட்டால் புரியாத விவரத்தை குறிப்பாகக் கேளுங்கள். தேதி அல்லது கோப்பு வடிவத்தை உறுதிப்படுத்தி, நீங்கள் செய்யும் அடுத்த செயலை உங்கள் சொற்களில் கூறுங்கள்.", "ml": "സന്ദേശം വ്യക്തമല്ലെങ്കിൽ മനസ്സിലാകാത്ത വിവരം കൃത്യമായി ചോദിക്കുക. തീയതിയോ ഫയൽ രൂപമോ ഉറപ്പാക്കി, അടുത്ത നടപടി സ്വന്തം വാക്കുകളിൽ പറഞ്ഞ് സ്ഥിരീകരിക്കുക.", "bn": "বার্তা অস্পষ্ট হলে ঠিক কোন তথ্যটি বুঝতে পারেননি তা জিজ্ঞেস করুন। তারিখ বা ফাইলের ধরন নিশ্চিত করে নিজের ভাষায় পরের কাজটি বলে মিলিয়ে নিন।", "mr": "संदेश अस्पष्ट असल्यास नेमका न समजलेला तपशील विचारा. तारीख किंवा फाइलचा प्रकार स्पष्ट करून पुढचे काम स्वतःच्या शब्दांत सांगून खात्री करा.", "gu": "સંદેશ અસ્પષ્ટ હોય તો ન સમજાયેલી ચોક્કસ વિગત પૂછો. તારીખ કે ફાઇલનો પ્રકાર સ્પષ્ટ કરીને આગળનું કામ પોતાના શબ્દોમાં કહી ખાતરી કરો."}}, {"id": "tell-a-story", "level": "intermediate", "category": "spoken", "title": "Tell a clear story with a turning point", "content": "Give your listener a short setting, then explain the problem, your response, and the outcome. Use time markers such as “at first,” “however,” and “eventually” to show the sequence. Keep the main event in the past tense. Include one concrete detail that helps the listener picture what happened. Avoid listing every minor event; choose details that explain why the outcome mattered.", "prompt": "Tell a 60–90 second story about a plan that changed. Include the original plan, the unexpected event, what you did, and what you learned.", "dialogue": "Friend: How did your presentation go?\nYou: At first, everything was ready. However, the projector stopped working just before our turn.\nFriend: What did you do?\nYou: We used a laptop for a small group demo. Eventually, everyone could see the key features.", "sample": "Last month, our team prepared a college demonstration. Just before it began, the projector stopped working. I suggested showing the application on two laptops while a teammate explained the workflow. We completed the demonstration and learned to prepare a backup plan.", "vocab": ["unexpected", "eventually"], "pronunciation": "At FIRST / the plan was simple. HOWEver / we needed a BACKup.", "checks": ["Set the scene briefly", "Explain your response", "Finish with the outcome"], "quiz": {"question": "Which sentence introduces a turning point?", "options": ["However, the projector stopped working.", "The presentation was in a room.", "My friend was there."], "answer": 0, "why": "However signals a change or contrast that affects the story."}, "quizzes": [{"question": "Which sentence introduces a turning point?", "options": ["However, the projector stopped working.", "The presentation was in a room.", "My friend was there."], "answer": 0, "why": "However signals a change or contrast that affects the story."}, {"question": "What belongs at the end of a focused story?", "options": ["Every person’s full name.", "The outcome and what you learned.", "The same introduction again."], "answer": 1, "why": "An outcome gives the story a clear destination."}, {"question": "Which sequence is easiest to follow?", "options": ["Outcome, unrelated facts, greeting.", "All details at once.", "Setting, problem, response, outcome."], "answer": 2, "why": "A clear sequence helps listeners connect cause and effect."}], "examples": "Friend: How did your presentation go?\nYou: At first, everything was ready. However, the projector stopped working just before our turn.\nFriend: What did you do?\nYou: We used a laptop for a small group demo. Eventually, everyone could see the key features.", "native": {"kn": "ಕಥೆಯಲ್ಲಿ ಹಿನ್ನೆಲೆ, ಅನಿರೀಕ್ಷಿತ ಸಮಸ್ಯೆ, ನಿಮ್ಮ ಕ್ರಮ ಮತ್ತು ಫಲಿತಾಂಶ ಇರಲಿ. ಘಟನೆಗಳ ಕ್ರಮಕ್ಕೆ at first, however, eventually ಬಳಸಿ; ಕೊನೆಯಲ್ಲಿ ಕಲಿತ ವಿಷಯ ಹೇಳಿ.", "hi": "कहानी में पृष्ठभूमि, अचानक आई समस्या, आपका कदम और नतीजा रखें। क्रम बताने के लिए at first, however और eventually प्रयोग करें; अंत में सीख बताएं।", "te": "కథలో నేపథ్యం, అనుకోని సమస్య, మీ చర్య, ఫలితం ఉండాలి. క్రమాన్ని చూపడానికి at first, however, eventually వాడండి; చివరలో నేర్చుకున్నది చెప్పండి.", "ta": "கதையில் பின்னணி, எதிர்பாராத சிக்கல், உங்கள் செயல், விளைவு இருக்கட்டும். வரிசைக்காக at first, however, eventually பயன்படுத்தி, இறுதியில் கற்றதைச் சொல்லுங்கள்.", "ml": "കഥയിൽ പശ്ചാത്തലം, അപ്രതീക്ഷിത പ്രശ്നം, നിങ്ങളുടെ നടപടി, ഫലം എന്നിവ ഉൾപ്പെടുത്തുക. ക്രമത്തിന് at first, however, eventually ഉപയോഗിച്ച് അവസാനം പഠിച്ചത് പറയുക.", "bn": "গল্পে পটভূমি, অপ্রত্যাশিত সমস্যা, আপনার পদক্ষেপ এবং ফল রাখুন। ক্রম বোঝাতে at first, however, eventually ব্যবহার করুন; শেষে শেখা বিষয় বলুন।", "mr": "कथेत पार्श्वभूमी, अनपेक्षित अडचण, तुमची कृती आणि परिणाम असू द्या. क्रमासाठी at first, however, eventually वापरा; शेवटी शिकलेले सांगा.", "gu": "વાર્તામાં પૃષ્ઠભૂમિ, અણધારી સમસ્યા, તમારી કાર્યવાહી અને પરિણામ રાખો. ક્રમ માટે at first, however, eventually વાપરો; અંતે શીખેલું કહો."}}, {"id": "explain-simply", "level": "advanced", "category": "spoken", "title": "Explain a complex idea to a non-specialist", "content": "Start with the listener’s question and give a plain-language answer before adding technical detail. Use an analogy only when it helps; explain where the comparison ends. Replace unnecessary jargon with familiar words, and separate what a system does from what you recommend. Check understanding with a useful question, such as “Would an example help?” Avoid treating the listener as less capable because their expertise is different.", "prompt": "Explain two-factor authentication to a classmate without a technical background. Give a simple example, mention its limitation, and check whether the explanation is clear.", "dialogue": "Colleague: Why do I need another login step?\nYou: It asks for a second proof that the person signing in is you. A password is one proof; an authenticator can provide another.\nColleague: Does that remove every risk?\nYou: No. It adds protection, but we still need to be careful with unexpected requests.", "sample": "Two-factor authentication asks for two different kinds of proof when you sign in. For example, you may enter a password and then approve a prompt on your own device. It adds a layer of protection, but it does not make every suspicious request safe. Would you like me to explain a typical sign-in example?", "vocab": ["analogy", "limitation"], "pronunciation": "It ADDS protection / but it does NOT remove EVERY risk.", "checks": ["Use plain language", "Include an example and limitation", "Invite a question"], "quiz": {"question": "Which explanation best fits a non-specialist?", "options": ["It implements a complex factor protocol.", "It asks for another kind of proof when you sign in.", "You would not understand it."], "answer": 1, "why": "The plain-language explanation gives the purpose before jargon."}, "quizzes": [{"question": "Which explanation best fits a non-specialist?", "options": ["It implements a complex factor protocol.", "It asks for another kind of proof when you sign in.", "You would not understand it."], "answer": 1, "why": "The plain-language explanation gives the purpose before jargon."}, {"question": "What makes an analogy responsible?", "options": ["Claiming it is exactly the same as the system.", "Adding more unfamiliar jargon.", "Explaining what it illustrates and where it stops applying."], "answer": 2, "why": "An analogy helps understanding but should not hide important differences."}, {"question": "Which is a useful understanding check?", "options": ["Would a sign-in example help?", "You understood, obviously.", "There is nothing to ask."], "answer": 0, "why": "Offering an example invites the listener to identify what they need."}], "examples": "Colleague: Why do I need another login step?\nYou: It asks for a second proof that the person signing in is you. A password is one proof; an authenticator can provide another.\nColleague: Does that remove every risk?\nYou: No. It adds protection, but we still need to be careful with unexpected requests.", "native": {"kn": "ತಾಂತ್ರಿಕ ವಿಷಯವನ್ನು ಪರಿಚಿತ ಪದಗಳಲ್ಲಿ ವಿವರಿಸಿ. ಒಂದು ಸರಳ ಉದಾಹರಣೆ ನೀಡಿ, ಅದರ ಮಿತಿಯನ್ನು ತಿಳಿಸಿ ಮತ್ತು ಕೇಳುವವರಿಗೆ ಇನ್ನೊಂದು ಉದಾಹರಣೆ ಬೇಕೇ ಎಂದು ಕೇಳಿ.", "hi": "तकनीकी बात परिचित शब्दों में समझाएं। एक सरल उदाहरण दें, उसकी सीमा बताएं और पूछें कि सुनने वाले को दूसरा उदाहरण चाहिए या नहीं।", "te": "సాంకేతిక విషయాన్ని పరిచయమైన పదాలతో వివరించండి. సరళమైన ఉదాహరణ, దాని పరిమితి చెప్పి, మరో ఉదాహరణ అవసరమా అని అడగండి.", "ta": "தொழில்நுட்பக் கருத்தை பழக்கமான சொற்களில் விளக்குங்கள். எளிய உதாரணத்தையும் அதன் வரம்பையும் கூறி, மற்றொரு உதாரணம் தேவையா எனக் கேளுங்கள்.", "ml": "സാങ്കേതിക ആശയം പരിചിതമായ വാക്കുകളിൽ വിശദീകരിക്കുക. ലളിതമായ ഉദാഹരണവും അതിന്റെ പരിമിതിയും പറഞ്ഞ് മറ്റൊരു ഉദാഹരണം വേണമോ എന്ന് ചോദിക്കുക.", "bn": "প্রযুক্তিগত বিষয় পরিচিত শব্দে বোঝান। সহজ উদাহরণ ও তার সীমা বলুন, তারপর আরেকটি উদাহরণ দরকার কি না জিজ্ঞেস করুন।", "mr": "तांत्रिक कल्पना परिचित शब्दांत समजवा. सोपे उदाहरण आणि त्याची मर्यादा सांगून आणखी उदाहरण हवे का ते विचारा.", "gu": "તકનીકી વિચાર પરિચિત શબ્દોમાં સમજાવો. સરળ ઉદાહરણ અને તેની મર્યાદા કહીને વધુ ઉદાહરણ જોઈએ છે કે નહીં તે પૂછો."}}, {"id": "deadline-options", "level": "advanced", "category": "workplace", "title": "Negotiate a deadline with evidence and options", "content": "Explain the delivery risk early, using observable facts. Connect the constraint to the effect on the work, then offer realistic alternatives. Be explicit about the trade-off between scope, time, and quality. Ask the decision-maker to choose a priority instead of making an unauthorized commitment. Finish by confirming who will do what and when. Your aim is a workable agreement, not a defensive excuse.", "prompt": "Testing is incomplete and your team cannot deliver every feature by Friday. Explain the risk, offer a smaller Friday release or a full Tuesday release, and ask which option the manager prefers.", "dialogue": "Manager: Can we release everything on Friday?\nYou: Two features still need testing. Releasing them now would leave known checks incomplete.\nManager: What do you suggest?\nYou: We can deliver the tested core on Friday or the full scope on Tuesday. Which priority should we plan around?", "sample": "The core features are tested, but two features still need review. We can release the tested core on Friday and schedule the remainder for Tuesday. Alternatively, we can move the complete release to Tuesday. Which option best meets the customer’s needs? I will update the plan after you confirm the priority.", "vocab": ["constraint", "trade-off"], "pronunciation": "We can deliver the CORE on FRIDAY / or the FULL scope on TUESDAY.", "checks": ["Name an observable constraint", "Offer two realistic options", "Ask for a priority decision"], "quiz": {"question": "Which response makes a deadline discussion constructive?", "options": ["It is impossible. Stop asking.", "Yes, everything will definitely be ready.", "We can deliver the core Friday or the full scope Tuesday. Which matters more?"], "answer": 2, "why": "Specific options make the time-and-scope trade-off visible."}, "quizzes": [{"question": "Which response makes a deadline discussion constructive?", "options": ["It is impossible. Stop asking.", "Yes, everything will definitely be ready.", "We can deliver the core Friday or the full scope Tuesday. Which matters more?"], "answer": 2, "why": "Specific options make the time-and-scope trade-off visible."}, {"question": "What should you confirm after an agreement?", "options": ["The owner, scope, and date.", "Only that the meeting ended.", "A new deadline nobody agreed to."], "answer": 0, "why": "A usable agreement needs clear responsibilities and timing."}, {"question": "Which statement uses evidence?", "options": ["The deadline is unfair.", "Two features still need testing, so the complete release is at risk.", "Nothing ever works."], "answer": 1, "why": "An observable fact makes the risk concrete without blame."}], "examples": "Manager: Can we release everything on Friday?\nYou: Two features still need testing. Releasing them now would leave known checks incomplete.\nManager: What do you suggest?\nYou: We can deliver the tested core on Friday or the full scope on Tuesday. Which priority should we plan around?", "native": {"kn": "ಗಡುವಿನ ಅಪಾಯವನ್ನು ವಾಸ್ತವಾಂಶದೊಂದಿಗೆ ಬೇಗ ತಿಳಿಸಿ. ಕಡಿಮೆ ಕೆಲಸವನ್ನು ಬೇಗ ನೀಡುವುದು ಅಥವಾ ಸಂಪೂರ್ಣ ಕೆಲಸವನ್ನು ನಂತರ ನೀಡುವುದು ಎಂಬ ಎರಡು ಆಯ್ಕೆಗಳನ್ನು ನೀಡಿ; ಆದ್ಯತೆಯನ್ನು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.", "hi": "समयसीमा का जोखिम तथ्यों के साथ जल्दी बताएं। कम काम जल्दी देने या पूरा काम बाद में देने के दो विकल्प दें और प्राथमिकता की पुष्टि करें।", "te": "గడువు ప్రమాదాన్ని వాస్తవాలతో ముందుగానే వివరించండి. తక్కువ పనిని త్వరగా లేదా మొత్తం పనిని తరువాత ఇవ్వగల రెండు ఎంపికలు సూచించి ప్రాధాన్యతను నిర్ధారించండి.", "ta": "காலக்கெடு ஆபத்தை உண்மைகளுடன் முன்கூட்டியே தெரிவியுங்கள். குறைந்த பணியை விரைவாக அல்லது முழுப் பணியை பின்னர் வழங்கும் இரண்டு தேர்வுகளைக் கூறி முன்னுரிமையை உறுதிசெய்யுங்கள்.", "ml": "സമയപരിധിയിലെ അപകടസാധ്യത വസ്തുതകളോടെ നേരത്തെ പറയുക. കുറച്ച് ജോലി വേഗത്തിലോ മുഴുവൻ ജോലി പിന്നീടോ നൽകുന്ന രണ്ട് വഴികൾ നിർദേശിച്ച് മുൻഗണന ഉറപ്പാക്കുക.", "bn": "সময়সীমার ঝুঁকি তথ্য দিয়ে আগেই জানান। কম কাজ আগে বা সম্পূর্ণ কাজ পরে দেওয়ার দুটি বিকল্প দিন এবং অগ্রাধিকার নিশ্চিত করুন।", "mr": "मुदतीचा धोका तथ्यांसह लवकर सांगा. कमी काम लवकर किंवा पूर्ण काम नंतर देण्याचे दोन पर्याय मांडून प्राधान्य निश्चित करा.", "gu": "સમયમર્યાદાનું જોખમ હકીકતો સાથે વહેલું જણાવો. ઓછું કામ વહેલું અથવા આખું કામ પછી આપવાના બે વિકલ્પો આપીને પ્રાથમિકતા નક્કી કરો."}}, {"id": "presentation-qa", "level": "advanced", "category": "workplace", "title": "Handle difficult presentation questions", "content": "Listen to the whole question before answering. Acknowledge the concern, answer the central point, and support it with the evidence you actually have. Distinguish a finding from a hypothesis. If a question has two parts, signpost your response. When you do not know, state what is missing and propose a follow-up rather than guessing. End by checking whether your answer addressed the question.", "prompt": "An audience member asks whether your small college survey proves that every student prefers online learning. Explain the limitation, describe what the survey can support, and suggest a next step.", "dialogue": "Audience: Does your survey prove all students prefer online classes?\nPresenter: No. It describes the responses from our sample, not every student.\nAudience: Then what can we conclude?\nPresenter: It suggests a preference among these respondents. We would need a broader sample before making a wider claim.", "sample": "That is an important limitation. Our survey shows a preference among the students who responded, but it does not prove the preference of all students. We should report the sample clearly and collect responses from a wider group before generalizing. Does that address your concern about the conclusion?", "vocab": ["evidence", "assumption"], "pronunciation": "Our SAMPLE suggests a preference / it does NOT prove a UNIVERSAL conclusion.", "checks": ["Answer the actual question", "Separate evidence from a wider claim", "Offer an appropriate next step"], "quiz": {"question": "What is the strongest response to an unsupported claim?", "options": ["Acknowledge the limit and explain what the evidence supports.", "Repeat the claim louder.", "Invent a larger sample."], "answer": 0, "why": "A clear limitation is more useful than an unsupported promise."}, "quizzes": [{"question": "What is the strongest response to an unsupported claim?", "options": ["Acknowledge the limit and explain what the evidence supports.", "Repeat the claim louder.", "Invent a larger sample."], "answer": 0, "why": "A clear limitation is more useful than an unsupported promise."}, {"question": "If you cannot answer accurately, say:", "options": ["I know everything about it.", "I do not have that figure; I will check the source and follow up.", "That question is not worth asking."], "answer": 1, "why": "Stating the gap and a follow-up preserves accuracy and trust."}, {"question": "What helps with a two-part question?", "options": ["Ignore one part.", "Give an unrelated answer.", "First address the method, then the finding."], "answer": 2, "why": "Signposting makes it clear which part you are answering."}], "examples": "Audience: Does your survey prove all students prefer online classes?\nPresenter: No. It describes the responses from our sample, not every student.\nAudience: Then what can we conclude?\nPresenter: It suggests a preference among these respondents. We would need a broader sample before making a wider claim.", "native": {"kn": "ಪ್ರಶ್ನೆಯನ್ನು ಪೂರ್ಣವಾಗಿ ಕೇಳಿ, ಸಾಕ್ಷ್ಯ ಬೆಂಬಲಿಸುವ ಉತ್ತರ ನೀಡಿ. ಚಿಕ್ಕ ಸಮೀಕ್ಷೆಯಿಂದ ಎಲ್ಲರ ಬಗ್ಗೆ ತೀರ್ಮಾನಿಸಲು ಆಗುವುದಿಲ್ಲ; ಮಿತಿಯನ್ನು ಮತ್ತು ಮುಂದಿನ ಪರಿಶೀಲನೆಯನ್ನು ವಿವರಿಸಿ.", "hi": "पूरा प्रश्न सुनकर उतना ही दावा करें जितना प्रमाण समर्थन करता है। छोटा सर्वे सभी लोगों की राय साबित नहीं करता; सीमा और अगली जांच स्पष्ट करें।", "te": "ప్రశ్న పూర్తిగా విని, ఆధారాలు సమర్థించేంత వరకే చెప్పండి. చిన్న సర్వే అందరి అభిప్రాయాన్ని నిరూపించదు; పరిమితి, తదుపరి పరిశీలన వివరించండి.", "ta": "கேள்வியை முழுவதும் கேட்டு, ஆதாரம் ஆதரிக்கும் அளவுக்கு மட்டும் பதிலளியுங்கள். சிறிய கருத்துக்கணிப்பு அனைவரின் கருத்தையும் நிரூபிக்காது; வரம்பையும் அடுத்த ஆய்வையும் கூறுங்கள்.", "ml": "ചോദ്യം മുഴുവൻ കേട്ട് തെളിവ് പിന്തുണയ്ക്കുന്ന പരിധിയിൽ മറുപടി നൽകുക. ചെറിയ സർവേ എല്ലാവരുടെയും അഭിപ്രായം തെളിയിക്കില്ല; പരിമിതിയും അടുത്ത പരിശോധനയും പറയുക.", "bn": "সম্পূর্ণ প্রশ্ন শুনে প্রমাণ যতটা সমর্থন করে ততটাই বলুন। ছোট সমীক্ষা সবার মত প্রমাণ করে না; সীমা ও পরের যাচাই ব্যাখ্যা করুন।", "mr": "पूर्ण प्रश्न ऐकून पुरावा जितके समर्थन करतो तितकेच बोला. लहान सर्वेक्षण सर्वांचे मत सिद्ध करत नाही; मर्यादा आणि पुढची तपासणी सांगा.", "gu": "આખો પ્રશ્ન સાંભળીને પુરાવા જેટલું સમર્થન કરે તેટલું જ કહો. નાનો સર્વે સૌનો મત સાબિત કરતો નથી; મર્યાદા અને આગળની તપાસ સમજાવો."}}, {"id": "customer-recovery", "level": "intermediate", "category": "workplace", "title": "Help a frustrated customer without overpromising", "content": "Acknowledge the customer’s inconvenience without arguing about their reaction. Ask for the specific detail needed to understand the issue, then explain the next action you can actually take. Avoid promising a fix or deadline you cannot control. If the issue needs another team, explain the handover and how the customer will receive an update. End by confirming the agreed next step.", "prompt": "A customer says their order arrived late and demands an immediate refund. Acknowledge the problem, ask for the order reference, and explain that you will check the available resolution without promising approval.", "dialogue": "Customer: This arrived late. I want a refund now.\nYou: I’m sorry the delay disrupted your plans. May I have the order reference so I can check the details?\nCustomer: It is AB123.\nYou: Thank you. I will review the order and explain the options available under our policy.", "sample": "I understand that the delay was inconvenient. Could you share the order reference and the delivery date? I will check the details and the available options under our policy. If another team needs to review it, I will explain how you can track the update.", "vocab": ["acknowledge", "resolution"], "pronunciation": "I underSTAND the inconvenience / let me CHECK the available OPTIONS.", "checks": ["Acknowledge the inconvenience", "Ask for a relevant detail", "Promise only an action you control"], "quiz": {"question": "Which response avoids an unsupported promise?", "options": ["Your refund is guaranteed, whatever happened.", "I will check the order and explain the available options.", "Calm down; it is not my problem."], "answer": 1, "why": "You can commit to checking the issue without guaranteeing a decision."}, "quizzes": [{"question": "Which response avoids an unsupported promise?", "options": ["Your refund is guaranteed, whatever happened.", "I will check the order and explain the available options.", "Calm down; it is not my problem."], "answer": 1, "why": "You can commit to checking the issue without guaranteeing a decision."}, {"question": "What is a useful first question?", "options": ["Why are you always angry?", "Can you stop talking?", "Could you share the order reference?"], "answer": 2, "why": "The order reference is a concrete detail needed to investigate."}, {"question": "A good handover explains:", "options": ["Who will review it and how updates will be shared.", "Only that someone else is responsible.", "A guaranteed outcome without review."], "answer": 0, "why": "The customer needs a clear next step, not a vague transfer."}], "examples": "Customer: This arrived late. I want a refund now.\nYou: I’m sorry the delay disrupted your plans. May I have the order reference so I can check the details?\nCustomer: It is AB123.\nYou: Thank you. I will review the order and explain the options available under our policy.", "native": {"kn": "ಗ್ರಾಹಕರಿಗೆ ಆಗಿರುವ ತೊಂದರೆಯನ್ನು ಒಪ್ಪಿಕೊಂಡು, ಅಗತ್ಯ ವಿವರ ಕೇಳಿ. ನೀವು ನಿಯಂತ್ರಿಸಬಹುದಾದ ಪರಿಶೀಲನೆಗೆ ಮಾತ್ರ ಭರವಸೆ ನೀಡಿ; ಅನುಮೋದಿಸದ ಪರಿಹಾರವನ್ನು ಖಚಿತವೆಂದು ಹೇಳಬೇಡಿ.", "hi": "ग्राहक की परेशानी स्वीकार करें और जरूरी जानकारी पूछें। केवल अपने नियंत्रण वाले कदम का वादा करें; बिना समीक्षा किसी समाधान की गारंटी न दें।", "te": "కస్టమర్ ఇబ్బందిని అంగీకరించి అవసరమైన వివరాలు అడగండి. మీ నియంత్రణలోని చర్యకు మాత్రమే మాట ఇవ్వండి; సమీక్షించని పరిష్కారాన్ని హామీ ఇవ్వవద్దు.", "ta": "வாடிக்கையாளரின் சிரமத்தை ஏற்று தேவையான விவரங்களைக் கேளுங்கள். உங்கள் கட்டுப்பாட்டிலுள்ள செயலுக்கு மட்டும் உறுதி அளியுங்கள்; ஆய்வு செய்யாத தீர்வை உறுதியாகக் கூறாதீர்கள்.", "ml": "ഉപഭോക്താവിന്റെ ബുദ്ധിമുട്ട് അംഗീകരിച്ച് ആവശ്യമായ വിവരം ചോദിക്കുക. നിങ്ങളുടെ നിയന്ത്രണത്തിലുള്ള നടപടിക്ക് മാത്രം ഉറപ്പുനൽകുക; പരിശോധിക്കാത്ത പരിഹാരം ഉറപ്പിക്കരുത്.", "bn": "গ্রাহকের অসুবিধা স্বীকার করে দরকারি তথ্য জিজ্ঞেস করুন। নিজের নিয়ন্ত্রণে থাকা কাজের প্রতিশ্রুতি দিন; যাচাই না করে সমাধানের নিশ্চয়তা দেবেন না।", "mr": "ग्राहकाची गैरसोय मान्य करून आवश्यक माहिती विचारा. तुमच्या नियंत्रणातील कृतीचेच आश्वासन द्या; तपासणीशिवाय उपायाची हमी देऊ नका.", "gu": "ગ્રાહકની અસુવિધા સ્વીકારી જરૂરી માહિતી પૂછો. તમારા નિયંત્રણમાં હોય તેવી કાર્યવાહીનું જ વચન આપો; તપાસ વગર ઉકેલની ખાતરી ન આપો."}}, {"id": "security-handover", "level": "advanced", "category": "workplace", "title": "Give a clear cybersecurity incident handover", "content": "For a practice handover, separate observed facts, suspected explanations, actions already authorized, and unresolved questions. Use clear timestamps and describe the known scope without exaggeration. Say “under review” when impact is not established. State who owns the next check and when the team will update the situation. This lesson practises communication; follow your organization’s authorized incident process for real events.", "prompt": "In a fictional exercise, monitoring flagged unusual sign-ins. Explain what was observed, what is still unknown, what has been escalated, and who will provide the next update. Do not claim that an attack or data loss is confirmed.", "dialogue": "Lead: What do we know?\nAnalyst: Monitoring flagged unusual sign-ins for one account. The cause and impact are still under review.\nLead: What happens next?\nAnalyst: The assigned responder is checking the relevant records. I have escalated the observation and will share the agreed update at 3 p.m.", "sample": "At 2 p.m., monitoring flagged unusual sign-ins for one account. We have not confirmed the cause or any data impact. I escalated the observation to the assigned responder, who is checking the relevant records under the team’s process. The next agreed update is at 3 p.m.; I will report confirmed findings separately from open questions.", "vocab": ["scope", "escalate"], "pronunciation": "The CAUSE is under review / the IMPACT is NOT yet confirmed.", "checks": ["Separate facts from uncertainty", "Describe known scope", "Name the next owner and update"], "quiz": {"question": "Which wording handles uncertainty correctly?", "options": ["All customer data is definitely stolen.", "Nothing could have happened.", "Unusual sign-ins were observed; cause and impact are still under review."], "answer": 2, "why": "The wording reports an observation without asserting an unconfirmed outcome."}, "quizzes": [{"question": "Which wording handles uncertainty correctly?", "options": ["All customer data is definitely stolen.", "Nothing could have happened.", "Unusual sign-ins were observed; cause and impact are still under review."], "answer": 2, "why": "The wording reports an observation without asserting an unconfirmed outcome."}, {"question": "What should a handover identify?", "options": ["The next owner, open questions, and update time.", "Only a dramatic headline.", "A guess stated as a fact."], "answer": 0, "why": "Clear ownership and open questions make the handover usable."}, {"question": "Why mention the known scope?", "options": ["To make the issue sound bigger.", "To distinguish what is observed from what is not established.", "To guarantee the final outcome."], "answer": 1, "why": "Known scope limits overstatement and helps the next person focus."}], "examples": "Lead: What do we know?\nAnalyst: Monitoring flagged unusual sign-ins for one account. The cause and impact are still under review.\nLead: What happens next?\nAnalyst: The assigned responder is checking the relevant records. I have escalated the observation and will share the agreed update at 3 p.m.", "native": {"kn": "ಗಮನಿಸಿದ ಘಟನೆ, ಇನ್ನೂ ತಿಳಿಯದ ಕಾರಣ ಮತ್ತು ದೃಢಪಡಿಸದ ಪರಿಣಾಮವನ್ನು ಬೇರ್ಪಡಿಸಿ ಹೇಳಿ. ಗೊತ್ತಿರುವ ವ್ಯಾಪ್ತಿ, ಮುಂದಿನ ಜವಾಬ್ದಾರ ವ್ಯಕ್ತಿ ಮತ್ತು ನವೀಕರಣದ ಸಮಯ ತಿಳಿಸಿ.", "hi": "देखे गए तथ्य, अज्ञात कारण और अपुष्ट प्रभाव अलग रखें। ज्ञात दायरा, अगली जांच के जिम्मेदार व्यक्ति और अपडेट का समय बताएं।", "te": "గమనించిన విషయాలు, తెలియని కారణం, నిర్ధారణ కాని ప్రభావాన్ని వేరుగా చెప్పండి. తెలిసిన పరిధి, తదుపరి బాధ్యత వహించే వ్యక్తి, సమాచారం ఇచ్చే సమయం వివరించండి.", "ta": "கவனித்த உண்மைகள், தெரியாத காரணம், உறுதிப்படுத்தாத தாக்கம் ஆகியவற்றைப் பிரித்துச் சொல்லுங்கள். தெரிந்த வரம்பு, அடுத்த பொறுப்பாளர், தகவல் தரும் நேரம் கூறுங்கள்.", "ml": "നിരീക്ഷിച്ച വസ്തുതകൾ, അറിയാത്ത കാരണം, സ്ഥിരീകരിക്കാത്ത സ്വാധീനം എന്നിവ വേർതിരിക്കുക. അറിയാവുന്ന പരിധി, അടുത്ത ഉത്തരവാദി, വിവരം നൽകുന്ന സമയം പറയുക.", "bn": "দেখা তথ্য, অজানা কারণ এবং অনিশ্চিত প্রভাব আলাদা রাখুন। জানা পরিসর, পরের দায়িত্বপ্রাপ্ত ব্যক্তি এবং আপডেটের সময় বলুন।", "mr": "दिसलेली तथ्ये, अज्ञात कारण आणि अपुष्ट परिणाम वेगळे सांगा. ज्ञात व्याप्ती, पुढील जबाबदार व्यक्ती आणि माहिती देण्याची वेळ नमूद करा.", "gu": "જોયેલી હકીકતો, અજાણ્યું કારણ અને અપ્રમાણિત અસર અલગ જણાવો. જાણીતી વ્યાપ્તિ, આગળના જવાબદાર વ્યક્તિ અને અપડેટનો સમય કહો."}}, {"id": "project-deep-dive", "level": "advanced", "category": "interview", "title": "Discuss technical decisions and trade-offs", "content": "An interviewer may test how you think rather than ask for a list of tools. Explain the user’s problem, the constraints, the options you considered, and your own contribution. Describe why you chose an approach and what it cost in time, simplicity, or capability. Give evidence you actually collected. Finish with a limitation and what you would improve. Clearly distinguish individual work from the team’s work.", "prompt": "Choose a real project. Explain the problem, two possible approaches, why you chose one, what you personally built, and one limitation. Use true results; do not invent metrics.", "dialogue": "Interviewer: Why did you choose that design?\nCandidate: We needed a working demo within two weeks. I compared a simple local store with a hosted database.\nInterviewer: What was the trade-off?\nCandidate: The local store made the demo simpler, but it did not support shared access. I would use a hosted database for that requirement.", "sample": "In my college project, I built a task tracker for a small demonstration. I compared local storage with a hosted database and chose local storage because the demonstration did not need shared access. I implemented the form validation and tested the main task flows. The limitation was that data did not sync across devices; for shared use, I would design a backend and test access controls.", "vocab": ["trade-off", "contribution"], "pronunciation": "I compared TWO approaches / chose ONE for the demo / and identified its LIMITATION.", "checks": ["Explain why, not just which tool", "State your own contribution", "Discuss one real limitation"], "quiz": {"question": "Which answer best explains a design choice?", "options": ["I chose local storage for a single-device demo; it was simpler, but it did not support shared access.", "Because it is the best tool everywhere.", "Our team used many technologies."], "answer": 0, "why": "The answer links the decision to a constraint and acknowledges its trade-off."}, "quizzes": [{"question": "Which answer best explains a design choice?", "options": ["I chose local storage for a single-device demo; it was simpler, but it did not support shared access.", "Because it is the best tool everywhere.", "Our team used many technologies."], "answer": 0, "why": "The answer links the decision to a constraint and acknowledges its trade-off."}, {"question": "What should you say about team work?", "options": ["Claim every part as your own.", "Explain the team goal and your specific contribution.", "Avoid mentioning your work."], "answer": 1, "why": "A specific contribution lets the interviewer understand your experience."}, {"question": "If you did not measure a result, you should:", "options": ["Invent a realistic percentage.", "Present a guess as a fact.", "Describe the observed result and say what you would measure next."], "answer": 2, "why": "A truthful qualitative result is stronger than a fabricated metric."}], "examples": "Interviewer: Why did you choose that design?\nCandidate: We needed a working demo within two weeks. I compared a simple local store with a hosted database.\nInterviewer: What was the trade-off?\nCandidate: The local store made the demo simpler, but it did not support shared access. I would use a hosted database for that requirement.", "native": {"kn": "ಯೋಜನೆಯ ಸಮಸ್ಯೆ, ಪರಿಗಣಿಸಿದ ಆಯ್ಕೆಗಳು ಮತ್ತು ನಿಮ್ಮ ನಿರ್ಧಾರದ ಕಾರಣ ವಿವರಿಸಿ. ನಿಮ್ಮ ಸ್ವಂತ ಕೊಡುಗೆ, ನಿಜವಾದ ಫಲಿತಾಂಶ ಮತ್ತು ಒಂದು ಮಿತಿಯನ್ನು ಹೇಳಿ; ಅಂಕಿ ಅಂಶಗಳನ್ನು ಕಲ್ಪಿಸಬೇಡಿ.", "hi": "परियोजना की समस्या, विकल्प और चुनाव का कारण समझाएं। अपना योगदान, वास्तविक नतीजा और एक सीमा बताएं; आंकड़े न गढ़ें।", "te": "ప్రాజెక్ట్ సమస్య, ఎంపికలు, నిర్ణయానికి కారణం వివరించండి. మీ సొంత సహకారం, నిజమైన ఫలితం, ఒక పరిమితి చెప్పండి; సంఖ్యలు కల్పించవద్దు.", "ta": "திட்டச் சிக்கல், தேர்வுகள், முடிவின் காரணம் விளக்குங்கள். உங்கள் பங்களிப்பு, உண்மையான விளைவு, ஒரு வரம்பு கூறுங்கள்; எண்களை உருவாக்காதீர்கள்.", "ml": "പദ്ധതിയുടെ പ്രശ്നം, വഴികൾ, തീരുമാനത്തിന്റെ കാരണം വിശദീകരിക്കുക. സ്വന്തം സംഭാവന, യഥാർത്ഥ ഫലം, ഒരു പരിമിതി പറയുക; കണക്കുകൾ സൃഷ്ടിക്കരുത്.", "bn": "প্রকল্পের সমস্যা, বিকল্প ও সিদ্ধান্তের কারণ ব্যাখ্যা করুন। নিজের অবদান, সত্য ফল এবং একটি সীমা বলুন; সংখ্যা বানাবেন না।", "mr": "प्रकल्पाची समस्या, पर्याय आणि निवडीचे कारण स्पष्ट करा. स्वतःचे योगदान, खरा परिणाम आणि एक मर्यादा सांगा; आकडे बनवू नका.", "gu": "પ્રોજેક્ટની સમસ્યા, વિકલ્પો અને પસંદગીનું કારણ સમજાવો. પોતાનું યોગદાન, સાચું પરિણામ અને એક મર્યાદા કહો; આંકડા બનાવશો નહીં."}}, {"id": "unknown-question", "level": "advanced", "category": "interview", "title": "Answer an unfamiliar technical question honestly", "content": "Pause and identify what the interviewer is asking. State the part you know and the part you do not know. If appropriate, ask permission to explain a related concept or reason through a simple example. Label an assumption clearly instead of presenting it as a fact. Explain how you would verify the answer. Confidence means communicating your limits clearly, not pretending to know every topic.", "prompt": "An interviewer asks about a tool you have never used. Acknowledge that, connect it to relevant experience you really have, and explain a practical way you would learn or verify the concept.", "dialogue": "Interviewer: Have you configured this monitoring platform?\nCandidate: I haven’t used that platform directly. I have worked with application logs in a college project.\nInterviewer: How would you get started?\nCandidate: I would read its official getting-started guide, try a small authorized exercise, and check my understanding with the team.", "sample": "I haven’t used that tool directly, so I would not claim configuration experience. My related experience is reviewing logs in a college project. If useful, I can explain how I approached that task. To learn this tool, I would follow its official documentation, practise in an authorized test environment, and ask the team to review my understanding.", "vocab": ["assumption", "verify"], "pronunciation": "I have NOT used it directly / my RELATED experience is / reviewing application LOGS.", "checks": ["Acknowledge the knowledge gap", "Connect truthful related experience", "Explain how you would verify or learn"], "quiz": {"question": "Which answer is honest and constructive?", "options": ["I am an expert, although I have never used it.", "I have not used it directly; I can explain related work and how I would learn it.", "No idea. Next question."], "answer": 1, "why": "It names the gap and offers relevant reasoning without inventing experience."}, "quizzes": [{"question": "Which answer is honest and constructive?", "options": ["I am an expert, although I have never used it.", "I have not used it directly; I can explain related work and how I would learn it.", "No idea. Next question."], "answer": 1, "why": "It names the gap and offers relevant reasoning without inventing experience."}, {"question": "When reasoning from an assumption, you should:", "options": ["Hide that it is an assumption.", "Treat it as a proven fact.", "State the assumption and explain how you would check it."], "answer": 2, "why": "The listener needs to distinguish your assumptions from known facts."}, {"question": "A useful learning plan begins with:", "options": ["Official documentation and a small authorized practice task.", "An invented claim of experience.", "A promise to know everything tomorrow."], "answer": 0, "why": "A concrete learning step is more credible than an unsupported promise."}], "examples": "Interviewer: Have you configured this monitoring platform?\nCandidate: I haven’t used that platform directly. I have worked with application logs in a college project.\nInterviewer: How would you get started?\nCandidate: I would read its official getting-started guide, try a small authorized exercise, and check my understanding with the team.", "native": {"kn": "ಬಳಸದ ಸಾಧನದ ಬಗ್ಗೆ ಅನುಭವವಿದೆ ಎಂದು ಹೇಳಬೇಡಿ. ತಿಳಿದಿರುವ ಸಂಬಂಧಿತ ಅನುಭವವನ್ನು ಹೇಳಿ, ನಿಮ್ಮ ಊಹೆಯನ್ನು ಗುರುತಿಸಿ ಮತ್ತು ಅಧಿಕೃತ ದಾಖಲೆಗಳಿಂದ ಹೇಗೆ ಪರಿಶೀಲಿಸುವಿರಿ ಎಂದು ವಿವರಿಸಿ.", "hi": "जिस उपकरण का उपयोग नहीं किया, उसका अनुभव होने का दावा न करें। संबंधित वास्तविक अनुभव बताएं, अनुमान को पहचानें और आधिकारिक दस्तावेज से जांचने की योजना समझाएं।", "te": "వాడని సాధనంలో అనుభవం ఉందని చెప్పవద్దు. సంబంధిత నిజమైన అనుభవం చెప్పి, ఊహను గుర్తించి, అధికారిక పత్రాలతో ఎలా పరిశీలిస్తారో వివరించండి.", "ta": "பயன்படுத்தாத கருவியில் அனுபவம் உள்ளதாகக் கூறாதீர்கள். தொடர்புடைய உண்மையான அனுபவத்தைச் சொல்லி, ஊகத்தைக் குறிப்பிட்டு, அதிகாரப்பூர்வ ஆவணங்கள் மூலம் சரிபார்க்கும் திட்டத்தை விளக்குங்கள்.", "ml": "ഉപയോഗിക്കാത്ത ഉപകരണത്തിൽ പരിചയമുണ്ടെന്ന് പറയരുത്. ബന്ധപ്പെട്ട യഥാർത്ഥ അനുഭവം പറഞ്ഞ് അനുമാനം വ്യക്തമാക്കുക; ഔദ്യോഗിക രേഖകളിലൂടെ പരിശോധിക്കുന്ന പദ്ധതി വിശദീകരിക്കുക.", "bn": "ব্যবহার না করা টুলের অভিজ্ঞতা আছে বলবেন না। সম্পর্কিত সত্য অভিজ্ঞতা জানান, অনুমান চিহ্নিত করুন এবং টুলের আনুষ্ঠানিক নথি দিয়ে যাচাইয়ের পরিকল্পনা বলুন।", "mr": "न वापरलेल्या साधनाचा अनुभव असल्याचा दावा करू नका. संबंधित खरा अनुभव, गृहीतक आणि अधिकृत दस्तऐवजांतून पडताळणीची योजना स्पष्ट करा.", "gu": "ન વાપરેલા સાધનનો અનુભવ હોવાનો દાવો ન કરો. સંબંધિત સાચો અનુભવ, ધારણા અને સત્તાવાર દસ્તાવેજથી ચકાસવાની યોજના સમજાવો."}}, {"id": "bug-report", "level": "intermediate", "category": "workplace", "title": "Explain a software bug so another person can reproduce it", "content": "Describe the environment, the steps that lead to the issue, what you expected, and what actually happened. Include a useful error message without exposing passwords or personal data. Separate a reproducible observation from a guess about the cause. End with the impact and the next check you propose. A clear report helps teammates investigate even when you cannot solve the bug yourself.", "prompt": "A fictional task form clears the title when Save fails. Give a concise report with steps, expected versus actual behavior, impact, and one next check. Do not guess the root cause.", "dialogue": "Tester: When I enter a title and press Save with the connection unavailable, the title disappears.\nDeveloper: What should happen?\nTester: The form should keep the title and show a retry message.\nDeveloper: Is the cause confirmed?\nTester: Not yet. I can share the reproduction steps so we can check it.", "sample": "In the test browser, I entered a task title, disconnected the test connection, and pressed Save. I expected the title to remain with a retry message, but the field was cleared. A user would need to retype the task. The root cause is not confirmed; I would first reproduce the flow with the team and review the error handling.", "vocab": ["reproduce", "expected"], "pronunciation": "I exPECTED the title to REMAIN / but the field was CLEARED.", "checks": ["Give reproducible steps", "Compare expected and actual behavior", "Explain impact without guessing the cause"], "quiz": {"question": "What makes a bug report useful?", "options": ["It is broken. Fix it.", "The code must be bad.", "Steps, expected behavior, actual behavior, and impact."], "answer": 2, "why": "These details let another person reproduce and understand the issue."}, "quizzes": [{"question": "What makes a bug report useful?", "options": ["It is broken. Fix it.", "The code must be bad.", "Steps, expected behavior, actual behavior, and impact."], "answer": 2, "why": "These details let another person reproduce and understand the issue."}, {"question": "Which statement separates observation from a guess?", "options": ["The field clears after Save; the cause is not confirmed.", "The database is definitely wrong, without checking.", "Everyone knows the cause."], "answer": 0, "why": "It reports what happened without claiming an unverified cause."}, {"question": "Which information should not be included in a public example?", "options": ["The expected behavior.", "A real password or private customer data.", "The reproduction steps."], "answer": 1, "why": "An example can explain the issue without exposing sensitive details."}], "examples": "Tester: When I enter a title and press Save with the connection unavailable, the title disappears.\nDeveloper: What should happen?\nTester: The form should keep the title and show a retry message.\nDeveloper: Is the cause confirmed?\nTester: Not yet. I can share the reproduction steps so we can check it.", "native": {"kn": "ದೋಷವನ್ನು ಮರುಕಳಿಸುವ ಹಂತಗಳು, ನಿರೀಕ್ಷಿತ ವರ್ತನೆ ಮತ್ತು ನಿಜವಾಗಿ ನಡೆದದ್ದನ್ನು ಹೇಳಿ. ಪರಿಣಾಮವನ್ನು ವಿವರಿಸಿ; ಪರಿಶೀಲಿಸದ ಮೂಲ ಕಾರಣವನ್ನು ಖಚಿತವೆಂದು ಹೇಳಬೇಡಿ.", "hi": "समस्या दोहराने के चरण, अपेक्षित व्यवहार और वास्तव में हुए व्यवहार का वर्णन करें। प्रभाव बताएं; बिना जांच मूल कारण निश्चित न बताएं।", "te": "లోపాన్ని మళ్లీ చూపించే దశలు, ఆశించిన ప్రవర్తన, నిజంగా జరిగినది వివరించండి. ప్రభావం చెప్పండి; పరిశీలించని మూల కారణాన్ని నిర్ధారించవద్దు.", "ta": "பிழையை மீண்டும் காணும் படிகள், எதிர்பார்த்த நடத்தை, உண்மையில் நடந்ததை விளக்குங்கள். தாக்கத்தைக் கூறுங்கள்; சரிபார்க்காத அடிப்படைக் காரணத்தை உறுதியாகக் கூறாதீர்கள்.", "ml": "പിഴവ് വീണ്ടും കാണിക്കാനുള്ള ഘട്ടങ്ങൾ, പ്രതീക്ഷിച്ച പെരുമാറ്റം, യഥാർത്ഥത്തിൽ നടന്നത് വിശദീകരിക്കുക. സ്വാധീനം പറയുക; പരിശോധിക്കാത്ത മൂലകാരണം ഉറപ്പിക്കരുത്.", "bn": "সমস্যা আবার দেখানোর ধাপ, প্রত্যাশিত আচরণ এবং সত্যি যা ঘটেছে তা ব্যাখ্যা করুন। প্রভাব বলুন; যাচাই না করা মূল কারণ নিশ্চিত বলবেন না।", "mr": "दोष पुन्हा दाखवण्याच्या पायऱ्या, अपेक्षित व प्रत्यक्ष वर्तन सांगा. परिणाम स्पष्ट करा; न तपासलेले मूळ कारण निश्चित म्हणू नका.", "gu": "ખામી ફરી બતાવવાનાં પગલાં, અપેક્ષિત અને ખરેખર થયેલું વર્તન કહો. અસર સમજાવો; તપાસ્યા વગર મૂળ કારણ નિશ્ચિત ન કહો."}}];
+const curriculumLabels = {"en": ["Conversation in context", "Useful vocabulary", "Worked example — adapt it to your real experience", "Role-play task", "Self-review checklist", "Pronunciation and phrasing", "Listen to dialogue", "Listen to model answer", "Next quiz question", "Key idea", "Read, listen, then answer in your own words. Examples are practice material, not claims about your experience."], "kn": ["ಸಂದರ್ಭದ ಸಂಭಾಷಣೆ", "ಉಪಯುಕ್ತ ಪದಗಳು", "ಮಾದರಿ ಉತ್ತರ — ನಿಮ್ಮ ನಿಜವಾದ ಅನುಭವಕ್ಕೆ ಹೊಂದಿಸಿ", "ಪಾತ್ರಾಭಿನಯ ಅಭ್ಯಾಸ", "ಸ್ವಯಂ ಪರಿಶೀಲನೆ", "ಉಚ್ಚಾರಣೆ ಮತ್ತು ವಿರಾಮ", "ಸಂಭಾಷಣೆ ಕೇಳಿ", "ಮಾದರಿ ಉತ್ತರ ಕೇಳಿ", "ಮುಂದಿನ ಪ್ರಶ್ನೆ", "ಮುಖ್ಯ ವಿಚಾರ", "ಓದಿ, ಕೇಳಿ, ನಂತರ ನಿಮ್ಮ ಮಾತಿನಲ್ಲಿ ಉತ್ತರಿಸಿ. ಉದಾಹರಣೆಗಳು ಅಭ್ಯಾಸಕ್ಕಾಗಿ ಮಾತ್ರ."], "hi": ["परिस्थिति में बातचीत", "उपयोगी शब्द", "नमूना उत्तर — अपने वास्तविक अनुभव के अनुसार बदलें", "भूमिका अभ्यास", "स्वयं समीक्षा", "उच्चारण और विराम", "बातचीत सुनें", "नमूना उत्तर सुनें", "अगला प्रश्न", "मुख्य विचार", "पढ़ें, सुनें और अपने शब्दों में उत्तर दें। उदाहरण केवल अभ्यास के लिए हैं।"], "te": ["సందర్భ సంభాషణ", "ఉపయోగకరమైన పదాలు", "నమూనా సమాధానం — మీ నిజమైన అనుభవానికి మార్చండి", "పాత్రాభినయ సాధన", "స్వీయ పరిశీలన", "ఉచ్చారణ మరియు విరామాలు", "సంభాషణ వినండి", "నమూనా సమాధానం వినండి", "తదుపరి ప్రశ్న", "ముఖ్య భావం", "చదవండి, వినండి, మీ మాటల్లో సమాధానం చెప్పండి. ఉదాహరణలు సాధన కోసం మాత్రమే."], "ta": ["சூழல் உரையாடல்", "பயனுள்ள சொற்கள்", "மாதிரி பதில் — உங்கள் உண்மையான அனுபவத்திற்கு மாற்றுங்கள்", "பாத்திரப் பயிற்சி", "சுய மதிப்பீடு", "உச்சரிப்பும் இடைவெளியும்", "உரையாடலைக் கேளுங்கள்", "மாதிரி பதிலைக் கேளுங்கள்", "அடுத்த கேள்வி", "முக்கிய கருத்து", "படித்து, கேட்டு, உங்கள் சொற்களில் பதிலளியுங்கள். உதாரணங்கள் பயிற்சிக்காக மட்டுமே."], "ml": ["സാഹചര്യ സംഭാഷണം", "ഉപയോഗപ്രദമായ വാക്കുകൾ", "മാതൃകാ ഉത്തരം — സ്വന്തം അനുഭവത്തിന് അനുസരിച്ച് മാറ്റുക", "വേഷപരിശീലനം", "സ്വയം വിലയിരുത്തൽ", "ഉച്ചാരണവും ഇടവേളയും", "സംഭാഷണം കേൾക്കുക", "മാതൃക കേൾക്കുക", "അടുത്ത ചോദ്യം", "പ്രധാന ആശയം", "വായിക്കുക, കേൾക്കുക, സ്വന്തം വാക്കുകളിൽ മറുപടി പറയുക. ഉദാഹരണങ്ങൾ പരിശീലനത്തിനാണ്."], "bn": ["পরিস্থিতির কথোপকথন", "প্রয়োজনীয় শব্দ", "নমুনা উত্তর — নিজের সত্য অভিজ্ঞতা অনুযায়ী বদলান", "ভূমিকা অনুশীলন", "নিজে যাচাই করুন", "উচ্চারণ ও বিরতি", "কথোপকথন শুনুন", "নমুনা উত্তর শুনুন", "পরের প্রশ্ন", "মূল ধারণা", "পড়ুন, শুনুন, নিজের ভাষায় উত্তর দিন। উদাহরণগুলি অনুশীলনের জন্য।"], "mr": ["प्रसंगातील संवाद", "उपयुक्त शब्द", "नमुना उत्तर — तुमच्या खऱ्या अनुभवाप्रमाणे बदला", "भूमिका सराव", "स्वतःची तपासणी", "उच्चार आणि विराम", "संवाद ऐका", "नमुना उत्तर ऐका", "पुढचा प्रश्न", "मुख्य कल्पना", "वाचा, ऐका आणि स्वतःच्या शब्दांत उत्तर द्या. उदाहरणे फक्त सरावासाठी आहेत."], "gu": ["પરિસ્થિતિનો સંવાદ", "ઉપયોગી શબ્દો", "નમૂના જવાબ — તમારા સાચા અનુભવ મુજબ બદલો", "ભૂમિકા અભ્યાસ", "સ્વમૂલ્યાંકન", "ઉચ્ચાર અને વિરામ", "સંવાદ સાંભળો", "નમૂના જવાબ સાંભળો", "આગળનો પ્રશ્ન", "મુખ્ય વિચાર", "વાંચો, સાંભળો અને પોતાના શબ્દોમાં જવાબ આપો. ઉદાહરણો માત્ર અભ્યાસ માટે છે."]};
+const curriculumWords = ["clarify", "confirm", "unexpected", "eventually", "analogy", "limitation", "constraint", "trade-off", "evidence", "assumption", "acknowledge", "resolution", "scope", "escalate", "contribution", "verify", "reproduce", "expected"];
+const curriculumGlossary = {"en": ["make a detail clear", "check that a detail is correct", "not planned or anticipated", "after time or difficulty", "a comparison used to explain an idea", "a boundary on what something can do", "a restriction affecting a decision", "a compromise between competing benefits", "information supporting a claim", "an idea accepted temporarily without proof", "recognize a concern or fact", "a way of addressing a problem", "the extent of what is included", "refer an issue to the appropriate responsible person", "the part you personally added or did", "check using a reliable source", "make the same issue happen again", "what should happen"], "kn": ["ವಿವರವನ್ನು ಸ್ಪಷ್ಟಪಡಿಸು", "ಸರಿಯೇ ಎಂದು ಖಚಿತಪಡಿಸು", "ನಿರೀಕ್ಷಿಸದ", "ಕೊನೆಗೆ", "ಅರ್ಥೈಸುವ ಹೋಲಿಕೆ", "ಮಿತಿ", "ನಿರ್ಬಂಧ", "ಒಂದು ಲಾಭಕ್ಕಾಗಿ ಮತ್ತೊಂದರಲ್ಲಿ ರಾಜಿ", "ದಾವೆಗೆ ಆಧಾರ", "ಪರಿಶೀಲಿಸದ ಊಹೆ", "ವಿಷಯವನ್ನು ಒಪ್ಪಿಕೊಳ್ಳು", "ಸಮಸ್ಯೆಗೆ ಪರಿಹಾರದ ಮಾರ್ಗ", "ಒಳಗೊಂಡಿರುವ ವ್ಯಾಪ್ತಿ", "ಸೂಕ್ತ ಜವಾಬ್ದಾರ ವ್ಯಕ್ತಿಗೆ ತಿಳಿಸು", "ನಿಮ್ಮ ಸ್ವಂತ ಕೊಡುಗೆ", "ವಿಶ್ವಾಸಾರ್ಹ ಮೂಲದಿಂದ ಪರಿಶೀಲಿಸು", "ಅದೇ ದೋಷವನ್ನು ಮತ್ತೆ ತೋರಿಸು", "ನಡೆಯಬೇಕಾದದ್ದು"], "hi": ["विवरण स्पष्ट करना", "सही होने की पुष्टि करना", "जिसकी उम्मीद न हो", "आखिरकार", "समझाने के लिए तुलना", "सीमा", "निर्णय को सीमित करने वाली बाधा", "एक लाभ के लिए दूसरे में समझौता", "दावे का समर्थन करने वाला प्रमाण", "अभी जांचा नहीं गया अनुमान", "बात या चिंता को स्वीकार करना", "समस्या सुलझाने का तरीका", "शामिल चीजों का दायरा", "सही जिम्मेदार व्यक्ति तक बात पहुंचाना", "आपका अपना योगदान", "विश्वसनीय स्रोत से जांचना", "वही समस्या फिर दिखाना", "जो होना चाहिए"], "te": ["వివరాన్ని స్పష్టం చేయడం", "సరైనదని నిర్ధారించడం", "ఊహించనిది", "చివరికి", "వివరణ కోసం పోలిక", "పరిమితి", "నిర్ణయాన్ని ప్రభావితం చేసే ఆంక్ష", "ఒక ప్రయోజనం కోసం మరొకదానిలో రాజీ", "వాదనకు ఆధారం", "పరిశీలించని ఊహ", "ఆందోళనను గుర్తించడం", "సమస్యకు పరిష్కార మార్గం", "చేర్చిన విషయాల పరిధి", "తగిన బాధ్యత గల వ్యక్తికి తెలియజేయడం", "మీ సొంత సహకారం", "నమ్మదగిన మూలంతో పరిశీలించడం", "అదే సమస్యను మళ్లీ చూపడం", "జరగాల్సినది"], "ta": ["விவரத்தைத் தெளிவாக்குதல்", "சரியானதை உறுதிசெய்தல்", "எதிர்பாராதது", "இறுதியில்", "விளக்க உதவும் ஒப்புமை", "வரம்பு", "முடிவைப் பாதிக்கும் கட்டுப்பாடு", "ஒரு நன்மைக்காக மற்றொன்றில் சமரசம்", "கருத்தை ஆதரிக்கும் சான்று", "சரிபார்க்காத ஊகம்", "கவலையை ஏற்றுக்கொள்ளுதல்", "சிக்கலைத் தீர்க்கும் வழி", "உள்ளடங்கியவற்றின் அளவு", "சரியான பொறுப்பாளரிடம் எடுத்துச் செல்லுதல்", "உங்கள் சொந்த பங்களிப்பு", "நம்பகமான ஆதாரத்தில் சரிபார்த்தல்", "அதே பிழையை மீண்டும் காட்டுதல்", "நடக்க வேண்டியது"], "ml": ["വിവരം വ്യക്തമാക്കുക", "ശരിയെന്ന് ഉറപ്പാക്കുക", "പ്രതീക്ഷിക്കാത്തത്", "ഒടുവിൽ", "വിശദീകരിക്കാൻ ഉപയോഗിക്കുന്ന താരതമ്യം", "പരിമിതി", "തീരുമാനത്തെ ബാധിക്കുന്ന നിയന്ത്രണം", "ഒരു നേട്ടത്തിനായി മറ്റൊന്നിൽ വിട്ടുവീഴ്ച", "വാദത്തെ പിന്തുണയ്ക്കുന്ന തെളിവ്", "പരിശോധിക്കാത്ത അനുമാനം", "ആശങ്ക അംഗീകരിക്കുക", "പ്രശ്നം കൈകാര്യം ചെയ്യുന്ന വഴി", "ഉൾപ്പെടുന്ന കാര്യങ്ങളുടെ പരിധി", "ഉചിതമായ ഉത്തരവാദിയിലേക്ക് അറിയിക്കുക", "സ്വന്തം സംഭാവന", "വിശ്വസനീയ സ്രോതസ്സിൽ പരിശോധിക്കുക", "അതേ പ്രശ്നം വീണ്ടും കാണിക്കുക", "സംഭവിക്കേണ്ടത്"], "bn": ["বিবরণ স্পষ্ট করা", "সঠিক কি না নিশ্চিত করা", "অপ্রত্যাশিত", "অবশেষে", "বোঝাতে ব্যবহৃত তুলনা", "সীমা", "সিদ্ধান্তের বাধা বা শর্ত", "এক সুবিধার জন্য অন্যটিতে আপস", "দাবির সমর্থনে প্রমাণ", "যাচাই না করা অনুমান", "উদ্বেগ স্বীকার করা", "সমস্যা সমাধানের উপায়", "অন্তর্ভুক্ত বিষয়ের পরিসর", "সঠিক দায়িত্বপ্রাপ্ত ব্যক্তিকে জানানো", "নিজের অবদান", "বিশ্বস্ত সূত্রে যাচাই করা", "একই সমস্যা আবার দেখানো", "যা হওয়ার কথা"], "mr": ["तपशील स्पष्ट करणे", "योग्य असल्याची खात्री करणे", "अनपेक्षित", "अखेरीस", "समजावण्यासाठी तुलना", "मर्यादा", "निर्णयावर परिणाम करणारे बंधन", "एका फायद्यासाठी दुसऱ्यात तडजोड", "दाव्याला आधार देणारा पुरावा", "न तपासलेले गृहीतक", "चिंता मान्य करणे", "समस्या सोडवण्याचा मार्ग", "समाविष्ट गोष्टींची व्याप्ती", "योग्य जबाबदार व्यक्तीकडे कळवणे", "तुमचे स्वतःचे योगदान", "विश्वसनीय स्रोताने पडताळणे", "तीच समस्या पुन्हा दाखवणे", "जे व्हायला हवे"], "gu": ["વિગત સ્પષ્ટ કરવી", "સાચું હોવાની ખાતરી કરવી", "અણધાર્યું", "અંતે", "સમજાવવા માટે સરખામણી", "મર્યાદા", "નિર્ણયને અસર કરતું બંધન", "એક લાભ માટે બીજામાં સમાધાન", "દાવાને ટેકો આપતો પુરાવો", "ચકાસ્યા વગરની ધારણા", "ચિંતાનો સ્વીકાર કરવો", "સમસ્યા ઉકેલવાનો માર્ગ", "સમાવેશ થયેલી બાબતોની વ્યાપ્તિ", "યોગ્ય જવાબદાર વ્યક્તિને જણાવવું", "પોતાનું યોગદાન", "વિશ્વસનીય સ્ત્રોતથી ચકાસવું", "એ જ સમસ્યા ફરી બતાવવી", "જે થવું જોઈએ"]};
+const enrichedFoundations = {"grammar": {"dialogue": "A: Are you ready for the meeting?\nB: I am ready, but Anu is joining later.\nA: Is the agenda final?\nB: Yes. The notes are in the shared folder.", "sample": "I am a student preparing for a software role. My current project is a task tracker. My teammates are helping with testing.", "vocab": ["confirm", "expected"], "pronunciation": "I AM ready / SHE is joining later / the notes ARE available.", "checks": ["Match the verb to the subject", "Use a complete sentence", "Say the ending clearly"], "extra": [["Complete: My teammates ___ ready.", ["is", "are", "am"], 1, "Use are with the plural subject my teammates."]]}, "introductions": {"dialogue": "Recruiter: Could you introduce yourself?\nCandidate: I’m Ravi, a computer applications student interested in testing.\nRecruiter: What are you working on?\nCandidate: I’m testing a college task-tracker project and documenting the main user flows.", "sample": "Hello, I’m Ravi. I’m studying computer applications and building practical testing skills. In a college project, I tested the task creation and editing flows. I’m looking for an opportunity to keep developing those skills.", "vocab": ["contribution", "scope"], "pronunciation": "I’m RAVI / a computer applications STUDENT / interested in software TESTING.", "checks": ["State your present focus", "Include one relevant detail", "End with a goal"], "extra": [["Which detail strengthens an introduction?", ["A long list of unrelated hobbies.", "A claim that you know everything.", "One relevant project and what you did."], 2, "A specific relevant detail helps the listener understand your focus."]]}, "smalltalk": {"dialogue": "A: How is your presentation going?\nB: I’m still choosing examples.\nA: What kind of examples would help your audience?\nB: A short demo might make the topic clearer.", "sample": "Hi, how is your presentation going? Which part are you working on now? That sounds interesting. What example do you think would help the audience most?", "vocab": ["clarify", "acknowledge"], "pronunciation": "That sounds INteresting / what did you enjoy MOST?", "checks": ["Respond to what the person said", "Ask an open question", "Avoid an abrupt topic change"], "extra": [["Someone says they are choosing examples. Your best follow-up is:", ["What kind of example would help your audience?", "I have a different topic.", "Yes or no?"], 0, "The follow-up builds on the information they just shared."]]}, "clarity": {"dialogue": "Speaker: I completed the project / with my team / last week.\nListener: Which part did you handle?\nSpeaker: I tested the login flow / and documented the results.", "sample": "I completed the project with my team last week. I tested the login flow and documented the results. We reviewed the issues before the demonstration.", "vocab": ["confirm", "contribution"], "pronunciation": "I TESTED the login flow / and documented the RESULTS.", "checks": ["Pause at meaningful boundaries", "Emphasize important information", "Keep a comfortable pace"], "extra": [["Where is a useful pause?", ["I / completed / the / project.", "I completed the project / with my team / last week.", "Never pause."], 1, "Thought groups preserve the meaning of a phrase."]]}, "meetings": {"dialogue": "Lead: How can we improve the registration page?\nYou: I suggest testing it with a few users first.\nLead: What would you check?\nYou: Whether they can find the required fields and understand the errors. Would that fit our schedule?", "sample": "I suggest a short usability check before we finalize the form. We can observe whether users understand the fields and the error messages. Could we agree on who will organize the check and when we will review the findings?", "vocab": ["evidence", "confirm"], "pronunciation": "I’d like to ADD one point / before we confirm the NEXT step.", "checks": ["Connect your idea to the discussion", "Give a reason", "Invite a response or action"], "extra": [["Which meeting ending is actionable?", ["We talked a lot.", "Someone should do something.", "Maya will send the draft by Thursday; we will review it Friday."], 2, "An owner and a date make the next step clear."]]}, "email": {"dialogue": "Sender: Could you review the draft by Thursday?\nReviewer: Which part should I focus on?\nSender: Please check the project summary and contact details.\nReviewer: Understood. I’ll send comments by Thursday afternoon.", "sample": "Subject: Draft review request by Thursday\nHello Maya,\nCould you review the project summary in my resume by Thursday afternoon? Please focus on whether my contribution is clear. I will use your comments to revise it before Friday.\nThank you,\nRavi", "vocab": ["scope", "confirm"], "pronunciation": "Could you REVIEW the draft / by THURSDAY afternoon?", "checks": ["Use a specific subject", "Name the action and deadline", "Make the request easy to answer"], "extra": [["Which subject line is most useful?", ["Draft review request by Thursday", "Hello", "Urgent urgent urgent"], 0, "The subject identifies the action and timing."]]}, "feedback": {"dialogue": "You: Your slide has useful findings, but the small labels are difficult to read.\nTeammate: What would you change?\nYou: I’d enlarge the labels and keep one main chart.\nTeammate: Thanks. I’ll try that version.", "sample": "The slide includes a useful comparison. The small labels make it difficult to identify the categories. A larger font and one main chart would help the audience follow the result. Would you like to test that version together?", "vocab": ["acknowledge", "evidence"], "pronunciation": "The DATA is useful / clearer LABELS would help the audience.", "checks": ["Describe a specific observation", "Explain its effect", "Suggest a practical improvement"], "extra": [["When receiving feedback, a constructive response is:", ["You are wrong.", "Thank you. Which label was hardest to read?", "I will ignore it."], 1, "A focused question helps you understand and use the feedback."]]}, "tellme": {"dialogue": "Interviewer: Tell me about yourself.\nCandidate: I’m finishing my BCA and developing testing skills.\nInterviewer: What have you practised?\nCandidate: I tested a college project and documented the main user flows.", "sample": "I’m completing my BCA and focusing on software testing. In a college task-tracker project, I tested the create and edit flows and recorded the issues I found. That experience helped me write clearer reproduction steps. I’m seeking an entry-level role where I can contribute those skills and learn from a team.", "vocab": ["contribution", "verify"], "pronunciation": "My current FOCUS is testing / my project helped me practise CLEAR reporting.", "checks": ["Start with your present focus", "Give one true example", "Connect to the target role"], "extra": [["How should a project appear in your introduction?", ["List every tool without context.", "Claim you built the entire team project.", "Briefly describe your own relevant contribution."], 2, "The interviewer needs to understand what you actually did."]]}, "strengths": {"dialogue": "Interviewer: What strength would you bring?\nCandidate: I’m organized. During our project, I tracked the testing tasks.\nInterviewer: What difference did that make?\nCandidate: It helped us see the remaining checks before the demonstration.", "sample": "One strength I bring is organization. During a college project, I maintained a list of testing tasks and noted which checks were still open. That helped the team prioritize the remaining work before the demo. I would bring the same habit of making progress visible to this role.", "vocab": ["evidence", "contribution"], "pronunciation": "One STRENGTH I bring / is staying ORGANIZED.", "checks": ["Name one relevant strength", "Support it with an example", "Explain its effect"], "extra": [["Which example supports “organized”?", ["I tracked open testing tasks so the team could prioritize them.", "I am very, very organized.", "Everyone says I am perfect."], 0, "It describes an observable action and its effect."]]}, "star": {"dialogue": "Interviewer: Tell me about a difficult deadline.\nCandidate: Our college demo was approaching, and testing was incomplete.\nInterviewer: What did you do?\nCandidate: I listed the remaining checks and coordinated them with teammates. We fixed the main demo issues.", "sample": "Situation: Our college demonstration was approaching and testing was incomplete.\nTask: I was responsible for coordinating the remaining checks.\nAction: I listed the checks, agreed owners, and recorded the findings.\nResult: We fixed the main demonstration issues and learned to schedule testing earlier.", "vocab": ["contribution", "resolution"], "pronunciation": "The SITUATION was / my TASK was / I TOOK these steps / the RESULT was.", "checks": ["Give brief context and responsibility", "Spend time on your actions", "State a truthful result or learning"], "extra": [["Which STAR section explains your responsibility?", ["Result", "Task", "Situation only"], 1, "Task identifies the responsibility or objective you had."]]}, "mock": {"dialogue": "Interviewer: Why should we hire you?\nCandidate: Your role calls for careful testing and clear communication.\nInterviewer: What supports that?\nCandidate: In my college project, I recorded test steps and explained issues to teammates. I can bring that foundation while learning your process.", "sample": "This role needs careful testing and clear reports. In my college project, I documented the main user flows and shared the issues I observed with teammates. That gave me a practical foundation in reproducing problems and communicating them clearly. I would contribute those habits and learn your team’s testing process.", "vocab": ["evidence", "contribution"], "pronunciation": "I can contribute CLEAR reporting / and a CAREFUL approach to testing.", "checks": ["Connect to real role requirements", "Provide evidence", "Describe how you would contribute"], "extra": [["A persuasive hiring answer should:", ["Promise you will never make a mistake.", "Focus only on wanting a salary.", "Connect role needs to evidence from your experience."], 2, "The interviewer needs a grounded reason why your skills fit the role."]]}};
+extendedCurriculum.forEach(lesson=>{lessonLibrary.push(lesson);Object.entries(lesson.native).forEach(([code,note])=>{if(!localizedLessonNotes[code])localizedLessonNotes[code]={};localizedLessonNotes[code][lesson.id]=note;});});
+lessonLibrary.forEach(lesson=>{const detail=enrichedFoundations[lesson.id];if(detail){Object.assign(lesson,detail);lesson.quizzes=[lesson.quiz,...detail.extra.map(q=>({question:q[0],options:q[1],answer:q[2],why:q[3]}))];} });
+let curriculumQuizIndex=0,curriculumQuizSubmitted=false;
+function curriculumQuiz(){const lesson=activeLesson();return (lesson.quizzes||[lesson.quiz])[curriculumQuizIndex%(lesson.quizzes||[lesson.quiz]).length];}
+function curriculumNode(tag,text,classes){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(classes)e.className=classes;return e;}
+function renderCurriculumQuiz(lesson,code){const q=curriculumQuiz(),ui=curriculumLabels[code]||curriculumLabels.en;curriculumQuizSubmitted=false;const text=(code==='en'?'':(localizedLessonNotes[code]?.[lesson.id]||'')+'\n\n')+q.question;document.getElementById('quizQuestion').textContent=text;const root=document.getElementById('quizOptions');root.replaceChildren();q.options.forEach((label,i)=>{const row=curriculumNode('label',undefined,'quiz-option');const input=document.createElement('input');input.type='radio';input.name='answer';input.value=i;row.append(input,document.createTextNode(' '+String.fromCharCode(65+i)+'. '+label));root.append(row);});const check=document.querySelector('button[onclick="checkQuiz()"]');if(check)check.disabled=false;document.getElementById('quizResult').style.display='none';document.getElementById('quizVoiceButton').style.display='none';let next=document.getElementById('nextCurriculumQuiz');if(!next){next=curriculumNode('button',ui[8],'secondary');next.type='button';next.id='nextCurriculumQuiz';root.parentElement.append(next);next.onclick=()=>{curriculumQuizIndex++;renderCurriculumQuiz(activeLesson(),document.getElementById('language').value);if(window.CareerAIDrafts)CareerAIDrafts.save();};}next.textContent=ui[8]+' · '+((curriculumQuizIndex%(lesson.quizzes||[lesson.quiz]).length)+1)+' / '+(lesson.quizzes||[lesson.quiz]).length;}
+function renderLessonDetails(lesson,code){const ui=curriculumLabels[code]||curriculumLabels.en;let rich=document.getElementById('richLesson');if(!rich){rich=curriculumNode('div');rich.id='richLesson';document.getElementById('lessonCard').append(rich);}rich.replaceChildren();rich.append(curriculumNode('p',ui[10],'curriculum-note'));function section(title,text){const block=curriculumNode('section',undefined,'curriculum-block');block.append(curriculumNode('h3',title),curriculumNode('p',text));rich.append(block);return block;}const conversation=section(ui[0],lesson.dialogue||lesson.examples);const hear=curriculumNode('button',ui[6],'secondary');hear.type='button';hear.onclick=()=>speak(lesson.dialogue||lesson.examples,'en-IN');conversation.append(hear);const vocab=section(ui[1],'');const list=curriculumNode('ul');(lesson.vocab||[]).forEach(word=>{const i=curriculumWords.indexOf(word),meaning=(curriculumGlossary[code]||curriculumGlossary.en)[i];list.append(curriculumNode('li',word+' — '+meaning));});vocab.append(list);const example=section(ui[2],lesson.sample||lesson.examples);const audio=curriculumNode('button',ui[7],'secondary');audio.type='button';audio.onclick=()=>speak(lesson.sample||lesson.examples,'en-IN');example.append(audio);section(ui[3],lesson.prompt);const check=section(ui[4],code==='en'?'':(localizedLessonNotes[code]?.[lesson.id]||''));const checks=curriculumNode('ul');(lesson.checks||[]).forEach(text=>checks.append(curriculumNode('li',text)));check.append(checks);section(ui[5],lesson.pronunciation||lesson.examples);const prompt=document.getElementById('practicePrompt');prompt.textContent=(code==='en'?'':(localizedLessonNotes[code]?.[lesson.id]||'')+'\n\n')+ui[3]+':\n'+lesson.prompt;document.querySelectorAll('.hero-tags span').forEach(e=>{if(/practical lessons/.test(e.textContent))e.textContent=lessonLibrary.length+' practical lessons';});}
+function saveLessonNotebook(){const answer=document.getElementById('practiceAnswer');if(!answer)return;const book=CareerAI.read('careerAITutorNotebook',{});book[activeLessonId]={answer:answer.value,updatedAt:new Date().toISOString()};CareerAI.write('careerAITutorNotebook',book);}
+
+function activeLesson() {
+    return lessonLibrary.find(lesson => lesson.id === activeLessonId) || lessonLibrary[0];
+}
+
+function filterLessons() {
+    if(document.getElementById("richLesson"))saveLessonNotebook();
+    const category = document.getElementById("lessonCategory").value;
+    const level = document.getElementById("levelSelect").value;
+    const search=(document.getElementById("lessonSearch")?.value||"").trim().toLowerCase();
+    const list = lessonLibrary.filter(item => (!search||(item.title+" "+item.content).toLowerCase().includes(search)) &&
+        (category === "all" || item.category === category) &&
+        (level === "all" || item.level === level)
+    );
+    const selector = document.getElementById("lessonSelect");
+    selector.innerHTML = "";
+    list.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item.id;
+        option.textContent = item.title + " · " + item.level;
+        selector.appendChild(option);
+    });
+    if (!list.length) { document.getElementById("lessonCount").textContent="No lessons match. Clear your search or change the filters."; return; }
+    if (!list.some(item => item.id === activeLessonId)) activeLessonId = list[0].id;
+    selector.value = activeLessonId;
+    document.getElementById("lessonCount").textContent = list.length + " lessons shown · " + lessonLibrary.length + " total";
+    renderLesson();
+}
+
+function selectLesson(id) {
+    saveLessonNotebook();curriculumQuizIndex=0;
+    activeLessonId = id;
+    renderLesson();
+}
+
+function renderLesson() {
+    const lesson = activeLesson();
+    const lang = selectedLanguage();
+    const languageCode = document.getElementById("language").value;
+    const activity = localizedActivityText[languageCode] || localizedActivityText.en;
+    const isGrammar = lesson.id === "grammar";
+    document.getElementById("lessonLevel").textContent = lesson.level;
+    document.getElementById("lessonTitle").textContent = "📘 " + (isGrammar ? lang.title : lesson.title);
+    const localizedNote = localizedLessonNotes[languageCode];
+    document.getElementById("lessonText").textContent = isGrammar
+        ? lang.lesson
+        : (localizedNote && localizedNote[lesson.id]
+            ? localizedNote[lesson.id] + "\n\nEnglish examples for practice:\n" + lesson.examples
+            : lesson.content);
+    const localizedPrompt = languageCode === "kn"
+        ? kannadaPracticePrompts[lesson.id]
+        : localizedLessonNotes[languageCode] && localizedLessonNotes[languageCode][lesson.id];
+    document.getElementById("practicePrompt").textContent = localizedPrompt
+        ? localizedPrompt + "\n\n" + activity.practice
+        : lesson.prompt;
+    document.getElementById("practiceAnswer").value = "";
+    document.getElementById("practiceFeedback").style.display = "none";
+    renderCurriculumQuiz(lesson,languageCode);
+    renderLessonDetails(lesson,languageCode);
+    const notebook=CareerAI.read('careerAITutorNotebook',{});
+    document.getElementById('practiceAnswer').value=notebook[lesson.id]?.answer||'';
+
+}
+
+function evaluatePractice() {
+    const answer = document.getElementById("practiceAnswer").value.trim();
+    const output = document.getElementById("practiceFeedback");
+    const speakButton = document.getElementById("speakPracticeFeedbackButton");
+    const languageCode = document.getElementById("language").value;
+    const activity = localizedActivityText[languageCode] || localizedActivityText.en;
+    if (!answer) {
+        output.textContent = activity.reviewEmpty;
+    } else {
+        const words = answer.split(/\s+/).filter(Boolean).length;
+        const isInterview = activeLesson().category === "interview";
+        const checklist = languageCode === "kn"
+            ? (isInterview ? kannadaPracticeReview.interview : kannadaPracticeReview.general)
+            : isInterview
+            ? activity.reviewInterview
+            : activity.reviewGeneral;
+        const countLabels = localizedReviewCount[languageCode] || localizedReviewCount.en;
+        output.textContent = countLabels[0] + " · " + words + " " + countLabels[1] + ".\n" + checklist + "\n" + (languageCode === "kn" ? kannadaPracticeReview.ending : activity.reviewEnd);
+    }
+    output.style.display = "block";
+    speakButton.style.display = "inline-block";
+}
+
+function speakPracticeFeedback() {
+    const feedback = document.getElementById("practiceFeedback").textContent;
+    if (feedback) speak(feedback, selectedLanguage().voice);
+}
+
+function copySpeechToPractice() {
+    const transcript = document.getElementById("speechResult").textContent;
+    const spoken = transcript.match(/You said:\s*([\s\S]*?)(?:\n\n|$)/);
+    if (!spoken) {
+        document.getElementById("practiceFeedback").textContent = "Record a response first with Start Speaking.";
+        document.getElementById("practiceFeedback").style.display = "block";
+        return;
+    }
+    document.getElementById("practiceAnswer").value = spoken[1].trim();
+}
+
+function selectedLanguage() {
+    return languages[document.getElementById("language").value];
+}
+
+function changeLanguage() {
+    const lang = selectedLanguage();
+    renderLesson();
+
+    document.getElementById("correction").style.display = "none";
+    document.getElementById("speakCorrectionButton").style.display = "none";
+    document.getElementById("quizResult").style.display = "none";
+    document.getElementById("quizVoiceButton").style.display = "none";
+
+    document.getElementById("voiceStatus").textContent =
+        "Selected language: " + document.getElementById("language")
+            .selectedOptions[0].text +
+        ". Click Hear Explanation to test the available voice.";
+}
+
+function getAvailableVoices() {
+    return new Promise(resolve => {
+        if (!("speechSynthesis" in window)) {
+            resolve([]);
+            return;
+        }
+
+        const synthesis = window.speechSynthesis;
+        const currentVoices = synthesis.getVoices();
+
+        if (currentVoices.length > 0) {
+            resolve(currentVoices);
+            return;
+        }
+
+        let finished = false;
+
+        function finish() {
+            if (finished) return;
+            finished = true;
+            synthesis.removeEventListener("voiceschanged", finish);
+            resolve(synthesis.getVoices());
+        }
+
+        synthesis.addEventListener("voiceschanged", finish);
+        setTimeout(finish, 1500);
+    });
+}
+
+let activeAudio = null;
+let activeAudioUrl = null;
+let speechRequestId = 0;
+
+async function speak(text, languageCode) {
+    const status = document.getElementById("voiceStatus");
+    const requestId = ++speechRequestId;
+
+    try {
+        // Stop any previous speech
+        if (activeAudio) {
+            activeAudio.pause();
+            activeAudio = null;
+        }
+
+        if (activeAudioUrl) {
+            URL.revokeObjectURL(activeAudioUrl);
+            activeAudioUrl = null;
+        }
+
+        if ("speechSynthesis" in window) {
+            window.speechSynthesis.cancel();
+        }
+
+        status.textContent = "Generating speech... Please wait.";
+
+        // Send the text and selected language to Flask
+        const response = await fetch(
+            CareerAIAPI.url("/api/text-to-speech"),
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    text: text,
+                    language: (languageCode || "en-IN").split("-")[0]
+                })
+            }
+        );
+
+        if (!response.ok) {
+            let message = "Could not generate speech.";
+            try {
+                const errorData = await response.json();
+                message = errorData.error || message;
+            } catch (_) {}
+            throw new Error(message);
+        }
+
+        const audioBlob = await response.blob();
+
+        // Ignore an older request if another button was clicked
+        if (requestId !== speechRequestId) return;
+
+        activeAudioUrl = URL.createObjectURL(audioBlob);
+        activeAudio = new Audio(activeAudioUrl);
+
+        activeAudio.onended = function () {
+            if (requestId === speechRequestId) {
+                status.textContent = "Speech finished.";
+            }
+            URL.revokeObjectURL(activeAudioUrl);
+            activeAudioUrl = null;
+            activeAudio = null;
+        };
+
+        activeAudio.onerror = function () {
+            status.textContent = "Audio playback failed. Please try again.";
+        };
+
+        await activeAudio.play();
+        status.textContent = "Playing speech in " + languageCode + ".";
+
+    } catch (error) {
+        if (requestId === speechRequestId) {
+            console.error("Text-to-speech error:", error);
+            status.textContent =
+                "Voice error: " + error.message +
+                " Check that Flask is running and your internet is connected.";
+        }
+    }
+}
+function speakLesson() {
+    const lang = selectedLanguage();
+    const lesson = activeLesson();
+    const languageCode = document.getElementById("language").value;
+    const translated = localizedLessonNotes[languageCode] && localizedLessonNotes[languageCode][lesson.id];
+    speak(lesson.id === "grammar" ? lang.lesson : (translated || lesson.content), lesson.id === "grammar" || translated ? lang.voice : "en-IN");
+}
+
+function speakExamples() {
+    const lesson = activeLesson();
+    const examples = lesson.id === "grammar"
+        ? "I am a student. He is a student. She is my friend. You are my friend. We are ready. They are happy."
+        : lesson.examples;
+    speak(examples, "en-IN");
+}
+
+function stopSpeech() {
+    // Invalidate a speech request that is still waiting for the backend.
+    speechRequestId += 1;
+
+    if (activeAudio) {
+        activeAudio.pause();
+        activeAudio.currentTime = 0;
+        activeAudio.onended = null;
+        activeAudio.onerror = null;
+        activeAudio = null;
+    }
+
+    if (activeAudioUrl) {
+        URL.revokeObjectURL(activeAudioUrl);
+        activeAudioUrl = null;
+    }
+
+    if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+    }
+
+    document.getElementById("voiceStatus").textContent = "Voice stopped.";
+}
+
+function checkSentence() {
+    const input = document.getElementById("sentence").value.trim();
+    const output = document.getElementById("correction");
+    const button = document.getElementById("speakCorrectionButton");
+    const lang = selectedLanguage();
+    const languageCode = document.getElementById("language").value;
+    const activity = localizedActivityText[languageCode] || localizedActivityText.en;
+
+    if (!input) {
+        output.textContent = activity.grammarEmpty;
+        output.style.display = "block";
+        button.style.display = "none";
+        return;
+    }
+
+    const normalized = input.toLowerCase()
+        .replace(/[.!?]+$/, "")
+        .trim();
+
+    const rules = [
+        {
+            patterns: ["he are a student", "he am a student"],
+            answer: "He is a student."
+        },
+        {
+            patterns: ["she are a student", "she am a student"],
+            answer: "She is a student."
+        },
+        {
+            patterns: ["i is a student", "i are a student"],
+            answer: "I am a student."
+        },
+        {
+            patterns: ["they is happy", "they am happy"],
+            answer: "They are happy."
+        },
+        {
+            patterns: ["you is my friend", "you am my friend"],
+            answer: "You are my friend."
+        }
+    ];
+
+    const rule = rules.find(item => item.patterns.includes(normalized));
+
+    if (rule) {
+        lastFeedback = activity.grammarLabel + " " + rule.answer + "\n" + lang.wrong;
+    } else if ([
+        "i am a student",
+        "he is a student",
+        "she is a student",
+        "you are my friend",
+        "they are happy",
+        "we are ready"
+    ].includes(normalized)) {
+        lastFeedback = lang.correct;
+    } else {
+        lastFeedback = activity.grammarUnknown + "\n" + input;
+    }
+
+    output.textContent = lastFeedback;
+    output.style.display = "block";
+    button.style.display = "inline-block";
+}
+
+function speakCorrection() {
+    speak(lastFeedback, selectedLanguage().voice);
+}
+
+function encodeWav(audioBuffer) {
+    const sampleRate = audioBuffer.sampleRate;
+    const channelCount = audioBuffer.numberOfChannels;
+    const frameCount = audioBuffer.length;
+    const dataSize = frameCount * 2;
+    const buffer = new ArrayBuffer(44 + dataSize);
+    const view = new DataView(buffer);
+    const writeText = (offset, value) => {
+        for (let i = 0; i < value.length; i++) view.setUint8(offset + i, value.charCodeAt(i));
+    };
+
+    writeText(0, "RIFF");
+    view.setUint32(4, 36 + dataSize, true);
+    writeText(8, "WAVE");
+    writeText(12, "fmt ");
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);
+    view.setUint16(22, 1, true);
+    view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate * 2, true);
+    view.setUint16(32, 2, true);
+    view.setUint16(34, 16, true);
+    writeText(36, "data");
+    view.setUint32(40, dataSize, true);
+
+    const channels = Array.from({ length: channelCount }, (_, i) => audioBuffer.getChannelData(i));
+    let offset = 44;
+    for (let i = 0; i < frameCount; i++) {
+        let sample = 0;
+        for (let channel = 0; channel < channelCount; channel++) sample += channels[channel][i];
+        sample = Math.max(-1, Math.min(1, sample / channelCount));
+        view.setInt16(offset, sample < 0 ? sample * 32768 : sample * 32767, true);
+        offset += 2;
+    }
+    return new Blob([buffer], { type: "audio/wav" });
+}
+
+async function transcribeRecording(blob) {
+    const output = document.getElementById("speechResult");
+    const startButton = document.getElementById("startButton");
+    output.textContent = "Converting recording and sending it to the tutor...";
+
+    try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const decoded = await audioContext.decodeAudioData(await blob.arrayBuffer());
+        const wav = encodeWav(decoded);
+        await audioContext.close();
+        const response = await fetch(CareerAIAPI.url("/api/speech-to-text"), {
+            method: "POST",
+            headers: { "Content-Type": "audio/wav" },
+            body: wav
+        });
+        const result = await response.json();
+        if (!response.ok || !result.success) throw new Error(result.error || "Transcription failed.");
+        output.textContent = "You said: " + result.text + "\n\nTip: Try saying the sentence clearly again.";
+    } catch (error) {
+        output.textContent = "Could not transcribe the recording: " + error.message +
+            " Make sure Flask is running on port 5000 and try again.";
+    } finally {
+        startButton.disabled = false;
+    }
+}
+
+async function startSpeaking() {
+    const output = document.getElementById("speechResult");
+    const startButton = document.getElementById("startButton");
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        output.textContent = "Microphone access needs a supported browser and a secure page. Open this page using localhost.";
+        return;
+    }
+    if (!window.MediaRecorder || !(window.AudioContext || window.webkitAudioContext)) {
+        output.textContent = "Audio recording is not supported in this browser. Try a recent version of Chrome or Edge.";
+        return;
+    }
+
+    stopRecognition();
+    try {
+        activeMicStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const chunks = [];
+        activeRecorder = new MediaRecorder(activeMicStream);
+        activeRecorder.ondataavailable = event => { if (event.data.size) chunks.push(event.data); };
+        activeRecorder.onstop = async () => {
+            if (recordingTimer) clearTimeout(recordingTimer);
+            recordingTimer = null;
+            if (activeMicStream) activeMicStream.getTracks().forEach(track => track.stop());
+            activeMicStream = null;
+            const recorder = activeRecorder;
+            activeRecorder = null;
+            if (chunks.length) await transcribeRecording(new Blob(chunks, { type: recorder.mimeType }));
+            else startButton.disabled = false;
+        };
+        activeRecorder.start();
+        startButton.disabled = true;
+        output.textContent = "🎤 Recording... Speak clearly, then click Stop Listening.";
+        recordingTimer = setTimeout(stopRecognition, 15000);
+    } catch (error) {
+        if (activeMicStream) activeMicStream.getTracks().forEach(track => track.stop());
+        activeMicStream = null;
+        activeRecorder = null;
+        startButton.disabled = false;
+        output.textContent = "Microphone access failed (" + error.name + "). Allow microphone access in the browser, then try again.";
+    }
+}
+
+function stopRecognition() {
+    if (activeRecognition) {
+        try {
+            activeRecognition.stop();
+        } catch (error) {
+            console.log("Recognition stop:", error);
+        }
+
+        activeRecognition = null;
+    }
+
+    if (recordingTimer) clearTimeout(recordingTimer);
+    recordingTimer = null;
+    if (activeRecorder && activeRecorder.state !== "inactive") activeRecorder.stop();
+
+    const startButton = document.getElementById("startButton");
+    if (startButton && !activeRecorder) startButton.disabled = false;
+}
+
+function checkQuiz() {
+    if(curriculumQuizSubmitted)return;
+    const selected = document.querySelector('input[name="answer"]:checked');
+    const output = document.getElementById("quizResult");
+    const button = document.getElementById("quizVoiceButton");
+    const lang = selectedLanguage();
+    const languageCode = document.getElementById("language").value;
+    const activity = localizedActivityText[languageCode] || localizedActivityText.en;
+
+    if (!selected) {
+        output.textContent = activity.quizTry;
+        output.style.display = "block";
+        button.style.display = "none";
+        return;
+    }
+
+    const lesson = activeLesson();
+    const quiz=curriculumQuiz();
+    const isCorrect = Number(selected.value) === quiz.answer;
+    curriculumQuizSubmitted=true;
+    document.querySelectorAll('input[name="answer"]').forEach(input=>input.disabled=true);
+    const checkButton=document.querySelector('button[onclick="checkQuiz()"]');if(checkButton)checkButton.disabled=true;
+    quizAttempts += 1;
+    if (isCorrect) quizScore += 1;
+    const progress=CareerAI.read("careerAILearningProgress",{}); const entry=progress[lesson.id]||{attempts:0,correct:0};entry.attempts++;if(isCorrect)entry.correct++;entry.updatedAt=new Date().toISOString();progress[lesson.id]=entry;CareerAI.write("careerAILearningProgress",progress);
+    const localizedQuiz = null;
+    const lessonNote = localizedLessonNotes[languageCode] && localizedLessonNotes[languageCode][lesson.id];
+    const answerLabel = {"en": "Best answer", "kn": "ಸರಿಯಾದ ಉತ್ತರ", "hi": "सही उत्तर", "te": "సరైన సమాధానం", "ta": "சரியான பதில்", "ml": "ശരിയായ ഉത്തരം", "bn": "সঠিক উত্তর", "mr": "योग्य उत्तर", "gu": "સાચો જવાબ"};
+    const reason=languageCode==='en'?quiz.why:lesson.id==='grammar'?lang.lesson:(localizedLessonNotes[languageCode]?.[lesson.id]||quiz.why);
+    lastQuizFeedback=(isCorrect?activity.quizCorrect:activity.quizTry)+'\n'+(answerLabel[languageCode]||answerLabel.en)+': '+quiz.options[quiz.answer]+'\n'+reason;
+
+    output.textContent = lastQuizFeedback;
+    output.style.display = "block";
+    button.style.display = "inline-block";
+    document.getElementById("score").textContent = "Score: " + quizScore + " / " + quizAttempts;
+    document.querySelectorAll('input[name="answer"]').forEach(input => { input.checked = false; });
+}
+
+function speakQuizResult() {
+    speak(lastQuizFeedback, selectedLanguage().voice);
+}
+
+// Refresh browser voice list when voices finish loading.
+if ("speechSynthesis" in window) {
+    window.speechSynthesis.addEventListener("voiceschanged", function() {
+        window.speechSynthesis.getVoices();
+    });
+}
+
+// Load the lesson library and preserve the original multilingual grammar lesson.
+filterLessons();
+changeLanguage();
+</script>
+
+
+<style data-career-journey>
+.journey-bar{width:min(1180px,calc(100% - 32px));margin:20px auto;padding:20px;border:1px solid #dddff0;border-radius:16px;background:white;color:#20243a;font:15px/1.5 'Segoe UI',sans-serif}.journey-bar h2{margin:0 0 6px;font-size:21px}.journey-track{display:flex;gap:8px;overflow-x:auto;list-style:none;padding:0 0 8px;margin:14px 0}.journey-track li{white-space:nowrap;padding:6px 10px;border-radius:20px;background:#f1f2f7;font-size:12px}.journey-track li[aria-current]{background:#6048d8;color:white}.journey-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.journey-actions a,.journey-actions button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 15px;border:1px solid #d7dbeb;border-radius:9px;background:white;color:#39405a;text-decoration:none;font:600 14px 'Segoe UI',sans-serif;cursor:pointer}.journey-actions .journey-next{background:#6048d8;color:white}.journey-actions button:disabled{opacity:.55;cursor:not-allowed}.journey-hint{margin:10px 0;color:#616a80;font-size:13px}body.journey-resume #careerPathSection,body.journey-resume #verificationSection,body.journey-resume #analysisSection,body.journey-results #resumeAnalysisSection,body.journey-results #careerPathSection,body.journey-results #verificationSection,body.journey-quiz #resumeAnalysisSection,body.journey-quiz #analysisSection,body.journey-quiz #careerPathSection{display:none!important}.journey-bottom{margin-top:20px;margin-bottom:32px}@media print{.journey-bar{display:none!important}}@media(max-width:550px){.journey-bar{padding:16px}.journey-actions .journey-next{flex:1}}
+</style>
+<script data-career-journey>
+(function(){
+const params=new URLSearchParams(location.search);if(params.get('journey')!=='1')return;
+const steps=[['Upload resume','resume_tools.html?feature=resume'],['Review analysis','resume_tools.html?feature=skill-gap'],['Verify skills','resume_tools.html?feature=verification'],['English tutor','tutor.html'],['Mock interview','interview_practice.html'],['Interview feedback','interview_analysis.html'],['Build resume','resume_builder.html']];
+const page=location.pathname.split('/').pop();let step=page==='resume_tools.html'?(params.get('feature')==='verification'?2:params.get('feature')==='skill-gap'?1:0):steps.findIndex(x=>x[1].split('?')[0]===page);if(step<0)return;
+const url=i=>steps[i][1]+(steps[i][1].includes('?')?'&':'?')+'journey=1';
+let state=CareerAI.read('careerAIJourney',{});state.current=step;state.visited=state.visited||{};state.visited[step]=true;state.updatedAt=new Date().toISOString();CareerAI.write('careerAIJourney',state);
+function build(bottom){const box=document.createElement('section');box.className='journey-bar'+(bottom?' journey-bottom':'');box.setAttribute('aria-label','Career preparation journey');if(!bottom){const title=document.createElement('h2');title.textContent='Step '+(step+1)+' of '+steps.length+' · '+steps[step][0];box.append(title);const role=document.createElement('p');role.className='journey-hint';role.textContent=CareerAI.role()?'Your target: '+CareerAI.role():'Choose your job role when uploading your resume.';box.append(role);const list=document.createElement('ol');list.className='journey-track';steps.forEach(([name],i)=>{const item=document.createElement('li');item.textContent=(i+1)+'. '+name;if(i===step)item.setAttribute('aria-current','step');list.append(item)});box.append(list)}const actions=document.createElement('div');actions.className='journey-actions';const back=document.createElement('a');back.href=step?url(step-1):'dashboard.html';back.textContent=step?'← Back':'← Dashboard';actions.append(back);const next=document.createElement('button');next.type='button';next.className='journey-next';next.onclick=()=>advance(false);actions.append(next);if(step<steps.length-1){const skip=document.createElement('button');skip.type='button';skip.textContent='Skip this step';skip.onclick=()=>advance(true);actions.append(skip)}const dash=document.createElement('a');dash.href='dashboard.html';dash.textContent='Save & exit';dash.onclick=()=>{if(step===4&&typeof endInterview==='function')endInterview();if(step===6&&document.getElementById('saveDraft'))document.getElementById('saveDraft').click();};actions.append(dash);const hint=document.createElement('p');hint.className='journey-hint journey-status';hint.setAttribute('aria-live','polite');box.append(actions,hint);return box}
+const top=build(false),bottom=build(true);document.body.insertBefore(top,document.body.firstChild);document.body.append(bottom);
+if(page==='resume_tools.html'){document.body.classList.add(step===0?'journey-resume':step===1?'journey-results':'journey-quiz');const a=CareerAI.read('careerAIResumeAnalysis',null);if(step>0&&!a){const notice=document.getElementById('skillGapNotice');notice.classList.remove('hidden');document.getElementById('noticeTitle').textContent='Upload a resume first';document.getElementById('skillGapMessage').textContent='Return to Step 1 to analyze a resume, or skip this step.';notice.querySelector('button').onclick=()=>location.assign(url(0));}}
+function completed(){switch(step){case 0:case 1:return !!CareerAI.read('careerAIResumeAnalysis',{}).job_role;case 2:return Object.keys(CareerAI.read('careerAIVerifiedSkills',{})).length>0;case 3:return Object.keys(CareerAI.read('careerAILearningProgress',{})).length>0;case 4:return !!CareerAI.read('careerAIInterviewReport',{}).totalAnswers;case 5:return !!CareerAI.read('careerAIInterviewReport',{}).totalAnswers;case 6:return !!CareerAI.read('careerAIResumeBuilt',{}).at;}}
+function update(){const done=completed(),working=step===4&&typeof active!=='undefined'&&active;const ready=done||working;const label=step===6?'Finish journey':step===4&&working?'End interview & review feedback':'Continue → '+steps[step+1][0];for(const bar of [top,bottom]){const button=bar.querySelector('.journey-next');if(button.textContent!==label)button.textContent=label;button.disabled=!ready;const text=ready?'Continue when you are ready. Your progress is saved in this browser.':'Complete this activity to continue, or use Skip this step.';const hint=bar.querySelector('.journey-status');if(hint.textContent!==text)hint.textContent=text}}
+function advance(skip){if(step===4&&typeof endInterview==='function'&&typeof active!=='undefined'&&active)endInterview();state=CareerAI.read('careerAIJourney',{});if(skip){state.skipped=state.skipped||{};state.skipped[step]=true;}else{state.completed=state.completed||{};state.completed[step]=true;}state.current=Math.min(step+1,steps.length-1);if(step===6)state.finishedAt=new Date().toISOString();CareerAI.write('careerAIJourney',state);location.assign(step===6?'dashboard.html':url(step+1));}
+// Keep links within the journey and show the results as the next step after analysis.
+document.querySelectorAll('a[href]').forEach(a=>{const target=new URL(a.href,location.href);if(target.origin!==location.origin)return;const i=steps.findIndex(x=>x[1]===target.pathname.split('/').pop()+target.search);if(i>=0)a.href=url(i)});
+update();setInterval(update,1000);
+})();
+</script>
+
+
+<script>
+window.tutorPanel='lessonCard';const tutorPanels=['lessonCard','practiceCard','grammarCard','speakingCard','quizCard'];
+window.showTutorPanel=function(id){if(!tutorPanels.includes(id))id='lessonCard';window.tutorPanel=id;tutorPanels.forEach(name=>document.getElementById(name).classList.toggle('tutor-panel-hidden',name!==id));document.querySelectorAll('[data-panel]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.panel===id)));};
+document.querySelectorAll('[data-panel]').forEach(b=>b.onclick=()=>{stopSpeech();showTutorPanel(b.dataset.panel);if(window.CareerAIDrafts)CareerAIDrafts.save();});
+document.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>{stopSpeech();document.getElementById('lessonSearch').value='';document.getElementById('lessonCategory').value='all';document.getElementById('levelSelect').value=b.dataset.level;curriculumQuizIndex=0;filterLessons();showTutorPanel('lessonCard');if(window.CareerAIDrafts)CareerAIDrafts.save();});document.getElementById('lessonSearch').addEventListener('input',filterLessons);document.getElementById('practiceAnswer').addEventListener('input',saveLessonNotebook);
+const next=document.createElement('div');next.className='studio-next';const activity=document.createElement('button');activity.type='button';activity.textContent='Next activity →';activity.onclick=()=>{stopSpeech();showTutorPanel(tutorPanels[(tutorPanels.indexOf(window.tutorPanel)+1)%tutorPanels.length]);if(window.CareerAIDrafts)CareerAIDrafts.save();};const lesson=document.createElement('button');lesson.type='button';lesson.className='secondary';lesson.textContent='Next lesson →';lesson.onclick=()=>{const select=document.getElementById('lessonSelect');if(select.selectedIndex<select.options.length-1){stopSpeech();select.selectedIndex++;selectLesson(select.value);showTutorPanel('lessonCard');if(window.CareerAIDrafts)CareerAIDrafts.save();}else document.getElementById('lessonCount').textContent='You have reached the last lesson in these filters. Try another category or level.';};next.append(activity,lesson);document.querySelector('.container').append(next);const note=document.createElement('p');note.className='studio-note';note.textContent='Guided lessons with multilingual explanations and voice playback. Practice reviews use text checks. Voice availability depends on your browser and connection.';next.after(note);
+function updateStudioStats(){const items=Object.values(CareerAI.read('careerAILearningProgress',{}));document.getElementById('studioLessons').textContent=items.length;const total=items.reduce((sum,x)=>sum+(x.attempts||0),0),correct=items.reduce((sum,x)=>sum+(x.correct||0),0);document.getElementById('studioAccuracy').textContent=total?Math.round(correct/total*100)+'%':'—';}showTutorPanel('lessonCard');updateStudioStats();document.addEventListener('click',()=>setTimeout(updateStudioStats,0));
+</script>
+<script data-career-drafts>
+(function(){
+const page=location.pathname.split('/').pop()||'dashboard.html';if(page==='dashboard.html')return;
+const key='careerAIAutosave:'+(page==='resume_tools.html'?'index.html':page);let restoring=false,cleared=false,timer;
+const fields=()=>[...document.querySelectorAll('input[id],select[id],textarea[id]')].filter(e=>!['file','password','hidden'].includes(e.type));
+function save(){if(restoring||cleared)return true;const data={savedAt:new Date().toISOString(),fields:{},scrollY:scrollY};fields().forEach(e=>data.fields[e.id]={value:e.value,checked:e.checked});
+if(page==='tutor.html'){data.tutor={lesson:activeLessonId,quizScore,quizAttempts,panel:window.tutorPanel||'lessonCard',quizIndex:curriculumQuizIndex};['speechResult','practiceFeedback','correction','quizResult'].forEach(id=>{const el=document.getElementById(id);if(el)data[id]={text:el.textContent,visible:getComputedStyle(el).display!=='none'};});}
+if(page==='interview_practice.html'){data.interview={questions,mainIndex,followUpPending,answers,inProgress:active||!!document.getElementById('resumeSavedInterview'),aiMode,question:document.getElementById('avatarQuestion').textContent,conversation:[...document.querySelectorAll('#conversation .bubble')].map(e=>({speaker:e.querySelector('.speaker').textContent,text:e.lastElementChild.textContent}))};}
+if(page==='resume_builder.html'){const view=document.getElementById('preview');if(!view.querySelector('.empty'))data.preview=[...view.childNodes].map(serializePreview);const draft={};draftFields.forEach(id=>draft[id]=document.getElementById(id).value);draft.skills=confirmedSkills().join(', ');draft.photo=photoData;draft.savedAt=data.savedAt;if(!CareerAI.write('careerAIResumeDraft',draft))return false;}
+if(page==='resume_tools.html')data.quizAnswers=[...document.querySelectorAll('#questionsContainer input:checked')].map(e=>({name:e.name,value:e.value}));
+const ok=CareerAI.write(key,data);const label=document.getElementById('draftSaveStatus');if(label)label.textContent=ok?'Draft saved on this device · '+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}):'Draft could not be saved: browser storage is unavailable or full.';return ok;}
+function serializePreview(node){if(node.nodeType===3)return {text:node.textContent};if(node.nodeType!==1)return null;return {tag:node.tagName,classes:node.className,children:[...node.childNodes].map(serializePreview).filter(Boolean)};}
+function restorePreview(item){if(typeof item.text==='string')return document.createTextNode(item.text);const allowed=['DIV','HEADER','H1','H2','H3','P','UL','OL','LI','SPAN','IMG','BR','B','STRONG','EM'];if(!allowed.includes(item.tag))return document.createTextNode('');const el=document.createElement(item.tag);if(typeof item.classes==='string')el.className=item.classes;if(item.tag==='IMG'){if(/^data:image\/(jpeg|png|webp);base64,/.test(photoData)){el.src=photoData;el.alt='Profile photo';}}else(item.children||[]).forEach(x=>el.append(restorePreview(x)));return el;}
+window.CareerAIDrafts={save};
+if(page==='resume_builder.html')document.getElementById('deleteDraft').onclick=()=>{if(!confirm('Clear the saved resume draft and its form on this device?'))return;cleared=true;draftFields.forEach(id=>document.getElementById(id).value=id==='template'?'classic':'');photoData='';document.getElementById('resumePhoto').value='';document.getElementById('preview').replaceChildren();const empty=document.createElement('div');empty.className='empty';empty.textContent='Fill in your details and create a preview.';document.getElementById('preview').append(empty);document.getElementById('qualityChecks').hidden=true;localStorage.removeItem('careerAIResumeDraft');localStorage.removeItem(key);document.getElementById('draftSaveStatus').textContent='Saved resume draft cleared.';};
+const strip=document.createElement('aside');strip.className='draft-status';strip.style.cssText='padding:10px 16px;margin:12px auto;max-width:1180px;background:#edf5f1;border:1px solid #cfe2d7;border-radius:10px;color:#255241;font:13px/1.5 Segoe UI,sans-serif';const label=document.createElement('span');label.id='draftSaveStatus';label.textContent='Your work saves automatically on this device. Uploaded files and recordings are not saved.';strip.append(label);document.body.insertBefore(strip,document.body.firstChild);
+const saved=CareerAI.read(key,null);
+if(saved){restoring=true;
+// Restore selectors before rebuilding dynamic lesson content, then restore typed work.
+for(const [id,item] of Object.entries(saved.fields||{})){const el=document.getElementById(id);if(el&&el.tagName==='SELECT'&&[...el.options].some(o=>o.value===item.value))el.value=item.value;}
+if(page==='tutor.html'&&saved.tutor){activeLessonId=saved.tutor.lesson;filterLessons();changeLanguage();curriculumQuizIndex=saved.tutor.quizIndex||0;renderCurriculumQuiz(activeLesson(),document.getElementById('language').value);quizScore=saved.tutor.quizScore||0;quizAttempts=saved.tutor.quizAttempts||0;document.getElementById('score').textContent='Score: '+quizScore+' / '+quizAttempts;if(window.showTutorPanel)showTutorPanel(saved.tutor.panel||'lessonCard');}
+for(const [id,item] of Object.entries(saved.fields||{})){const el=document.getElementById(id);if(!el||el.type==='file')continue;if(el.tagName!=='SELECT'){el.value=item.value??'';if(['checkbox','radio'].includes(el.type))el.checked=!!item.checked;}}
+if(page==='resume_builder.html'&&saved.preview){const view=document.getElementById('preview');view.dataset.template=document.getElementById('template').value;view.replaceChildren(...saved.preview.map(restorePreview));if(view.firstElementChild)view.firstElementChild.contentEditable='true';showQualityChecks();}
+if(page==='tutor.html'){['speechResult','practiceFeedback','correction','quizResult'].forEach(id=>{const state=saved[id];if(state){const el=document.getElementById(id);el.textContent=state.text;if(state.visible)el.style.display='block';}});}
+if(page==='interview_practice.html'&&saved.interview){const d=saved.interview;const safe=d.questions&&d.questions.length&&Number.isInteger(d.mainIndex)&&d.mainIndex>=0&&d.mainIndex<d.questions.length;
+if(safe&&!d.aiMode){questions=d.questions;mainIndex=d.mainIndex;followUpPending=!!d.followUpPending;answers=d.answers||[];aiMode=false;document.getElementById('conversation').replaceChildren();(d.conversation||[]).forEach(item=>addMessage(item.speaker,item.text));document.getElementById('avatarQuestion').textContent=d.question||questions[mainIndex].q;lastSpokenQuestion=d.question||questions[mainIndex].q;
+if(d.inProgress){const resume=document.createElement('button');resume.type='button';resume.id='resumeSavedInterview';resume.textContent='▶ Resume saved interview';resume.onclick=async()=>{active=true;setSetupLocked(true);document.getElementById('answerText').disabled=false;document.getElementById('sendButton').disabled=false;document.getElementById('recordButton').disabled=!recognitionAvailable();document.getElementById('endButton').disabled=false;document.getElementById('startButton').disabled=true;resume.remove();if(document.getElementById('useCamera').checked)await startCamera(false);setTurnStatus('Question '+(mainIndex+1)+' of '+questions.length+(followUpPending?' · follow-up':''));speak(lastSpokenQuestion);};document.getElementById('startButton').before(resume);document.getElementById('startButton').textContent='Start a new interview';document.getElementById('setupStatus').textContent='Saved interview found. Resume from your last question, or start a new round.';}
+}else if(d.aiMode){document.getElementById('setupStatus').textContent='Your typed draft is restored. Start a new AI session to continue; connected sessions may expire.';}}
+if(page==='resume_tools.html'&&saved.fields?.verificationSkill?.value&&saved.quizAnswers?.length){loadSkillQuestions().then(()=>{saved.quizAnswers.forEach(a=>{const input=[...document.querySelectorAll('#questionsContainer input')].find(e=>e.name===a.name&&e.value===a.value);if(input)input.checked=true;});});}
+requestAnimationFrame(()=>window.scrollTo(0,Number(saved.scrollY)||0));restoring=false;label.textContent='Draft restored from '+new Date(saved.savedAt).toLocaleString()+'. Your camera and microphone stay off until you resume.';}
+document.addEventListener('input',()=>{cleared=false;clearTimeout(timer);timer=setTimeout(save,300)});document.addEventListener('change',()=>{cleared=false;save()});document.addEventListener('click',()=>{clearTimeout(timer);timer=setTimeout(save,350)});window.addEventListener('pagehide',save);window.addEventListener('beforeunload',save);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')save()});
+})();
+</script>
+
+</body>
+</html>
+
+
+
+

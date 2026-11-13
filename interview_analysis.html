@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="careerai-api-base" content="https://careerai-project-vca7.onrender.com">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#171d34">
+<title>Interview Performance Analysis | CareerAI</title>
+<style>
+:root{--ink:#20243a;--muted:#687087;--line:#e5e8f0;--accent:#6048d8;--surface:#fff;--bg:#f5f6fb}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Segoe UI,Arial,sans-serif}.hero{padding:28px 20px 32px;color:#fff;background:linear-gradient(115deg,#171d34,#25214e 58%,#403078)}.wrap{width:min(1000px,100% - 32px);margin:auto}.back{display:inline-block;margin-bottom:14px;color:#e7e2ff;text-decoration:none;font-weight:700}.kicker{color:#c9c5ff;text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:800}h1{margin:8px 0;font-size:clamp(28px,5vw,40px)}.hero p{margin:0;color:#d6d9e8}.main{padding:22px 0 42px}.card{margin-bottom:16px;padding:22px;border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:0 5px 20px #222b4408}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.metric{padding:14px;border:1px solid var(--line);border-radius:12px;background:#fbfcff}.metric strong{display:block;color:var(--accent);font-size:24px}.muted{color:var(--muted);font-size:14px}.notice{padding:14px;border-radius:11px;background:#f2f0ff;color:#4c4671}.answer{margin-top:12px;padding:15px;border:1px solid var(--line);border-radius:12px;background:#fff}.answer h3{font-size:16px;margin:0 0 8px}.answer p{white-space:pre-wrap;overflow-wrap:anywhere;margin:7px 0}.tips{color:#4d5870}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}a.button,button{display:inline-flex;align-items:center;justify-content:center;padding:11px 15px;border:0;border-radius:10px;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;cursor:pointer}button.secondary{background:#eef0f6;color:#34405a}.empty{display:none}footer{text-align:center;padding:8px 15px 24px;color:#788195;font-size:13px}@media(max-width:620px){.metrics{grid-template-columns:1fr}.card{padding:17px}}
+</style>
+<style>
+button,a,input,select,textarea{touch-action:manipulation}input,select,textarea{font-size:16px}button{min-height:44px}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #8c78ed;outline-offset:3px}img,video{max-width:100%}body{overflow-wrap:break-word}@media(max-width:600px){input,select,textarea{max-width:100%}.module-modal{padding:0!important}.module-shell{width:100%!important;height:100dvh!important;max-height:none!important;border-radius:0!important}.module-frame{min-height:0}button{white-space:normal}}@media print{.career-progress{display:none!important}}
+</style><script>
+window.CareerAI={read:function(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}},write:function(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}},role:function(){return this.read('careerAIProfile',{}).role||this.read('careerAIResumeAnalysis',{}).job_role||''},setRole:function(role){if(!role.trim())return;var p=this.read('careerAIProfile',{});p.role=role.trim();p.updatedAt=new Date().toISOString();this.write('careerAIProfile',p)}};
+</script>
+<script src="./career-api.js"></script>
+</head>
+<body>
+<header class="hero"><div class="wrap"><a class="back" href="./dashboard.html" target="_top">← Back to dashboard</a><div class="kicker">CareerAI · Feedback</div><h1>Interview Performance Analysis</h1><p>Review your latest mock interview and see practical ways to strengthen your answers.</p></div></header>
+<main class="main wrap">
+<section id="emptyState" class="card empty"><h2>No interview report yet</h2><p class="muted">Complete at least one answer in Mock Interview Practice, then end the interview. Your latest feedback report will appear here.</p><p class="notice">The free report checks answer structure, examples, and results using simple text patterns. It is coaching feedback, not an AI hiring decision. Your report stays in this browser.</p><div class="actions"><a class="button" href="./interview_practice.html">Start mock interview</a></div></section>
+<section id="reportView" hidden>
+<div class="card"><p class="muted" id="meta"></p><div class="metrics"><div class="metric"><strong id="score">—</strong><span>Average answer structure</span></div><div class="metric"><strong id="examples">—</strong><span>Answers with a specific example</span></div><div class="metric"><strong id="results">—</strong><span>Answers that mention a result</span></div></div><p class="notice" id="advice" style="margin-top:16px"></p><p class="muted" id="method" style="margin-top:10px"></p></div>
+<section class="card"><h2>Answer-by-answer feedback</h2><div id="answers"></div></section>
+<div class="actions"><a class="button" href="./interview_practice.html">Practise again</a><a class="button" href="./dashboard.html" target="_top">Back to dashboard</a><button id="clearReport" class="secondary" type="button">Clear saved report</button></div>
+</section>
+</main>
+<footer>CareerAI · Feedback is for practice and learning.</footer>
+<script>
+"use strict";
+const key="careerAIInterviewReport";
+const empty=document.getElementById("emptyState");
+const view=document.getElementById("reportView");
+function addText(parent,tag,text,className){const el=document.createElement(tag);el.textContent=text;if(className)el.className=className;parent.appendChild(el);return el;}
+let report=null;
+try{report=JSON.parse(localStorage.getItem(key)||"null");}catch(_){report=null;}
+if(!report||!Array.isArray(report.answers)||!report.answers.length){empty.style.display="block";}else{
+ view.hidden=false;
+ const saved=new Date(report.savedAt);
+ const savedLabel=Number.isNaN(saved.getTime())?"":saved.toLocaleString();
+ document.getElementById("meta").textContent=[report.role,report.level,report.mode,savedLabel].filter(Boolean).join(" · ");
+ document.getElementById("score").textContent=Number(report.averageScore||0).toFixed(1)+"/10";
+ document.getElementById("examples").textContent=(report.exampleCount||0)+"/"+report.answers.length;
+ document.getElementById("results").textContent=(report.resultCount||0)+"/"+report.answers.length;
+ document.getElementById("advice").textContent=report.advice||"Keep practising with a clear structure: situation, what you did, and the result.";
+ document.getElementById("method").textContent=report.intro||"Feedback is based on answer text patterns; it is not a generative AI assessment.";
+ const list=document.getElementById("answers");
+ report.answers.forEach((item,index)=>{
+  const article=document.createElement("article");article.className="answer";
+  addText(article,"h3","Question "+(index+1)+": "+(item.question||"Interview answer"));
+  addText(article,"p",item.text||"No answer text was saved.");
+  addText(article,"p","Structure score: "+(item.score??"—")+"/10 · "+(item.words||0)+" words · Example: "+(item.example?"yes":"not detected")+" · Action: "+(item.action?"detected":"not detected")+" · Result: "+(item.result?"detected":"not detected"),"muted");
+  const tips=Array.isArray(item.tips)?item.tips:[];
+  if(tips.length){const ul=document.createElement("ul");ul.className="tips";tips.forEach(tip=>addText(ul,"li",tip));article.appendChild(ul);}
+  list.appendChild(article);
+ });
+}
+document.getElementById("clearReport").addEventListener("click",function(){if(confirm("Clear the saved interview report from this browser?")){localStorage.removeItem(key);location.reload();}});
+</script>
+
+<style data-career-journey>
+.journey-bar{width:min(1180px,calc(100% - 32px));margin:20px auto;padding:20px;border:1px solid #dddff0;border-radius:16px;background:white;color:#20243a;font:15px/1.5 'Segoe UI',sans-serif}.journey-bar h2{margin:0 0 6px;font-size:21px}.journey-track{display:flex;gap:8px;overflow-x:auto;list-style:none;padding:0 0 8px;margin:14px 0}.journey-track li{white-space:nowrap;padding:6px 10px;border-radius:20px;background:#f1f2f7;font-size:12px}.journey-track li[aria-current]{background:#6048d8;color:white}.journey-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.journey-actions a,.journey-actions button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 15px;border:1px solid #d7dbeb;border-radius:9px;background:white;color:#39405a;text-decoration:none;font:600 14px 'Segoe UI',sans-serif;cursor:pointer}.journey-actions .journey-next{background:#6048d8;color:white}.journey-actions button:disabled{opacity:.55;cursor:not-allowed}.journey-hint{margin:10px 0;color:#616a80;font-size:13px}body.journey-resume #careerPathSection,body.journey-resume #verificationSection,body.journey-resume #analysisSection,body.journey-results #resumeAnalysisSection,body.journey-results #careerPathSection,body.journey-results #verificationSection,body.journey-quiz #resumeAnalysisSection,body.journey-quiz #analysisSection,body.journey-quiz #careerPathSection{display:none!important}.journey-bottom{margin-top:20px;margin-bottom:32px}@media print{.journey-bar{display:none!important}}@media(max-width:550px){.journey-bar{padding:16px}.journey-actions .journey-next{flex:1}}
+</style>
+<script data-career-journey>
+(function(){
+const params=new URLSearchParams(location.search);if(params.get('journey')!=='1')return;
+const steps=[['Upload resume','resume_tools.html?feature=resume'],['Review analysis','resume_tools.html?feature=skill-gap'],['Verify skills','resume_tools.html?feature=verification'],['English tutor','tutor.html'],['Mock interview','interview_practice.html'],['Interview feedback','interview_analysis.html'],['Build resume','resume_builder.html']];
+const page=location.pathname.split('/').pop();let step=page==='resume_tools.html'?(params.get('feature')==='verification'?2:params.get('feature')==='skill-gap'?1:0):steps.findIndex(x=>x[1].split('?')[0]===page);if(step<0)return;
+const url=i=>steps[i][1]+(steps[i][1].includes('?')?'&':'?')+'journey=1';
+let state=CareerAI.read('careerAIJourney',{});state.current=step;state.visited=state.visited||{};state.visited[step]=true;state.updatedAt=new Date().toISOString();CareerAI.write('careerAIJourney',state);
+function build(bottom){const box=document.createElement('section');box.className='journey-bar'+(bottom?' journey-bottom':'');box.setAttribute('aria-label','Career preparation journey');if(!bottom){const title=document.createElement('h2');title.textContent='Step '+(step+1)+' of '+steps.length+' · '+steps[step][0];box.append(title);const role=document.createElement('p');role.className='journey-hint';role.textContent=CareerAI.role()?'Your target: '+CareerAI.role():'Choose your job role when uploading your resume.';box.append(role);const list=document.createElement('ol');list.className='journey-track';steps.forEach(([name],i)=>{const item=document.createElement('li');item.textContent=(i+1)+'. '+name;if(i===step)item.setAttribute('aria-current','step');list.append(item)});box.append(list)}const actions=document.createElement('div');actions.className='journey-actions';const back=document.createElement('a');back.href=step?url(step-1):'dashboard.html';back.textContent=step?'← Back':'← Dashboard';actions.append(back);const next=document.createElement('button');next.type='button';next.className='journey-next';next.onclick=()=>advance(false);actions.append(next);if(step<steps.length-1){const skip=document.createElement('button');skip.type='button';skip.textContent='Skip this step';skip.onclick=()=>advance(true);actions.append(skip)}const dash=document.createElement('a');dash.href='dashboard.html';dash.textContent='Save & exit';dash.onclick=()=>{if(step===4&&typeof endInterview==='function')endInterview();if(step===6&&document.getElementById('saveDraft'))document.getElementById('saveDraft').click();};actions.append(dash);const hint=document.createElement('p');hint.className='journey-hint journey-status';hint.setAttribute('aria-live','polite');box.append(actions,hint);return box}
+const top=build(false),bottom=build(true);document.body.insertBefore(top,document.body.firstChild);document.body.append(bottom);
+if(page==='resume_tools.html'){document.body.classList.add(step===0?'journey-resume':step===1?'journey-results':'journey-quiz');const a=CareerAI.read('careerAIResumeAnalysis',null);if(step>0&&!a){const notice=document.getElementById('skillGapNotice');notice.classList.remove('hidden');document.getElementById('noticeTitle').textContent='Upload a resume first';document.getElementById('skillGapMessage').textContent='Return to Step 1 to analyze a resume, or skip this step.';notice.querySelector('button').onclick=()=>location.assign(url(0));}}
+function completed(){switch(step){case 0:case 1:return !!CareerAI.read('careerAIResumeAnalysis',{}).job_role;case 2:return Object.keys(CareerAI.read('careerAIVerifiedSkills',{})).length>0;case 3:return Object.keys(CareerAI.read('careerAILearningProgress',{})).length>0;case 4:return !!CareerAI.read('careerAIInterviewReport',{}).totalAnswers;case 5:return !!CareerAI.read('careerAIInterviewReport',{}).totalAnswers;case 6:return !!CareerAI.read('careerAIResumeBuilt',{}).at;}}
+function update(){const done=completed(),working=step===4&&typeof active!=='undefined'&&active;const ready=done||working;const label=step===6?'Finish journey':step===4&&working?'End interview & review feedback':'Continue → '+steps[step+1][0];for(const bar of [top,bottom]){const button=bar.querySelector('.journey-next');if(button.textContent!==label)button.textContent=label;button.disabled=!ready;const text=ready?'Continue when you are ready. Your progress is saved in this browser.':'Complete this activity to continue, or use Skip this step.';const hint=bar.querySelector('.journey-status');if(hint.textContent!==text)hint.textContent=text}}
+function advance(skip){if(step===4&&typeof endInterview==='function'&&typeof active!=='undefined'&&active)endInterview();state=CareerAI.read('careerAIJourney',{});if(skip){state.skipped=state.skipped||{};state.skipped[step]=true;}else{state.completed=state.completed||{};state.completed[step]=true;}state.current=Math.min(step+1,steps.length-1);if(step===6)state.finishedAt=new Date().toISOString();CareerAI.write('careerAIJourney',state);location.assign(step===6?'dashboard.html':url(step+1));}
+// Keep links within the journey and show the results as the next step after analysis.
+document.querySelectorAll('a[href]').forEach(a=>{const target=new URL(a.href,location.href);if(target.origin!==location.origin)return;const i=steps.findIndex(x=>x[1]===target.pathname.split('/').pop()+target.search);if(i>=0)a.href=url(i)});
+update();setInterval(update,1000);
+})();
+</script>
+
+
+<script data-career-drafts>
+(function(){
+const page=location.pathname.split('/').pop()||'dashboard.html';if(page==='dashboard.html')return;
+const key='careerAIAutosave:'+(page==='resume_tools.html'?'index.html':page);let restoring=false,cleared=false,timer;
+const fields=()=>[...document.querySelectorAll('input[id],select[id],textarea[id]')].filter(e=>!['file','password','hidden'].includes(e.type));
+function save(){if(restoring||cleared)return true;const data={savedAt:new Date().toISOString(),fields:{},scrollY:scrollY};fields().forEach(e=>data.fields[e.id]={value:e.value,checked:e.checked});
+if(page==='tutor.html'){data.tutor={lesson:activeLessonId,quizScore,quizAttempts,panel:window.tutorPanel||'lessonCard'};['speechResult','practiceFeedback','correction','quizResult'].forEach(id=>{const el=document.getElementById(id);if(el)data[id]={text:el.textContent,visible:getComputedStyle(el).display!=='none'};});}
+if(page==='interview_practice.html'){data.interview={questions,mainIndex,followUpPending,answers,inProgress:active||!!document.getElementById('resumeSavedInterview'),aiMode,question:document.getElementById('avatarQuestion').textContent,conversation:[...document.querySelectorAll('#conversation .bubble')].map(e=>({speaker:e.querySelector('.speaker').textContent,text:e.lastElementChild.textContent}))};}
+if(page==='resume_builder.html'){const view=document.getElementById('preview');if(!view.querySelector('.empty'))data.preview=[...view.childNodes].map(serializePreview);const draft={};draftFields.forEach(id=>draft[id]=document.getElementById(id).value);draft.skills=confirmedSkills().join(', ');draft.photo=photoData;draft.savedAt=data.savedAt;if(!CareerAI.write('careerAIResumeDraft',draft))return false;}
+if(page==='resume_tools.html')data.quizAnswers=[...document.querySelectorAll('#questionsContainer input:checked')].map(e=>({name:e.name,value:e.value}));
+const ok=CareerAI.write(key,data);const label=document.getElementById('draftSaveStatus');if(label)label.textContent=ok?'Draft saved on this device · '+new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}):'Draft could not be saved: browser storage is unavailable or full.';return ok;}
+function serializePreview(node){if(node.nodeType===3)return {text:node.textContent};if(node.nodeType!==1)return null;return {tag:node.tagName,classes:node.className,children:[...node.childNodes].map(serializePreview).filter(Boolean)};}
+function restorePreview(item){if(typeof item.text==='string')return document.createTextNode(item.text);const allowed=['DIV','HEADER','H1','H2','H3','P','UL','OL','LI','SPAN','IMG','BR','B','STRONG','EM'];if(!allowed.includes(item.tag))return document.createTextNode('');const el=document.createElement(item.tag);if(typeof item.classes==='string')el.className=item.classes;if(item.tag==='IMG'){if(/^data:image\/(jpeg|png|webp);base64,/.test(photoData)){el.src=photoData;el.alt='Profile photo';}}else(item.children||[]).forEach(x=>el.append(restorePreview(x)));return el;}
+window.CareerAIDrafts={save};
+if(page==='resume_builder.html')document.getElementById('deleteDraft').onclick=()=>{if(!confirm('Clear the saved resume draft and its form on this device?'))return;cleared=true;draftFields.forEach(id=>document.getElementById(id).value=id==='template'?'classic':'');photoData='';document.getElementById('resumePhoto').value='';document.getElementById('preview').replaceChildren();const empty=document.createElement('div');empty.className='empty';empty.textContent='Fill in your details and create a preview.';document.getElementById('preview').append(empty);document.getElementById('qualityChecks').hidden=true;localStorage.removeItem('careerAIResumeDraft');localStorage.removeItem(key);document.getElementById('draftSaveStatus').textContent='Saved resume draft cleared.';};
+const strip=document.createElement('aside');strip.className='draft-status';strip.style.cssText='padding:10px 16px;margin:12px auto;max-width:1180px;background:#edf5f1;border:1px solid #cfe2d7;border-radius:10px;color:#255241;font:13px/1.5 Segoe UI,sans-serif';const label=document.createElement('span');label.id='draftSaveStatus';label.textContent='Your work saves automatically on this device. Uploaded files and recordings are not saved.';strip.append(label);document.body.insertBefore(strip,document.body.firstChild);
+const saved=CareerAI.read(key,null);
+if(saved){restoring=true;
+// Restore selectors before rebuilding dynamic lesson content, then restore typed work.
+for(const [id,item] of Object.entries(saved.fields||{})){const el=document.getElementById(id);if(el&&el.tagName==='SELECT'&&[...el.options].some(o=>o.value===item.value))el.value=item.value;}
+if(page==='tutor.html'&&saved.tutor){activeLessonId=saved.tutor.lesson;filterLessons();changeLanguage();quizScore=saved.tutor.quizScore||0;quizAttempts=saved.tutor.quizAttempts||0;document.getElementById('score').textContent='Score: '+quizScore+' / '+quizAttempts;if(window.showTutorPanel)showTutorPanel(saved.tutor.panel||'lessonCard');}
+for(const [id,item] of Object.entries(saved.fields||{})){const el=document.getElementById(id);if(!el||el.type==='file')continue;if(el.tagName!=='SELECT'){el.value=item.value??'';if(['checkbox','radio'].includes(el.type))el.checked=!!item.checked;}}
+if(page==='resume_builder.html'&&saved.preview){const view=document.getElementById('preview');view.dataset.template=document.getElementById('template').value;view.replaceChildren(...saved.preview.map(restorePreview));if(view.firstElementChild)view.firstElementChild.contentEditable='true';showQualityChecks();}
+if(page==='tutor.html'){['speechResult','practiceFeedback','correction','quizResult'].forEach(id=>{const state=saved[id];if(state){const el=document.getElementById(id);el.textContent=state.text;if(state.visible)el.style.display='block';}});}
+if(page==='interview_practice.html'&&saved.interview){const d=saved.interview;const safe=d.questions&&d.questions.length&&Number.isInteger(d.mainIndex)&&d.mainIndex>=0&&d.mainIndex<d.questions.length;
+if(safe&&!d.aiMode){questions=d.questions;mainIndex=d.mainIndex;followUpPending=!!d.followUpPending;answers=d.answers||[];aiMode=false;document.getElementById('conversation').replaceChildren();(d.conversation||[]).forEach(item=>addMessage(item.speaker,item.text));document.getElementById('avatarQuestion').textContent=d.question||questions[mainIndex].q;lastSpokenQuestion=d.question||questions[mainIndex].q;
+if(d.inProgress){const resume=document.createElement('button');resume.type='button';resume.id='resumeSavedInterview';resume.textContent='▶ Resume saved interview';resume.onclick=async()=>{active=true;setSetupLocked(true);document.getElementById('answerText').disabled=false;document.getElementById('sendButton').disabled=false;document.getElementById('recordButton').disabled=!recognitionAvailable();document.getElementById('endButton').disabled=false;document.getElementById('startButton').disabled=true;resume.remove();if(document.getElementById('useCamera').checked)await startCamera(false);setTurnStatus('Question '+(mainIndex+1)+' of '+questions.length+(followUpPending?' · follow-up':''));speak(lastSpokenQuestion);};document.getElementById('startButton').before(resume);document.getElementById('startButton').textContent='Start a new interview';document.getElementById('setupStatus').textContent='Saved interview found. Resume from your last question, or start a new round.';}
+}else if(d.aiMode){document.getElementById('setupStatus').textContent='Your typed draft is restored. Start a new AI session to continue; connected sessions may expire.';}}
+if(page==='resume_tools.html'&&saved.fields?.verificationSkill?.value&&saved.quizAnswers?.length){loadSkillQuestions().then(()=>{saved.quizAnswers.forEach(a=>{const input=[...document.querySelectorAll('#questionsContainer input')].find(e=>e.name===a.name&&e.value===a.value);if(input)input.checked=true;});});}
+requestAnimationFrame(()=>window.scrollTo(0,Number(saved.scrollY)||0));restoring=false;label.textContent='Draft restored from '+new Date(saved.savedAt).toLocaleString()+'. Your camera and microphone stay off until you resume.';}
+document.addEventListener('input',()=>{cleared=false;clearTimeout(timer);timer=setTimeout(save,300)});document.addEventListener('change',()=>{cleared=false;save()});document.addEventListener('click',()=>{clearTimeout(timer);timer=setTimeout(save,350)});window.addEventListener('pagehide',save);window.addEventListener('beforeunload',save);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')save()});
+})();
+</script>
+
+<script src="correction-support.js"></script>
+</body>
+</html>
