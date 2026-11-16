@@ -177,6 +177,11 @@ body{background:#f3f6fa;color:#24354c;font-family:'Segoe UI',Arial,sans-serif}he
 </style>
 <style>.curriculum-levels{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}.curriculum-levels button{display:block;text-align:left;padding:12px;background:#eef5f9;color:#24475d;border:1px solid #d8e5ee}.curriculum-levels strong,.curriculum-levels span{display:block}.curriculum-levels span{font-size:12px;line-height:1.6;margin-top:7px;color:#586e81}@media(max-width:650px){.curriculum-levels{grid-template-columns:1fr}}.curriculum-block{margin-top:18px;padding:18px;border:1px solid #dfe8ef;background:#fbfdff;border-radius:12px}.curriculum-block h3{margin:0 0 10px;font-size:16px;color:#245665}.curriculum-block p{white-space:pre-wrap;line-height:1.8}.curriculum-block li{margin:8px 0;line-height:1.6}.curriculum-note{font-size:13px;color:#667b8e;line-height:1.8}#nextCurriculumQuiz{margin:12px 0}.quiz-option{color:#24354c!important;background:#f5f8fc!important;border-color:#d9e3ed!important}.quiz-option input{width:auto!important}.curriculum-block button{margin-top:8px}</style>
 <script src="./career-api.js"></script>
+<style id="professional-tutor-style">
+.professional-entry{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 24px;margin:0 0 20px;background:#143a46;color:#fff;border-radius:16px;clear:both}.professional-entry h2{color:#fff;margin:3px 0 7px}.professional-entry p{color:#d0e4e8;margin:0;line-height:1.65}.professional-entry button{background:#fff;color:#174654;white-space:nowrap}.pro-kicker{text-transform:uppercase;font-size:11px;font-weight:800;letter-spacing:.12em;color:#a7d9df}.professional-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(240px,1fr);gap:22px;margin-top:22px}.pro-question-box{border:1px solid #d9e5ed;background:#f1f7fa;border-radius:14px;padding:20px}.pro-question-box h3{font-size:23px;line-height:1.5;margin:8px 0 14px;color:#173b4d}.pro-guidance{line-height:1.85;white-space:pre-wrap;color:#416174}.pro-counter{font-size:12px;font-weight:800;letter-spacing:.06em;color:#467783}.pro-response-label{display:block;font-weight:750;margin-top:22px}.pro-response{min-height:190px!important;line-height:1.8}.pro-review-panel{border:1px solid #dbe5ec;border-radius:14px;padding:20px;background:#fbfdff;align-self:start}.pro-review-panel h3{font-size:17px;margin:0 0 6px;color:#25495d}.pro-review-panel label{display:flex;gap:11px;align-items:flex-start;padding:12px 0;line-height:1.65;border-bottom:1px solid #e5edf2;font-size:14px;color:#3b5569}.pro-review-panel input[type=checkbox]{flex:0 0 auto;width:18px!important;height:18px;margin-top:4px;accent-color:#246f7d}.pro-word-count{color:#627d8b;font-size:12px;margin:0 0 15px}.pro-feedback{margin-top:16px;border:1px solid #c8dfe2;border-radius:12px;padding:16px;background:#edf7f6;line-height:1.8;color:#204d53}.pro-feedback p{margin:0 0 10px}.pro-feedback ul{padding-left:20px;margin:0}.pro-example{margin-top:20px;border-top:1px solid #dce7ee;padding-top:18px}.pro-example summary{cursor:pointer;font-weight:750;color:#226875;min-height:44px;display:flex;align-items:center}.pro-example p{white-space:pre-wrap;line-height:1.8;color:#3b566a}.pro-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:14px 0}.pro-toolbar button{margin:0}.pro-feedback[hidden]{display:none}.professional-filters{display:grid;grid-template-columns:minmax(180px,1fr) minmax(0,2fr);gap:16px;margin-top:18px}.professional-filters label{font-size:13px;font-weight:750;color:#446173}.pro-next{margin-top:18px!important}.professional-note{font-size:13px;color:#647c8a;line-height:1.8}.pro-save-status{font-size:12px;color:#647c8a;min-height:18px}.pro-feedback-heading{font-size:16px;color:#204d53;margin:0 0 10px}.pro-self-label{display:inline-block;background:#e9f1f5;border-radius:20px;padding:5px 10px;font-size:11px;font-weight:800;color:#3c6b80;margin-bottom:14px}.pro-question-box:focus-visible{outline:3px solid #3a8190;outline-offset:4px}@media(max-width:760px){.professional-grid,.professional-filters{grid-template-columns:1fr}.professional-entry{align-items:flex-start;flex-direction:column;padding:20px}.pro-question-box h3{font-size:21px}.pro-review-panel{padding:18px}}
+</style>
+<link rel="stylesheet" href="./career-ui.css">
+<script src="./career-journey.js" defer></script>
 </head>
 
 <body>
@@ -195,6 +200,8 @@ body{background:#f3f6fa;color:#24354c;font-family:'Segoe UI',Arial,sans-serif}he
 </nav>
 
 <div class="container"><section class="studio-welcome"><div><span class="studio-eyebrow">CAREERAI · COMMUNICATION STUDIO</span><h1>Build confidence, one conversation at a time.</h1><p>Learn in your language. Practise English for everyday life, work, and interviews.</p></div><div class="studio-stats"><strong id="studioLessons">0</strong><span>lessons practised</span><strong id="studioAccuracy">—</strong><span>quiz accuracy</span></div></section>
+
+    <section class="professional-entry" aria-labelledby="professional-entry-title"><div><span class="pro-kicker">From classroom to workplace</span><h2 id="professional-entry-title">Practise the conversations that matter.</h2><p>12 professional questions · 6 situations · guidance in your language.</p></div><button type="button" id="openProfessionalPractice">Open professional practice →</button></section>
 
     <section class="card" id="languageCard">
         <h2>🌐 Choose Your Language</h2>
@@ -246,7 +253,15 @@ body{background:#f3f6fa;color:#24354c;font-family:'Segoe UI',Arial,sans-serif}he
         <label for="lessonSearch">Find a lesson</label><input type="search" id="lessonSearch" placeholder="Search introductions, meetings, interviews…"><p id="lessonCount" class="small" aria-live="polite"></p>
     </section>
 
-    <nav class="tutor-tabs" aria-label="Learning activities"><button type="button" data-panel="lessonCard">1 · Learn</button><button type="button" data-panel="practiceCard">2 · Practise</button><button type="button" data-panel="grammarCard">3 · Refine</button><button type="button" data-panel="speakingCard">4 · Speak</button><button type="button" data-panel="quizCard">5 · Check</button></nav><section class="card" id="lessonCard">
+    <nav class="tutor-tabs" aria-label="Learning activities"><button type="button" data-panel="lessonCard">1 · Learn</button><button type="button" data-panel="practiceCard">2 · Practise</button><button type="button" data-panel="grammarCard">3 · Refine</button><button type="button" data-panel="speakingCard">4 · Speak</button><button type="button" data-panel="quizCard">5 · Check</button><button type="button" data-panel="professionalCard">6 · Professional</button></nav>
+    <section class="card tutor-panel-hidden" id="professionalCard" aria-labelledby="professional-title">
+        <span class="lesson-level">Professional communication</span>
+        <h2 id="professional-title">Prepare an answer you can stand behind.</h2>
+        <p>Choose a real workplace situation, write your answer, then use the checklist to review it. Questions and examples are in English; guidance follows your explanation language.</p>
+        <div class="professional-filters"><label for="professionalCategory">Situation<select id="professionalCategory"></select></label><label for="professionalQuestion">Professional question<select id="professionalQuestion"></select></label></div>
+        <div class="professional-grid"><div><section class="pro-question-box" id="professionalPromptBox" tabindex="-1"><span class="pro-counter" id="professionalCounter"></span><h3 id="professionalPrompt"></h3><p class="pro-guidance" id="professionalGuidance"></p><button type="button" class="secondary" id="hearProfessionalGuidance">Hear guidance</button></section><label for="professionalAnswer" class="pro-response-label">Your English response</label><textarea id="professionalAnswer" class="pro-response" maxlength="6000" placeholder="Use a real example from your studies, project, internship or work. Keep claims truthful."></textarea><p class="pro-word-count" id="professionalWordCount" aria-live="polite"></p><div class="pro-toolbar"><button type="button" id="reviewProfessionalAnswer">Review my checklist</button><button type="button" class="secondary" id="useProfessionalTranscript">Use my speech transcript</button></div><p class="pro-save-status" id="professionalSaveStatus" aria-live="polite"></p><div class="pro-feedback" id="professionalFeedback" aria-live="polite" hidden></div><details class="pro-example" id="professionalExample"><summary>View an illustrative answer</summary><p class="professional-note">This is an example, not a script about your experience. Replace its details with your own facts.</p><p id="professionalSample"></p><button type="button" class="secondary" id="hearProfessionalSample">Hear example in English</button></details></div><aside class="pro-review-panel"><span class="pro-self-label">Your self-review</span><h3>Does your answer include these?</h3><p class="professional-note">Tick only what you can find in your own response.</p><div id="professionalChecklist"></div><button type="button" class="secondary pro-next" id="nextProfessionalQuestion">Next question →</button><p class="professional-note">This checks your word count and checklist selections. It does not automatically grade meaning, technical accuracy, pronunciation or fluency.</p></aside></div>
+    </section>
+    <section class="card" id="lessonCard">
         <span id="lessonLevel" class="lesson-level">Beginner</span>
         <h2 id="lessonTitle">📘 Lesson 1: Am, Is, Are</h2>
 
@@ -1244,31 +1259,12 @@ changeLanguage();
 </script>
 
 
-<style data-career-journey>
-.journey-bar{width:min(1180px,calc(100% - 32px));margin:20px auto;padding:20px;border:1px solid #dddff0;border-radius:16px;background:white;color:#20243a;font:15px/1.5 'Segoe UI',sans-serif}.journey-bar h2{margin:0 0 6px;font-size:21px}.journey-track{display:flex;gap:8px;overflow-x:auto;list-style:none;padding:0 0 8px;margin:14px 0}.journey-track li{white-space:nowrap;padding:6px 10px;border-radius:20px;background:#f1f2f7;font-size:12px}.journey-track li[aria-current]{background:#6048d8;color:white}.journey-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.journey-actions a,.journey-actions button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 15px;border:1px solid #d7dbeb;border-radius:9px;background:white;color:#39405a;text-decoration:none;font:600 14px 'Segoe UI',sans-serif;cursor:pointer}.journey-actions .journey-next{background:#6048d8;color:white}.journey-actions button:disabled{opacity:.55;cursor:not-allowed}.journey-hint{margin:10px 0;color:#616a80;font-size:13px}body.journey-resume #careerPathSection,body.journey-resume #verificationSection,body.journey-resume #analysisSection,body.journey-results #resumeAnalysisSection,body.journey-results #careerPathSection,body.journey-results #verificationSection,body.journey-quiz #resumeAnalysisSection,body.journey-quiz #analysisSection,body.journey-quiz #careerPathSection{display:none!important}.journey-bottom{margin-top:20px;margin-bottom:32px}@media print{.journey-bar{display:none!important}}@media(max-width:550px){.journey-bar{padding:16px}.journey-actions .journey-next{flex:1}}
-</style>
-<script data-career-journey>
-(function(){
-const params=new URLSearchParams(location.search);if(params.get('journey')!=='1')return;
-const steps=[['Upload resume','resume_tools.html?feature=resume'],['Review analysis','resume_tools.html?feature=skill-gap'],['Verify skills','resume_tools.html?feature=verification'],['English tutor','tutor.html'],['Mock interview','interview_practice.html'],['Interview feedback','interview_analysis.html'],['Build resume','resume_builder.html']];
-const page=location.pathname.split('/').pop();let step=page==='resume_tools.html'?(params.get('feature')==='verification'?2:params.get('feature')==='skill-gap'?1:0):steps.findIndex(x=>x[1].split('?')[0]===page);if(step<0)return;
-const url=i=>steps[i][1]+(steps[i][1].includes('?')?'&':'?')+'journey=1';
-let state=CareerAI.read('careerAIJourney',{});state.current=step;state.visited=state.visited||{};state.visited[step]=true;state.updatedAt=new Date().toISOString();CareerAI.write('careerAIJourney',state);
-function build(bottom){const box=document.createElement('section');box.className='journey-bar'+(bottom?' journey-bottom':'');box.setAttribute('aria-label','Career preparation journey');if(!bottom){const title=document.createElement('h2');title.textContent='Step '+(step+1)+' of '+steps.length+' · '+steps[step][0];box.append(title);const role=document.createElement('p');role.className='journey-hint';role.textContent=CareerAI.role()?'Your target: '+CareerAI.role():'Choose your job role when uploading your resume.';box.append(role);const list=document.createElement('ol');list.className='journey-track';steps.forEach(([name],i)=>{const item=document.createElement('li');item.textContent=(i+1)+'. '+name;if(i===step)item.setAttribute('aria-current','step');list.append(item)});box.append(list)}const actions=document.createElement('div');actions.className='journey-actions';const back=document.createElement('a');back.href=step?url(step-1):'dashboard.html';back.textContent=step?'← Back':'← Dashboard';actions.append(back);const next=document.createElement('button');next.type='button';next.className='journey-next';next.onclick=()=>advance(false);actions.append(next);if(step<steps.length-1){const skip=document.createElement('button');skip.type='button';skip.textContent='Skip this step';skip.onclick=()=>advance(true);actions.append(skip)}const dash=document.createElement('a');dash.href='dashboard.html';dash.textContent='Save & exit';dash.onclick=()=>{if(step===4&&typeof endInterview==='function')endInterview();if(step===6&&document.getElementById('saveDraft'))document.getElementById('saveDraft').click();};actions.append(dash);const hint=document.createElement('p');hint.className='journey-hint journey-status';hint.setAttribute('aria-live','polite');box.append(actions,hint);return box}
-const top=build(false),bottom=build(true);document.body.insertBefore(top,document.body.firstChild);document.body.append(bottom);
-if(page==='resume_tools.html'){document.body.classList.add(step===0?'journey-resume':step===1?'journey-results':'journey-quiz');const a=CareerAI.read('careerAIResumeAnalysis',null);if(step>0&&!a){const notice=document.getElementById('skillGapNotice');notice.classList.remove('hidden');document.getElementById('noticeTitle').textContent='Upload a resume first';document.getElementById('skillGapMessage').textContent='Return to Step 1 to analyze a resume, or skip this step.';notice.querySelector('button').onclick=()=>location.assign(url(0));}}
-function completed(){switch(step){case 0:case 1:return !!CareerAI.read('careerAIResumeAnalysis',{}).job_role;case 2:return Object.keys(CareerAI.read('careerAIVerifiedSkills',{})).length>0;case 3:return Object.keys(CareerAI.read('careerAILearningProgress',{})).length>0;case 4:return !!CareerAI.read('careerAIInterviewReport',{}).totalAnswers;case 5:return !!CareerAI.read('careerAIInterviewReport',{}).totalAnswers;case 6:return !!CareerAI.read('careerAIResumeBuilt',{}).at;}}
-function update(){const done=completed(),working=step===4&&typeof active!=='undefined'&&active;const ready=done||working;const label=step===6?'Finish journey':step===4&&working?'End interview & review feedback':'Continue → '+steps[step+1][0];for(const bar of [top,bottom]){const button=bar.querySelector('.journey-next');if(button.textContent!==label)button.textContent=label;button.disabled=!ready;const text=ready?'Continue when you are ready. Your progress is saved in this browser.':'Complete this activity to continue, or use Skip this step.';const hint=bar.querySelector('.journey-status');if(hint.textContent!==text)hint.textContent=text}}
-function advance(skip){if(step===4&&typeof endInterview==='function'&&typeof active!=='undefined'&&active)endInterview();state=CareerAI.read('careerAIJourney',{});if(skip){state.skipped=state.skipped||{};state.skipped[step]=true;}else{state.completed=state.completed||{};state.completed[step]=true;}state.current=Math.min(step+1,steps.length-1);if(step===6)state.finishedAt=new Date().toISOString();CareerAI.write('careerAIJourney',state);location.assign(step===6?'dashboard.html':url(step+1));}
-// Keep links within the journey and show the results as the next step after analysis.
-document.querySelectorAll('a[href]').forEach(a=>{const target=new URL(a.href,location.href);if(target.origin!==location.origin)return;const i=steps.findIndex(x=>x[1]===target.pathname.split('/').pop()+target.search);if(i>=0)a.href=url(i)});
-update();setInterval(update,1000);
-})();
-</script>
+
+
 
 
 <script>
-window.tutorPanel='lessonCard';const tutorPanels=['lessonCard','practiceCard','grammarCard','speakingCard','quizCard'];
+window.tutorPanel='lessonCard';const tutorPanels=['lessonCard','practiceCard','grammarCard','speakingCard','quizCard','professionalCard'];
 window.showTutorPanel=function(id){if(!tutorPanels.includes(id))id='lessonCard';window.tutorPanel=id;tutorPanels.forEach(name=>document.getElementById(name).classList.toggle('tutor-panel-hidden',name!==id));document.querySelectorAll('[data-panel]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.panel===id)));};
 document.querySelectorAll('[data-panel]').forEach(b=>b.onclick=()=>{stopSpeech();showTutorPanel(b.dataset.panel);if(window.CareerAIDrafts)CareerAIDrafts.save();});
 document.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>{stopSpeech();document.getElementById('lessonSearch').value='';document.getElementById('lessonCategory').value='all';document.getElementById('levelSelect').value=b.dataset.level;curriculumQuizIndex=0;filterLessons();showTutorPanel('lessonCard');if(window.CareerAIDrafts)CareerAIDrafts.save();});document.getElementById('lessonSearch').addEventListener('input',filterLessons);document.getElementById('practiceAnswer').addEventListener('input',saveLessonNotebook);
@@ -1309,6 +1305,220 @@ document.addEventListener('input',()=>{cleared=false;clearTimeout(timer);timer=s
 })();
 </script>
 
+<script id="professional-tutor">
+(function () {
+    'use strict';
+    const categories = [
+        ['introductions', 'Introductions & role motivation'],
+        ['projects', 'Projects & technical communication'],
+        ['teamwork', 'Teamwork & disagreement'],
+        ['updates', 'Progress updates & deadlines'],
+        ['clients', 'Customer & client conversations'],
+        ['writing', 'Professional email & follow-up']
+    ];
+    const questions = [
+        {id:'introduce',category:'introductions',title:'Introduce yourself for a graduate role',question:'Tell me about yourself and explain how your experience relates to this graduate role.',range:[60,120],checks:['I named my current background and target role.','I gave one relevant project or learning example.','I explained my own contribution rather than only the team’s work.','I ended with what I want to contribute or learn.'],sample:'I am a final-year BCA student interested in web development. In our campus project, I built the search form and connected it to a backend service. I learned to validate inputs and explain errors clearly to users. I also worked with a teammate to review the main user journey before our presentation. I am looking for a graduate role where I can contribute to useful applications and keep improving my development skills.'},
+        {id:'motivation',category:'introductions',title:'Explain why the role interests you',question:'Why are you interested in this role, and which skill or experience would help you contribute?',range:[60,110],checks:['I referred to a specific responsibility in the role.','I connected that responsibility to a real skill or experience.','I supported the skill with a concrete example.','I acknowledged an area I am still learning.'],sample:'This role interests me because it involves building and maintaining features that people use every day. In my college project, I enjoyed turning a confusing form into a clearer step-by-step flow. I used JavaScript to validate the fields and showed useful messages when information was missing. That experience connects to the user-facing work described in the role. I am still developing my testing skills, and I would like to improve them through code reviews and guidance from the team.'},
+        {id:'project',category:'projects',title:'Explain your project to a non-technical person',question:'Explain one project you have built to a person who does not know the technologies. What problem did it solve, and what did you contribute?',range:[70,130],checks:['I explained the user’s problem before naming technologies.','I described the main steps in plain language.','I identified my own contribution.','I gave a result or a limitation without exaggerating.'],sample:'Our project helps students organise study material in one place. A student chooses a subject, opens the available notes and can ask for a simpler explanation of selected content. I worked on the subject selection and upload form. I made sure that notes and model papers were labelled separately so students could find the right material. In our demonstration, users could complete the main flow without opening several folders. The explanations still need checking against the source notes, so we show the supplied pages beside the answer.'},
+        {id:'debugging',category:'projects',title:'Describe a bug and your investigation',question:'Tell a teammate about a bug you investigated. Explain the expected behaviour, what happened, how you checked it, and what remains to be done.',range:[70,130],checks:['I separated expected behaviour from observed behaviour.','I described the steps or evidence I used to investigate.','I explained the change I made or the next action.','I stated what has and has not been verified.'],sample:'The form should have shown the analysis result after a valid PDF was uploaded. Instead, it kept displaying a loading message. I reproduced the issue with a small sample file and checked the request status before changing the page. The server was unavailable, but the page gave no useful failure message. I added a clear error state so the user could retry. I checked the message with the sample request. I still need to review the behaviour with a slower connection and different PDF files.'},
+        {id:'disagreement',category:'teamwork',title:'Handle a disagreement respectfully',question:'A teammate prefers a different approach for your project. How would you discuss the disagreement and decide what to do?',range:[60,120],checks:['I described the shared goal without blaming the person.','I asked about the reasons behind the other approach.','I proposed a fair way to compare the options.','I included an agreed decision or follow-up.'],sample:'I would start by confirming that we both want a reliable solution within our deadline. I would ask my teammate to explain the benefits of their approach and then describe the concern I have with it. If we are still unsure, I would suggest comparing the options against the same criteria, such as setup time and ease of maintenance. We could try a small example before deciding. Once we agree, I would record the decision and divide the remaining work clearly.'},
+        {id:'help',category:'teamwork',title:'Ask for help without hiding the problem',question:'You are blocked on a task. How would you ask a senior teammate for help while showing what you have already tried?',range:[50,110],checks:['I stated the task and the specific blocker.','I summarised what I already tried.','I asked a focused question.','I explained the impact or useful next step.'],sample:'I am connecting the upload form to the analysis endpoint, and I am blocked by a response-format error. I checked the request fields and confirmed that the server receives the file. I also compared the response with the format the page expects. Could you help me check whether this route returns the same fields for success and failure? A short review would help me finish the error-handling step before we connect it to the dashboard.'},
+        {id:'status',category:'updates',title:'Give a concise project status update',question:'Give your supervisor a short project update: what is complete, what is in progress, and what needs a decision or help?',range:[50,100],checks:['I named completed work with a concrete detail.','I separated ongoing work from completed work.','I called out a blocker or stated that there is none.','I gave a next action and a realistic time.'],sample:'The subject selection screen and the document list are complete. I am now improving the upload messages and checking that each file has the correct document type. The main blocker is that we do not yet have the final subject list approved by the team. Could we confirm that list in today’s meeting? Once it is agreed, I expect to finish the form labels by tomorrow afternoon. I will send another update if that estimate changes.'},
+        {id:'deadline',category:'updates',title:'Communicate a delivery risk early',question:'You realise your task may miss its deadline. What would you say to your team lead, and what options would you offer?',range:[60,120],checks:['I reported the risk early and clearly.','I explained the cause without making unsupported excuses.','I offered a revised estimate or smaller deliverable.','I asked for agreement on the next priority.'],sample:'I want to flag a risk with Friday’s upload feature deadline. Text-based PDFs are working, but scanned files need another processing step that I underestimated. I can deliver the text-PDF flow on Friday and add scanned-file support after we check its quality, or we can move the full feature to next week. My current estimate for that extra work is two working days. Which option best fits the demonstration? I will update the task plan once we agree.'},
+        {id:'clarify',category:'clients',title:'Clarify an unclear request',question:'A client asks, “Can you make the dashboard better?” How would you clarify the request before proposing a change?',range:[50,110],checks:['I asked who uses the dashboard and what they need to do.','I requested a concrete example of the current problem.','I checked priority or success criteria.','I summarised a next step rather than promising an undefined change.'],sample:'I would be happy to help improve it. Which users are finding the dashboard difficult, and what are they trying to do? Could you show me one example where they get stuck? I would also like to understand whether speed, navigation or the information shown is the main concern. Once we identify the highest-priority issue, I can propose a small change and agree with you on how we will judge whether it helps.'},
+        {id:'customer',category:'clients',title:'Respond to a reported service issue',question:'A customer says an important feature is not working. Write a calm first response that acknowledges the problem and asks for the information needed to investigate.',range:[50,100],checks:['I acknowledged the impact respectfully.','I asked for specific information without requesting a password.','I gave a realistic next step.','I avoided promising a fix time I cannot confirm.'],sample:'Thank you for telling us. I understand that the failed upload is interrupting your work. Could you share the time it happened, the file type and the error message you saw? Please do not send your password or any private document contents. I will use those details to investigate the request and check the upload service. I cannot confirm a repair time yet, but I will update you once we have identified the cause or the next useful step.'},
+        {id:'email',category:'writing',title:'Write a professional clarification email',question:'Write a short email to your supervisor asking them to confirm the scope of a feature before you begin the work.',range:[50,110],checks:['I used a clear subject and appropriate greeting.','I stated the decision or information I need.','I gave enough context for the recipient to respond.','I ended politely with a clear next action.'],sample:'Subject: Confirming the scope of the document upload feature\n\nHello Ms Rao,\n\nBefore I begin the upload changes, could you confirm whether the first release should support text-based PDFs only or scanned PDFs as well? The second option needs additional text recognition and a review step. My proposed first release includes PDF upload, file-type checks and clear error messages.\n\nPlease let me know which scope to use so I can update the plan.\n\nThank you,\nVarun'},
+        {id:'followup',category:'writing',title:'Follow up after an interview',question:'Write a concise follow-up email after an interview. Thank the interviewer, mention one relevant discussion point, and express continued interest without pressuring them.',range:[50,100],checks:['I included a clear subject and appropriate greeting.','I thanked the interviewer for their time.','I referred to a specific topic from the conversation.','I expressed interest politely without demanding a decision.'],sample:'Subject: Thank you for the graduate developer interview\n\nHello Mr Patel,\n\nThank you for taking the time to discuss the graduate developer role with me today. I enjoyed learning how your team reviews user feedback before planning new features. That discussion connected with my experience improving the upload flow in our college project.\n\nI remain interested in the opportunity and would be happy to provide any further information you need.\n\nKind regards,\nVarun'}
+    ];
+    // Prepared guidance follows the existing explanation-language selector;
+    // interview prompts and sample responses intentionally remain in English.
+    const guidance = {
+        en: {
+            introductions:'Start with your current background, connect one real example to the role, and finish with what you can contribute. Keep your claims truthful and relevant.',
+            projects:'Explain the problem first, then your own action and the result. Use plain words. Clearly separate what works from what still needs improvement.',
+            teamwork:'Keep the discussion respectful. Explain the shared goal, listen to the other person, then agree on a practical next action. Use a real example if you have one.',
+            updates:'Separate completed work, current work and blockers. State realistic next steps and timing. Raise risks early rather than promising an uncertain result.',
+            clients:'Acknowledge the person’s concern, ask a focused question and state the next step. Avoid jargon, passwords and promises you cannot confirm.',
+            writing:'Use a clear subject, polite greeting, brief context, one clear request and a professional closing. Keep the message easy to act on.'
+        },
+        kn: {
+            introductions:'ಮೊದಲು ನಿಮ್ಮ ಪ್ರಸ್ತುತ ಅಧ್ಯಯನ ಅಥವಾ ಕೆಲಸದ ಹಿನ್ನೆಲೆಯನ್ನು ಹೇಳಿ. ಆ ಹುದ್ದೆಗೆ ಸಂಬಂಧಿಸಿದ ನಿಜವಾದ ಉದಾಹರಣೆ ನೀಡಿ. ಕೊನೆಯಲ್ಲಿ ನೀವು ಹೇಗೆ ಕೊಡುಗೆ ನೀಡಬಹುದು ಎಂದು ತಿಳಿಸಿ. ಗೊತ್ತಿಲ್ಲದ ಅನುಭವವನ್ನು ಹೇಳಬೇಡಿ.',
+            projects:'ಮೊದಲು ಸಮಸ್ಯೆಯನ್ನು ಸರಳವಾಗಿ ವಿವರಿಸಿ. ನಂತರ ನೀವು ಮಾಡಿದ ಕೆಲಸ ಮತ್ತು ಅದರ ಫಲಿತಾಂಶವನ್ನು ಹೇಳಿ. ಕೆಲಸ ಮಾಡುತ್ತಿರುವ ಭಾಗ ಮತ್ತು ಇನ್ನೂ ಸುಧಾರಿಸಬೇಕಾದ ಭಾಗವನ್ನು ಸ್ಪಷ್ಟವಾಗಿ ಬೇರ್ಪಡಿಸಿ.',
+            teamwork:'ಗೌರವದಿಂದ ಮಾತನಾಡಿ. ಎಲ್ಲರ ಸಾಮಾನ್ಯ ಗುರಿಯನ್ನು ಹೇಳಿ, ಇನ್ನೊಬ್ಬರ ಕಾರಣಗಳನ್ನು ಕೇಳಿ ಮತ್ತು ಮುಂದಿನ ಕ್ರಮವನ್ನು ಒಪ್ಪಿಕೊಳ್ಳಿ. ಸಾಧ್ಯವಾದರೆ ನಿಮ್ಮ ನಿಜವಾದ ಅನುಭವವನ್ನು ಬಳಸಿ.',
+            updates:'ಪೂರ್ಣಗೊಂಡ ಕೆಲಸ, ಈಗ ನಡೆಯುತ್ತಿರುವ ಕೆಲಸ ಮತ್ತು ಅಡ್ಡಿಗಳನ್ನು ಬೇರೆಬೇರೆಯಾಗಿ ಹೇಳಿ. ಮುಂದಿನ ಕ್ರಮ ಹಾಗೂ ವಾಸ್ತವಿಕ ಸಮಯ ತಿಳಿಸಿ. ಖಚಿತವಿಲ್ಲದ ಭರವಸೆ ನೀಡದೆ ಅಪಾಯವನ್ನು ಮುಂಚಿತವಾಗಿ ತಿಳಿಸಿ.',
+            clients:'ಅವರ ತೊಂದರೆಯನ್ನು ಗೌರವದಿಂದ ಒಪ್ಪಿಕೊಳ್ಳಿ. ಬೇಕಾದ ಮಾಹಿತಿಯನ್ನು ಸ್ಪಷ್ಟವಾಗಿ ಕೇಳಿ ಮತ್ತು ಮುಂದಿನ ಕ್ರಮ ಹೇಳಿ. ಪಾಸ್‌ವರ್ಡ್ ಕೇಳಬೇಡಿ; ಖಚಿತವಿಲ್ಲದ ಸಮಯದ ಭರವಸೆ ನೀಡಬೇಡಿ.',
+            writing:'ಸ್ಪಷ್ಟವಾದ ವಿಷಯದ ಸಾಲು, ಗೌರವದ ಸಂಬೋಧನೆ, ಚಿಕ್ಕ ಹಿನ್ನೆಲೆ, ಒಂದೇ ಸ್ಪಷ್ಟ ವಿನಂತಿ ಮತ್ತು ವಿನಯದ ಮುಕ್ತಾಯ ಬಳಸಿ. ಓದುಗರಿಗೆ ಮುಂದೇನು ಮಾಡಬೇಕು ಎಂದು ಸುಲಭವಾಗಿ ಅರ್ಥವಾಗಲಿ.'
+        },
+        hi: {
+            introductions:'पहले अपनी वर्तमान पढ़ाई या काम का परिचय दें। फिर भूमिका से जुड़ा एक सच्चा उदाहरण बताएं और अंत में अपना योगदान समझाएं। ऐसा अनुभव न बताएं जो आपके पास नहीं है।',
+            projects:'पहले समस्या समझाएं, फिर अपना काम और उसका परिणाम बताएं। सरल शब्दों का प्रयोग करें। जो काम करता है और जिसमें अभी सुधार चाहिए, उन्हें अलग बताएं।',
+            teamwork:'सम्मान से बात करें। साझा लक्ष्य बताएं, दूसरे व्यक्ति की बात सुनें और अगला व्यावहारिक कदम तय करें। संभव हो तो वास्तविक अनुभव का उदाहरण दें।',
+            updates:'पूरा काम, चल रहा काम और रुकावटें अलग बताएं। अगला कदम और वास्तविक समय-सीमा दें। अनिश्चित वादा करने के बजाय जोखिम जल्दी बताएं।',
+            clients:'उनकी परेशानी को स्वीकार करें, ज़रूरी जानकारी के लिए स्पष्ट सवाल पूछें और अगला कदम बताएं। पासवर्ड न मांगें और बिना पुष्टि के समय का वादा न करें।',
+            writing:'स्पष्ट विषय, विनम्र संबोधन, थोड़ा संदर्भ, एक साफ अनुरोध और उचित समापन लिखें। संदेश से समझ आना चाहिए कि प्राप्तकर्ता को आगे क्या करना है।'
+        },
+        te: {
+            introductions:'ముందుగా మీ ప్రస్తుత చదువు లేదా పని గురించి చెప్పండి. ఆ పాత్రకు సంబంధించిన నిజమైన ఉదాహరణ ఇవ్వండి. చివరగా మీరు ఎలా సహకరించగలరో చెప్పండి. మీకు లేని అనుభవాన్ని చెప్పవద్దు.',
+            projects:'ముందు సమస్యను వివరించండి. తరువాత మీరు చేసిన పని, దాని ఫలితాన్ని సరళంగా చెప్పండి. పని చేస్తున్న భాగాన్ని, ఇంకా మెరుగుపరచాల్సిన భాగాన్ని వేరు చేయండి.',
+            teamwork:'గౌరవంగా మాట్లాడండి. అందరి ఉమ్మడి లక్ష్యాన్ని చెప్పి, ఎదుటివారి అభిప్రాయం వినండి. తరువాత చేయగల తదుపరి చర్యను కలిసి నిర్ణయించండి.',
+            updates:'పూర్తయిన పని, జరుగుతున్న పని, అడ్డంకులను వేరుగా చెప్పండి. తదుపరి చర్యకు వాస్తవిక సమయం ఇవ్వండి. ఖచ్చితంగా తెలియని వాగ్దానం చేయకుండా ప్రమాదాన్ని ముందే తెలియజేయండి.',
+            clients:'వారి ఇబ్బందిని అంగీకరించి అవసరమైన సమాచారాన్ని స్పష్టంగా అడగండి. తదుపరి చర్య చెప్పండి. పాస్‌వర్డ్ అడగవద్దు; నిర్ధారణ లేని సమయాన్ని వాగ్దానం చేయవద్దు.',
+            writing:'స్పష్టమైన విషయం, గౌరవమైన సంబోధన, చిన్న నేపథ్యం, ఒక స్పష్టమైన అభ్యర్థన మరియు మర్యాదైన ముగింపు రాయండి. తరువాత ఏమి చేయాలో అందుకునేవారికి అర్థమయ్యేలా ఉంచండి.'
+        },
+        ta: {
+            introductions:'முதலில் உங்கள் தற்போதைய படிப்பு அல்லது வேலை பற்றிச் சொல்லுங்கள். இந்தப் பணிக்குத் தொடர்பான உண்மையான உதாரணம் கொடுங்கள். நீங்கள் எவ்வாறு பங்களிக்கலாம் என்று முடிக்கவும். இல்லாத அனுபவத்தைக் கூற வேண்டாம்.',
+            projects:'முதலில் பிரச்சினையை விளக்குங்கள். பிறகு நீங்கள் செய்த வேலை மற்றும் அதன் முடிவை எளிய சொற்களில் சொல்லுங்கள். செயல்படும் பகுதியையும் இன்னும் மேம்படுத்த வேண்டிய பகுதியையும் பிரித்துக் கூறுங்கள்.',
+            teamwork:'மரியாதையுடன் பேசுங்கள். பொதுவான இலக்கை விளக்கி, மற்றவரின் கருத்தைக் கேளுங்கள். அடுத்து செய்யக்கூடிய நடைமுறைச் செயலை இணைந்து முடிவு செய்யுங்கள்.',
+            updates:'முடிந்த வேலை, நடக்கும் வேலை, தடைகள் ஆகியவற்றைத் தனியாகச் சொல்லுங்கள். அடுத்த செயலும் நடைமுறையான நேரமும் கூறுங்கள். உறுதியில்லாத வாக்குறுதிக்குப் பதிலாக ஆபத்தை முன்னரே தெரிவியுங்கள்.',
+            clients:'அவர்களின் சிரமத்தை ஏற்றுக்கொண்டு, தேவையான தகவலைத் தெளிவாகக் கேளுங்கள். அடுத்த செயலைக் கூறுங்கள். கடவுச்சொல் கேட்க வேண்டாம்; உறுதியாகத் தெரியாத நேரத்தை வாக்குறுதி அளிக்க வேண்டாம்.',
+            writing:'தெளிவான தலைப்பு, மரியாதையான அழைப்பு, சுருக்கமான பின்னணி, ஒரு தெளிவான கோரிக்கை, பொருத்தமான முடிவு ஆகியவற்றைப் பயன்படுத்துங்கள். பெறுபவர் அடுத்து என்ன செய்ய வேண்டும் என்பது விளங்கட்டும்.'
+        },
+        ml: {
+            introductions:'ആദ്യം ഇപ്പോഴത്തെ പഠനമോ ജോലിയോ പരിചയപ്പെടുത്തുക. ഈ ജോലിക്ക് യോജിക്കുന്ന ഒരു യഥാർത്ഥ ഉദാഹരണം പറയുക. നിങ്ങൾക്ക് എങ്ങനെ സംഭാവന ചെയ്യാമെന്ന് വ്യക്തമാക്കി അവസാനിപ്പിക്കുക. ഇല്ലാത്ത അനുഭവം അവകാശപ്പെടരുത്.',
+            projects:'ആദ്യം പ്രശ്നം വിശദീകരിക്കുക. തുടർന്ന് നിങ്ങൾ ചെയ്ത ജോലിയും ഫലവും ലളിതമായി പറയുക. പ്രവർത്തിക്കുന്ന ഭാഗവും ഇനിയും മെച്ചപ്പെടുത്തേണ്ട ഭാഗവും വേർതിരിക്കുക.',
+            teamwork:'ബഹുമാനത്തോടെ സംസാരിക്കുക. പൊതുവായ ലക്ഷ്യം പറയുക, മറ്റുള്ളവരുടെ അഭിപ്രായം കേൾക്കുക, അടുത്ത പ്രായോഗിക നടപടി ഒരുമിച്ച് തീരുമാനിക്കുക.',
+            updates:'പൂർത്തിയായ ജോലി, നടക്കുന്ന ജോലി, തടസ്സങ്ങൾ എന്നിവ വേർതിരിച്ച് പറയുക. അടുത്ത നടപടിയും യാഥാർത്ഥ്യമായ സമയവും വ്യക്തമാക്കുക. ഉറപ്പില്ലാത്ത വാഗ്ദാനത്തിനു പകരം അപകടസാധ്യത നേരത്തെ അറിയിക്കുക.',
+            clients:'അവരുടെ ബുദ്ധിമുട്ട് അംഗീകരിക്കുക. ആവശ്യമായ വിവരം വ്യക്തമായി ചോദിച്ച് അടുത്ത നടപടി പറയുക. പാസ്‌വേഡ് ചോദിക്കരുത്; ഉറപ്പില്ലാത്ത സമയവാഗ്ദാനം നൽകരുത്.',
+            writing:'വ്യക്തമായ വിഷയം, വിനയമുള്ള അഭിവാദ്യം, ചെറിയ പശ്ചാത്തലം, ഒരു വ്യക്തമായ അഭ്യർത്ഥന, ഉചിതമായ സമാപനം എന്നിവ എഴുതുക. ലഭിക്കുന്നയാൾ അടുത്തതായി എന്തു ചെയ്യണമെന്ന് വ്യക്തമാകണം.'
+        },
+        bn: {
+            introductions:'প্রথমে আপনার বর্তমান পড়াশোনা বা কাজের পরিচয় দিন। এই পদের সঙ্গে সম্পর্কিত একটি সত্যি উদাহরণ বলুন এবং আপনি কী অবদান রাখতে পারেন তা দিয়ে শেষ করুন। নেই এমন অভিজ্ঞতা দাবি করবেন না।',
+            projects:'আগে সমস্যাটি বোঝান, তারপর নিজের কাজ ও ফলাফল বলুন। সহজ ভাষা ব্যবহার করুন। কোন অংশ কাজ করছে এবং কোন অংশে উন্নতি দরকার তা আলাদা করে বলুন।',
+            teamwork:'সম্মান রেখে কথা বলুন। সবার লক্ষ্য বোঝান, অন্যের মতামত শুনুন এবং পরের বাস্তবসম্মত কাজটি একসঙ্গে ঠিক করুন। সম্ভব হলে সত্যি অভিজ্ঞতা দিন।',
+            updates:'শেষ হওয়া কাজ, চলমান কাজ ও বাধা আলাদা করে বলুন। পরের কাজ ও বাস্তবসম্মত সময় জানান। অনিশ্চিত প্রতিশ্রুতির বদলে ঝুঁকি আগেই জানান।',
+            clients:'তাঁর অসুবিধা স্বীকার করুন, প্রয়োজনীয় তথ্যের জন্য স্পষ্ট প্রশ্ন করুন এবং পরের ধাপ জানান। পাসওয়ার্ড চাইবেন না বা নিশ্চিত না হয়ে সময়ের প্রতিশ্রুতি দেবেন না।',
+            writing:'স্পষ্ট বিষয়, ভদ্র সম্বোধন, ছোট প্রেক্ষাপট, একটি পরিষ্কার অনুরোধ ও উপযুক্ত সমাপ্তি ব্যবহার করুন। প্রাপককে পরের কাজটি বুঝতে সাহায্য করুন।'
+        },
+        mr: {
+            introductions:'आधी तुमचे सध्याचे शिक्षण किंवा काम सांगा. या भूमिकेशी संबंधित खरे उदाहरण द्या आणि तुम्ही कसे योगदान देऊ शकता ते सांगून संपवा. नसलेल्या अनुभवाचा दावा करू नका.',
+            projects:'आधी समस्या स्पष्ट करा. नंतर तुम्ही केलेले काम आणि त्याचा परिणाम साध्या शब्दांत सांगा. काय चालते आणि कुठे सुधारणा हवी ते वेगळे सांगा.',
+            teamwork:'आदराने बोला. समान ध्येय सांगा, दुसऱ्याचे मत ऐका आणि पुढची व्यवहार्य कृती एकत्र ठरवा. शक्य असल्यास खरे उदाहरण द्या.',
+            updates:'पूर्ण झालेले काम, सुरू असलेले काम आणि अडथळे वेगळे सांगा. पुढची कृती व वास्तववादी वेळ द्या. अनिश्चित आश्वासनाऐवजी धोका लवकर कळवा.',
+            clients:'त्यांची अडचण मान्य करा, आवश्यक माहितीसाठी स्पष्ट प्रश्न विचारा आणि पुढचे पाऊल सांगा. पासवर्ड मागू नका आणि खात्री नसलेली वेळ देऊ नका.',
+            writing:'स्पष्ट विषय, नम्र संबोधन, थोडा संदर्भ, एक स्पष्ट विनंती आणि योग्य शेवट लिहा. समोरच्या व्यक्तीने पुढे काय करायचे ते समजले पाहिजे.'
+        },
+        gu: {
+            introductions:'પહેલાં તમારું હાલનું ભણતર અથવા કામ જણાવો. આ ભૂમિકા સાથે જોડાયેલું સાચું ઉદાહરણ આપો અને તમે કેવી રીતે યોગદાન આપી શકો તે કહીને પૂરું કરો. ન હોય એવો અનુભવ ન બતાવો.',
+            projects:'પહેલાં સમસ્યા સમજાવો. પછી તમે કરેલું કામ અને તેનું પરિણામ સરળ શબ્દોમાં કહો. કયો ભાગ ચાલે છે અને ક્યાં સુધારો જોઈએ તે અલગથી જણાવો.',
+            teamwork:'આદરપૂર્વક વાત કરો. સામાન્ય લક્ષ્ય સમજાવો, સામેની વ્યક્તિનું મંતવ્ય સાંભળો અને આગળનું વ્યવહારુ પગલું સાથે નક્કી કરો.',
+            updates:'પૂર્ણ થયેલું કામ, ચાલુ કામ અને અડચણોને અલગ જણાવો. આગળનું પગલું અને વાસ્તવિક સમય આપો. અનિશ્ચિત વચનને બદલે જોખમ વહેલું જણાવો.',
+            clients:'તેમની મુશ્કેલી સ્વીકારો, જરૂરી માહિતી માટે સ્પષ્ટ પ્રશ્ન પૂછો અને આગળનું પગલું જણાવો. પાસવર્ડ ન માગો અને ખાતરી વિના સમયનું વચન ન આપો.',
+            writing:'સ્પષ્ટ વિષય, નમ્ર સંબોધન, ટૂંકો સંદર્ભ, એક સ્પષ્ટ વિનંતી અને યોગ્ય સમાપન લખો. મેળવનારને આગળ શું કરવું તે સહેલાઈથી સમજાય એવું રાખો.'
+        }
+    };
+    const ui = {
+        en:{empty:'Write an answer before reviewing it.',review:'Your self-review',notice:'These are your own checklist selections, not an automatic judgement of your answer.',none:'All four checks are selected. Read your answer once more and confirm each one is supported by your own words.',word:'Words',aim:'Suggested practice length',checked:'checks selected',next:'Review these before your next attempt:'},
+        kn:{empty:'ಪರಿಶೀಲಿಸುವ ಮೊದಲು ನಿಮ್ಮ ಉತ್ತರವನ್ನು ಬರೆಯಿರಿ.',review:'ನಿಮ್ಮ ಸ್ವಯಂ ಪರಿಶೀಲನೆ',notice:'ಇವು ನೀವು ಆಯ್ಕೆ ಮಾಡಿದ ಪರಿಶೀಲನೆಗಳು. ವ್ಯವಸ್ಥೆ ನಿಮ್ಮ ಉತ್ತರದ ಅರ್ಥ ಅಥವಾ ಸರಿತನವನ್ನು ತಾನಾಗಿಯೇ ಅಳೆಯುವುದಿಲ್ಲ.',none:'ನಾಲ್ಕೂ ಅಂಶಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಿದ್ದೀರಿ. ಪ್ರತಿ ಅಂಶಕ್ಕೂ ನಿಮ್ಮ ಉತ್ತರದಲ್ಲಿ ಸಾಕ್ಷಿ ಇದೆಯೇ ಎಂದು ಮತ್ತೆ ಓದಿ ನೋಡಿ.',word:'ಪದಗಳು',aim:'ಅಭ್ಯಾಸಕ್ಕೆ ಸೂಚಿಸಿದ ಉದ್ದ',checked:'ಪರಿಶೀಲನೆಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಲಾಗಿದೆ',next:'ಮುಂದಿನ ಪ್ರಯತ್ನದ ಮೊದಲು ಇವುಗಳನ್ನು ಪರಿಶೀಲಿಸಿ:'},
+        hi:{empty:'समीक्षा से पहले अपना उत्तर लिखें।',review:'आपकी स्व-समीक्षा',notice:'ये आपके चुने हुए चेक हैं, उत्तर का स्वचालित मूल्यांकन नहीं।',none:'चारों चेक चुने गए हैं। फिर पढ़कर देखें कि हर बिंदु आपके शब्दों में मौजूद है।',word:'शब्द',aim:'अभ्यास के लिए सुझाई गई लंबाई',checked:'चेक चुने गए',next:'अगले प्रयास से पहले इन पर विचार करें:'},
+        te:{empty:'సమీక్షకు ముందు మీ సమాధానం రాయండి.',review:'మీ స్వీయ సమీక్ష',notice:'ఇవి మీరు ఎంచుకున్న తనిఖీలు మాత్రమే. సమాధానం అర్థాన్ని లేదా సరైనదో కాదో వ్యవస్థ స్వయంగా అంచనా వేయదు.',none:'నాలుగు అంశాలు ఎంచుకున్నారు. ప్రతి అంశం మీ సమాధానంలో ఉందో మళ్లీ చదవండి.',word:'పదాలు',aim:'అభ్యాసానికి సూచించిన పొడవు',checked:'తనిఖీలు ఎంచుకున్నారు',next:'మరో ప్రయత్నానికి ముందు ఇవి పరిశీలించండి:'},
+        ta:{empty:'மதிப்பாய்வுக்கு முன் உங்கள் பதிலை எழுதுங்கள்.',review:'உங்கள் சுய மதிப்பாய்வு',notice:'இவை நீங்கள் தேர்ந்தெடுத்த குறிப்புகள் மட்டுமே; பதிலின் பொருள் அல்லது சரித்தன்மையைத் தானாக மதிப்பிடுவதில்லை.',none:'நான்கு குறிப்புகளையும் தேர்ந்தெடுத்துள்ளீர்கள். ஒவ்வொன்றும் பதிலில் இருக்கிறதா என்று மீண்டும் படியுங்கள்.',word:'சொற்கள்',aim:'பயிற்சிக்கான பரிந்துரைக்கப்பட்ட நீளம்',checked:'குறிப்புகள் தேர்ந்தெடுக்கப்பட்டன',next:'அடுத்த முயற்சிக்கு முன் இவற்றைப் பாருங்கள்:'},
+        ml:{empty:'അവലോകനത്തിനു മുമ്പ് നിങ്ങളുടെ ഉത്തരം എഴുതുക.',review:'നിങ്ങളുടെ സ്വയം അവലോകനം',notice:'ഇവ നിങ്ങൾ തിരഞ്ഞെടുത്ത പരിശോധനകൾ മാത്രമാണ്. ഉത്തരത്തിന്റെ അർത്ഥമോ കൃത്യതയോ സ്വയം വിലയിരുത്തുന്നില്ല.',none:'നാലു പരിശോധനകളും തിരഞ്ഞെടുത്തു. ഓരോന്നും ഉത്തരത്തിൽ ഉണ്ടോ എന്ന് വീണ്ടും വായിക്കുക.',word:'വാക്കുകൾ',aim:'പരിശീലനത്തിന് നിർദേശിക്കുന്ന നീളം',checked:'പരിശോധനകൾ തിരഞ്ഞെടുത്തു',next:'അടുത്ത ശ്രമത്തിനു മുമ്പ് ഇവ പരിശോധിക്കുക:'},
+        bn:{empty:'পর্যালোচনার আগে আপনার উত্তর লিখুন।',review:'আপনার স্ব-পর্যালোচনা',notice:'এগুলি আপনার বেছে নেওয়া চেক, উত্তরের স্বয়ংক্রিয় মূল্যায়ন নয়।',none:'চারটি চেকই বেছে নেওয়া হয়েছে। প্রতিটি আপনার উত্তরে আছে কি না আবার পড়ে দেখুন।',word:'শব্দ',aim:'অনুশীলনের প্রস্তাবিত দৈর্ঘ্য',checked:'চেক বেছে নেওয়া হয়েছে',next:'পরের চেষ্টার আগে এগুলি দেখুন:'},
+        mr:{empty:'पुनरावलोकन करण्यापूर्वी तुमचे उत्तर लिहा.',review:'तुमचे स्व-पुनरावलोकन',notice:'हे तुम्ही निवडलेले तपासणी मुद्दे आहेत; उत्तराचे स्वयंचलित मूल्यमापन नाही.',none:'चारही मुद्दे निवडले आहेत. प्रत्येक मुद्दा उत्तरात आहे का ते पुन्हा वाचा.',word:'शब्द',aim:'सरावासाठी सुचवलेली लांबी',checked:'मुद्दे निवडले',next:'पुढील प्रयत्नापूर्वी हे पाहा:'},
+        gu:{empty:'સમીક્ષા કરતાં પહેલાં તમારો જવાબ લખો.',review:'તમારી સ્વ-સમીક્ષા',notice:'આ તમે પસંદ કરેલા ચેક છે; જવાબનું આપમેળે મૂલ્યાંકન નથી.',none:'ચારેય ચેક પસંદ કર્યા છે. દરેક મુદ્દો તમારા જવાબમાં છે કે નહીં તે ફરી વાંચો.',word:'શબ્દો',aim:'અભ્યાસ માટે સૂચવેલી લંબાઈ',checked:'ચેક પસંદ કર્યા',next:'આગલા પ્રયત્ન પહેલાં આ જુઓ:'}
+    };
+    const $ = id => document.getElementById(id);
+    const categorySelect = $('professionalCategory');
+    const questionSelect = $('professionalQuestion');
+    const answer = $('professionalAnswer');
+    const storageKey = 'careerAIProfessionalTutor';
+    const saved = CareerAI.read(storageKey, {});
+    let notebook = saved.answers && typeof saved.answers === 'object' ? saved.answers : {};
+    let currentId = questions.some(q => q.id === saved.currentId) ? saved.currentId : questions[0].id;
+    let inputTimer;
+    function node(tag, text, className) {
+        const element = document.createElement(tag);
+        if (text !== undefined) element.textContent = text;
+        if (className) element.className = className;
+        return element;
+    }
+    function current() { return questions.find(q => q.id === currentId) || questions[0]; }
+    function language() { return $('language').value in guidance ? $('language').value : 'en'; }
+    function copy() { return ui[language()] || ui.en; }
+    function words() { return answer.value.trim().split(/\s+/).filter(Boolean).length; }
+    function checkedValues() { return [...$('professionalChecklist').querySelectorAll('input')].map(input => input.checked); }
+    function countWords() {
+        const q = current(), text = copy();
+        $('professionalWordCount').textContent = text.word + ': ' + words() + ' · ' + text.aim + ': ' + q.range[0] + '–' + q.range[1] + '.';
+    }
+    function persist() {
+        notebook[currentId] = {answer:answer.value,checks:checkedValues(),updatedAt:new Date().toISOString()};
+        const ok = CareerAI.write(storageKey, {currentId,answers:notebook});
+        $('professionalSaveStatus').textContent = ok ? 'Professional responses saved on this device.' : 'Browser storage is unavailable. Copy your response before leaving.';
+        return ok;
+    }
+    function refreshGuidance() {
+        const code = language();
+        $('professionalGuidance').textContent = guidance[code][current().category];
+        $('professionalGuidance').lang = code;
+        countWords();
+        if (!$('professionalFeedback').hidden) review(false);
+    }
+    function fillQuestionSelect() {
+        questionSelect.replaceChildren();
+        const filtered = questions.filter(q => categorySelect.value === 'all' || q.category === categorySelect.value);
+        filtered.forEach(q => { const option = node('option', q.title); option.value = q.id; questionSelect.append(option); });
+        if (!filtered.some(q => q.id === currentId)) currentId = filtered[0].id;
+        questionSelect.value = currentId;
+    }
+    function render() {
+        const q = current(), entry = notebook[currentId] || {};
+        questionSelect.value = currentId;
+        $('professionalCounter').textContent = 'QUESTION ' + (questions.indexOf(q) + 1) + ' OF ' + questions.length + ' · ' + categories.find(x => x[0] === q.category)[1];
+        $('professionalPrompt').textContent = q.question;
+        $('professionalSample').textContent = q.sample;
+        $('professionalExample').open = false;
+        answer.value = typeof entry.answer === 'string' ? entry.answer : '';
+        $('professionalChecklist').replaceChildren();
+        q.checks.forEach((text, i) => {
+            const label = node('label');
+            const input = node('input'); input.type = 'checkbox'; input.id = 'professionalCheck' + i; input.checked = Array.isArray(entry.checks) && entry.checks[i] === true;
+            input.addEventListener('change', () => { $('professionalFeedback').hidden = true; persist(); });
+            label.append(input, node('span', text)); $('professionalChecklist').append(label);
+        });
+        $('professionalFeedback').hidden = true;
+        $('professionalSaveStatus').textContent = entry.answer ? 'Your saved response is restored on this device.' : 'Your response stays in this browser on this device.';
+        refreshGuidance();
+    }
+    function review(saveResult) {
+        const output = $('professionalFeedback'), text = copy();
+        output.replaceChildren(); output.hidden = false;
+        if (!answer.value.trim()) { output.append(node('p', text.empty)); if (saveResult !== false) answer.focus(); return; }
+        const selections = checkedValues(), count = selections.filter(Boolean).length;
+        output.append(node('h3', text.review, 'pro-feedback-heading'));
+        output.append(node('p', count + ' / 4 ' + text.checked + ' · ' + text.word + ': ' + words() + '.'));
+        const unchecked = current().checks.filter((_, i) => !selections[i]);
+        if (unchecked.length) {
+            output.append(node('p', text.next));
+            const list = node('ul'); unchecked.forEach(item => list.append(node('li', item))); output.append(list);
+        } else output.append(node('p', text.none));
+        output.append(node('p', text.notice, 'professional-note'));
+        if (saveResult !== false) persist();
+    }
+    const all = node('option', 'All professional situations'); all.value = 'all'; categorySelect.append(all);
+    categories.forEach(([id,label]) => { const option = node('option',label); option.value = id; categorySelect.append(option); });
+    categorySelect.value = 'all'; fillQuestionSelect(); render();
+    categorySelect.addEventListener('change', () => { stopSpeech(); persist(); fillQuestionSelect(); render(); });
+    questionSelect.addEventListener('change', () => { stopSpeech(); persist(); currentId = questionSelect.value; render(); persist(); });
+    answer.addEventListener('input', () => { countWords(); $('professionalFeedback').hidden = true; clearTimeout(inputTimer); inputTimer = setTimeout(persist, 350); });
+    $('language').addEventListener('change', refreshGuidance);
+    $('reviewProfessionalAnswer').addEventListener('click', () => review(true));
+    $('hearProfessionalGuidance').addEventListener('click', () => speak($('professionalGuidance').textContent, selectedLanguage().voice));
+    $('hearProfessionalSample').addEventListener('click', () => speak(current().sample, 'en-IN'));
+    $('nextProfessionalQuestion').addEventListener('click', () => {
+        stopSpeech(); persist(); const options = [...questionSelect.options], index = options.findIndex(o => o.value === currentId);
+        currentId = options[(index + 1) % options.length].value; render(); persist(); $('professionalPromptBox').focus();
+    });
+    $('useProfessionalTranscript').addEventListener('click', () => {
+        const spoken = $('speechResult').textContent.match(/You said:\s*([\s\S]*?)(?:\n\n|$)/);
+        if (!spoken) { const output = $('professionalFeedback'); output.replaceChildren(node('p','Use the Speak activity to record an English response, then return here to bring in its transcript.')); output.hidden = false; return; }
+        answer.value = spoken[1].trim(); countWords(); persist(); $('professionalFeedback').hidden = true;
+    });
+    $('openProfessionalPractice').addEventListener('click', () => { stopSpeech(); showTutorPanel('professionalCard'); $('professionalCard').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}); $('professionalPromptBox').focus({preventScroll:true}); if (window.CareerAIDrafts) CareerAIDrafts.save(); });
+    window.addEventListener('pagehide', persist);
+    document.querySelector('.hero-tags span:nth-child(2)').textContent = lessonLibrary.length + ' practical lessons';
+})();
+</script>
 </body>
 </html>
 
