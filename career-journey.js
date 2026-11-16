@@ -40,7 +40,9 @@
     write('careerAIJourneyV2',state);
     const chrome=node('div','career-chrome');
     const nav=node('nav','career-topbar');nav.setAttribute('aria-label','CareerAI module navigation');
-    const brand=link('CareerAI','./dashboard.html','career-brand');brand.prepend(node('span','career-brand-mark','C'));
+    const brand=link('','./dashboard.html','career-brand');
+    const brandCopy=node('span','career-brand-copy','CareerAI');brandCopy.append(node('small','','and Interview Preparation System'));
+    brand.append(node('span','career-brand-mark','C'),brandCopy);
     const breadcrumb=node('span','career-breadcrumb','Preparation / '+step.short);
     const jump=node('details','career-jump');jump.append(node('summary','','All 10 modules'));
     const menu=node('ol','career-jump-menu');steps.forEach((s,i)=>{const li=node('li');const a=link(String(i+1).padStart(2,'0')+' · '+s.short,s.url);if(i===current)a.setAttribute('aria-current','page');li.append(a);menu.append(li);});jump.append(menu);
@@ -79,7 +81,7 @@
       if(current===3){const heading=document.querySelector('#analysisSection > h2');if(heading)heading.textContent='Your skill gap & learning plan';}
       if(typeof setupSkillVerification==='function')setupSkillVerification([]);
     }
-    document.title=step.short+' · CareerAI';
+    document.title=step.short+' · CareerAI and Interview Preparation System';
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();

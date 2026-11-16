@@ -5,7 +5,7 @@
 <meta name="careerai-api-base" content="https://careerai-project-vca7.onrender.com">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Resume & Career Preparation System</title>
+<title>CareerAI and Interview Preparation System</title>
 
 <style>
 *{box-sizing:border-box}
@@ -128,7 +128,7 @@ window.CareerAI={read:function(k,d){try{return JSON.parse(localStorage.getItem(k
 
 <body>
 <header>
-<h1>AI Resume & Career Preparation System</h1>
+<h1>CareerAI and Interview Preparation System</h1>
 <p>Resume Analysis • Skill Gap • Learning • Skill Verification • Career Path</p>
 </header>
 
@@ -810,7 +810,7 @@ async function submitSkillQuiz() {
 const page=location.pathname.split('/').pop()||'dashboard.html';if(page==='dashboard.html')return;
 const key='careerAIAutosave:'+(page==='resume_tools.html'?'index.html':page);let restoring=false,cleared=false,timer;
 const fields=()=>[...document.querySelectorAll('input[id],select[id],textarea[id]')].filter(e=>e.id!=='jobDescription'&&!['file','password','hidden'].includes(e.type));
-function save(){if(restoring||cleared)return true;const data={savedAt:new Date().toISOString(),fields:{},scrollY:scrollY};fields().forEach(e=>data.fields[e.id]={value:e.value,checked:e.checked});
+function save(){if(restoring||cleared)return true;const data={savedAt:new Date().toISOString(),fields:{},scrollY:scrollY,module:new URLSearchParams(location.search).get('feature')||'resume'};fields().forEach(e=>data.fields[e.id]={value:e.value,checked:e.checked});
 if(page==='tutor.html'){data.tutor={lesson:activeLessonId,quizScore,quizAttempts,panel:window.tutorPanel||'lessonCard'};['speechResult','practiceFeedback','correction','quizResult'].forEach(id=>{const el=document.getElementById(id);if(el)data[id]={text:el.textContent,visible:getComputedStyle(el).display!=='none'};});}
 if(page==='interview_practice.html'){data.interview={questions,mainIndex,followUpPending,answers,inProgress:active||!!document.getElementById('resumeSavedInterview'),aiMode,question:document.getElementById('avatarQuestion').textContent,conversation:[...document.querySelectorAll('#conversation .bubble')].map(e=>({speaker:e.querySelector('.speaker').textContent,text:e.lastElementChild.textContent}))};}
 if(page==='resume_builder.html'){const view=document.getElementById('preview');if(!view.querySelector('.empty'))data.preview=[...view.childNodes].map(serializePreview);const draft={};draftFields.forEach(id=>draft[id]=document.getElementById(id).value);draft.skills=confirmedSkills().join(', ');draft.photo=photoData;draft.savedAt=data.savedAt;if(!CareerAI.write('careerAIResumeDraft',draft))return false;}
@@ -834,7 +834,7 @@ if(safe&&!d.aiMode){questions=d.questions;mainIndex=d.mainIndex;followUpPending=
 if(d.inProgress){const resume=document.createElement('button');resume.type='button';resume.id='resumeSavedInterview';resume.textContent='▶ Resume saved interview';resume.onclick=async()=>{active=true;setSetupLocked(true);document.getElementById('answerText').disabled=false;document.getElementById('sendButton').disabled=false;document.getElementById('recordButton').disabled=!recognitionAvailable();document.getElementById('endButton').disabled=false;document.getElementById('startButton').disabled=true;resume.remove();if(document.getElementById('useCamera').checked)await startCamera(false);setTurnStatus('Question '+(mainIndex+1)+' of '+questions.length+(followUpPending?' · follow-up':''));speak(lastSpokenQuestion);};document.getElementById('startButton').before(resume);document.getElementById('startButton').textContent='Start a new interview';document.getElementById('setupStatus').textContent='Saved interview found. Resume from your last question, or start a new round.';}
 }else if(d.aiMode){document.getElementById('setupStatus').textContent='Your typed draft is restored. Start a new AI session to continue; connected sessions may expire.';}}
 if(page==='resume_tools.html'&&saved.fields?.verificationSkill?.value&&saved.quizAnswers?.length){loadSkillQuestions().then(()=>{saved.quizAnswers.forEach(a=>{const input=[...document.querySelectorAll('#questionsContainer input')].find(e=>e.name===a.name&&e.value===a.value);if(input)input.checked=true;});});}
-requestAnimationFrame(()=>window.scrollTo(0,Number(saved.scrollY)||0));restoring=false;label.textContent='Draft restored from '+new Date(saved.savedAt).toLocaleString()+'. Your camera and microphone stay off until you resume.';}
+requestAnimationFrame(()=>window.scrollTo(0,saved.module===(new URLSearchParams(location.search).get('feature')||'resume')?(Number(saved.scrollY)||0):0));restoring=false;label.textContent='Draft restored from '+new Date(saved.savedAt).toLocaleString()+'. Your camera and microphone stay off until you resume.';}
 document.addEventListener('input',()=>{cleared=false;clearTimeout(timer);timer=setTimeout(save,300)});document.addEventListener('change',()=>{cleared=false;save()});document.addEventListener('click',()=>{clearTimeout(timer);timer=setTimeout(save,350)});window.addEventListener('pagehide',save);window.addEventListener('beforeunload',save);document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')save()});
 })();
 </script>
